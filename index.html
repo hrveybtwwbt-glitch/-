@@ -251,14 +251,14 @@ function verifyStudentCode(grade, subject) {
     if (schoolCodes[grade] && schoolCodes[grade][subject]) {
         if (schoolCodes[grade][subject].includes(enteredCode)) {
             alert("تم التحقق بنجاح! أهلاً بك في الدرس.");
-            // ضع هنا الكود الذي ينتقل بالطالب إلى صفحة الدروس أو يظهر محتوى المادة
+            // ضع هنا كود الانتقال لصفحة الدروس
         } else {
             alert("الرمز غير صحيح أو غير مخصص لهذه المادة/الصف.");
         }
     } else {
         alert("حدث خطأ في تحديد المرحلة أو المادة.");
     }
-}
+
     </script>
 </body>
 </html>
