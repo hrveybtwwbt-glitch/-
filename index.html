@@ -37,7 +37,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 <!-- 1. الرياضيات -->
-                <div onclick="selectSubject('الرياضيات')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="verifyStudentCode('third', 'math')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="math-bg.png" alt="الرياضيات" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الأولى</span>
@@ -47,7 +47,7 @@
                 </div>
 
                 <!-- 2. enاللغة الإنجليزية -->
-                <div onclick="selectSubject('اللغة الإنجليزية')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="verifyStudentCode('third', 'math')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="engl-bg.png" alt="الانجليزي" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الثانية</span>
@@ -57,7 +57,7 @@
                 </div>
 
                 <!-- 3. الفيزياء -->
-                <div onclick="selectSubject('الفيزياء')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="verifyStudentCode('third', 'math')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="fezeia.png" alt="الفيزياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الثالثة</span>
@@ -67,7 +67,7 @@
                 </div>
 
                 <!-- 4. الكيمياء -->
-                <div onclick="selectSubject('الكيمياء')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="verifyStudentCode('third', 'math')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="kemea.png" alt="الكيمياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الرابعة</span>
@@ -77,7 +77,7 @@
                 </div>
 
                 <!-- 5. اللغة العربية -->
-                <div onclick="selectSubject('اللغة العربية')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="verifyStudentCode('third', 'math')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="arpeq.png" alt="اللغة العربية" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الخامسة</span>
@@ -87,7 +87,7 @@
                 </div>
 
                 <!-- 6. الأحياء -->
-                <div onclick="selectSubject('الأحياء')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="verifyStudentCode('third', 'math')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="paelowje.png" alt="الأحياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة السادسة</span>
@@ -225,6 +225,41 @@
             currentGrade = "";
             switchView('view-home');
         }
+        // ==========================================
+// قاعدة بيانات رموز الدخول (10 رموز لكل مادة - 7 أرقام)
+// ==========================================
+
+const schoolCodes = {
+    third: {
+        math: ["7834192", "4592018", "6102837", "9023481", "1298475", "5483019", "3092847", "8471920", "2918347", "6382019"],
+        english: ["1928374", "5647382", "9019283", "4857692", "3829102", "7485961", "2039485", "6152438", "8910293", "5049382"],
+        physics: ["4920183", "7382910", "2837465", "9102938", "5647383", "8392019", "3049586", "6758493", "1928384", "9485762"]
+    },
+    sixth: {
+        math: ["8392014", "3920184", "6574839", "2019384", "7485962", "1029384", "5948372", "8374652", "4859602", "9182736"],
+        english: ["3829104", "7485960", "2918374", "6543219", "8910294", "1029385", "4859603", "5748392", "9018273", "2837466"],
+        physics: ["9283746", "3847562", "1029386", "7584932", "5849302", "2918375", "8475632", "6758494", "4938201", "3049587"]
+    }
+};
+
+// دالة التحقق عند اختيار الطالب للمادة والمرحلة
+function verifyStudentCode(grade, subject) {
+    let enteredCode = prompt("أدخل رمز الدخول المكون من 7 أرقام:");
+    
+    if (!enteredCode) return; // إذا ألغى الطالب الإدخال
+
+    // التحقق مما إذا كان الرمز موجوداً في قائمة المرحلة والمادة المحددة
+    if (schoolCodes[grade] && schoolCodes[grade][subject]) {
+        if (schoolCodes[grade][subject].includes(enteredCode)) {
+            alert("تم التحقق بنجاح! أهلاً بك في الدرس.");
+            // هنا تضع الكود الخاص بفتح صفحة الدروس أو الفيديوهات الخاصة بهذا القسم
+        } else {
+            alert("الرمز غير صحيح أو غير مخصص لهذه المادة/الصف.");
+        }
+    } else {
+        alert("حدث خطأ في تحديد المرحلة أو المادة.");
+    }
+}
     </script>
 </body>
 </html>
