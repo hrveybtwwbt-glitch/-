@@ -10,13 +10,16 @@
         body { font-family: 'Cairo', sans-serif; }
         .subject-card {
     transition: all 0.3s ease-in-out;
-    background-image: url('bg.png');
-    background-size: cover;
-    background-position: center;
 }
         .subject-card:hover {
             transform: translateY(-4px);
         }
+        body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-8 flex items-center justify-center">
