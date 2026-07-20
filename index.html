@@ -9,17 +9,17 @@
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
         body { font-family: 'Cairo', sans-serif; }
         .subject-card {
-    transition: all 0.3s ease-in-out;
-}
+            transition: all 0.3s ease-in-out;
+        }
         .subject-card:hover {
             transform: translateY(-4px);
         }
         body {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('bg.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-8 flex items-center justify-center">
@@ -37,7 +37,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 <!-- 1. الرياضيات -->
-                <div onclick="verifyStudentCode('third', 'math')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="selectSubject('math')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="math-bg.png" alt="الرياضيات" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الأولى</span>
@@ -46,8 +46,8 @@
                     </div>
                 </div>
 
-                <!-- 2. enاللغة الإنجليزية -->
-                <div onclick="verifyStudentCode('third', 'english')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <!-- 2. اللغة الإنجليزية -->
+                <div onclick="selectSubject('english')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="engl-bg.png" alt="الانجليزي" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الثانية</span>
@@ -57,7 +57,7 @@
                 </div>
 
                 <!-- 3. الفيزياء -->
-                <div onclick="verifyStudentCode('third', 'physics')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="selectSubject('physics')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="fezeia.png" alt="الفيزياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الثالثة</span>
@@ -67,7 +67,7 @@
                 </div>
 
                 <!-- 4. الكيمياء -->
-                <div onclick="verifyStudentCode('third', 'chemistry')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="selectSubject('chemistry')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="kemea.png" alt="الكيمياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الرابعة</span>
@@ -77,7 +77,7 @@
                 </div>
 
                 <!-- 5. اللغة العربية -->
-                <div onclick="verifyStudentCode('third', 'arabic')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="selectSubject('arabic')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="arpeq.png" alt="اللغة العربية" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة الخامسة</span>
@@ -87,7 +87,7 @@
                 </div>
 
                 <!-- 6. الأحياء -->
-                <div onclick=verifyStudentCode('third', 'biology')"" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
+                <div onclick="selectSubject('biology')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="paelowje.png" alt="الأحياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
                         <span class="text-xs text-cyan-400 font-bold">المادة السادسة</span>
@@ -108,31 +108,12 @@
             <p class="text-center text-slate-400 mb-8">اختر صفك الدراسي للمتابعة</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-xl mx-auto">
-                <button onclick="selectGrade('ثالث متوسط')" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
+                <button onclick="selectGrade('third')" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
                     ثالث متوسط
                 </button>
-                <button onclick="selectGrade('سادس علمي')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
+                <button onclick="selectGrade('sixth')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
                     سادس علمي
                 </button>
-            </div>
-        </div>
-
-        <!-- ================= الطبقة الثالثة: إدخال الكود السري (5 أرقام) ================= -->
-        <div id="view-auth" class="view-section hidden">
-            <button onclick="goBackToGrades()" class="mb-6 text-sm text-cyan-400 hover:underline flex items-center gap-1">
-                ← العودة لاختيار الصف
-            </button>
-            <div class="max-w-md mx-auto bg-slate-800 p-8 rounded-2xl border border-slate-700 text-center">
-                <h3 class="text-xl font-bold text-white mb-2">تسجيل الدخول للقسم</h3>
-                <p id="auth-subtitle" class="text-sm text-slate-300 mb-6"></p>
-                
-                <input type="password" id="passcode-input" maxlength="5" placeholder="أدخل الكود (5 أرقام)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-center text-xl tracking-widest text-white mb-4 focus:outline-none focus:border-cyan-400">
-                
-                <button onclick="verifyCode()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-lg transition-all">
-                    دخول المنصة
-                </button>
-                
-                <p id="error-message" class="text-red-400 text-sm mt-4 hidden">الكود غير صحيح لهذا القسم! يرجى التأكد.</p>
             </div>
         </div>
 
@@ -174,9 +155,23 @@
         let currentSubject = "";
         let currentGrade = "";
 
-        const validCodes = {
-            "ثالث متوسط": "12345",
-            "سادس علمي": "98765"
+        const schoolCodes = {
+            third: {
+                math: ["7834192", "4592018", "6102837", "9023481", "1298475", "5483019", "3092847", "8471920", "2918347", "6382019"],
+                english: ["1928374", "5647382", "9019283", "4857692", "3829102", "7485961", "2039485", "6152438", "8910293", "5049382"],
+                physics: ["4920183", "7382910", "2837465", "9102938", "5647383", "8392019", "3049586", "6758493", "1928384", "9485762"],
+                chemistry: ["1122334", "5566778", "9900112", "3344556", "7788990", "1234567", "7654321", "1357924", "2468135", "9876543"],
+                arabic: ["2233445", "6677889", "0011223", "4455667", "8899001", "2345678", "8765432", "2468135", "3579246", "8765431"],
+                biology: ["4433221", "8877665", "2211009", "6655443", "0099887", "7651234", "1237654", "2461357", "1352468", "3456789"]
+            },
+            sixth: {
+                math: ["8392014", "3920184", "6574839", "2019384", "7485962", "1029384", "5948372", "8374652", "4859602", "9182736"],
+                english: ["3829104", "7485960", "2918374", "6543219", "8910294", "1029385", "4859603", "5748392", "9018273", "2837466"],
+                physics: ["9283746", "3847562", "1029386", "7584932", "5849302", "2918375", "8475632", "6758494", "4938201", "3049587"],
+                chemistry: ["4567890", "1122446", "3355779", "8866442", "9977553", "1472583", "3692581", "7418529", "9638527", "8529637"],
+                arabic: ["5678901", "2233557", "4466880", "9977331", "1188442", "2581473", "3691472", "8523691", "7419632", "9637418"],
+                biology: ["7412583", "3698521", "9632587", "1593578", "7531598", "9517538", "3571598", "8521473", "9631478", "7539512"]
+            }
         };
 
         function switchView(viewId) {
@@ -186,38 +181,34 @@
 
         function selectSubject(subject) {
             currentSubject = subject;
-            document.getElementById('selected-subject-title').innerText = `المادة: ${subject}`;
+            document.getElementById('selected-subject-title').innerText = `المادة المختارة`;
             switchView('view-grades');
-        }
-
-        function goBackToHome() {
-            switchView('view-home');
         }
 
         function selectGrade(grade) {
             currentGrade = grade;
-            document.getElementById('auth-subtitle').innerText = `قسم ${currentSubject} - ${grade}`;
-            document.getElementById('passcode-input').value = "";
-            document.getElementById('error-message').classList.add('hidden');
-            switchView('view-auth');
-        }
+            
+            let enteredCode = prompt("أدخل رمز الدخول المكون من 7 أرقام:");
+            if (!enteredCode) return;
 
-        function goBackToGrades() {
-            switchView('view-grades');
-        }
-
-        function verifyCode() {
-            const enteredCode = document.getElementById('passcode-input').value;
-            const errorElement = document.getElementById('error-message');
-
-            if (enteredCode === validCodes[currentGrade]) {
-                errorElement.classList.add('hidden');
-                document.getElementById('dash-title').innerText = `مرحباً بك في قسم ${currentSubject}`;
-                document.getElementById('dash-subtitle').innerText = `المرحلة الدراسية: ${currentGrade}`;
-                switchView('view-dashboard');
+            if (schoolCodes[currentGrade] && schoolCodes[currentGrade][currentSubject]) {
+                if (schoolCodes[currentGrade][currentSubject].includes(enteredCode)) {
+                    alert("تم التحقق بنجاح! أهلاً بك في الدرس.");
+                    document.getElementById('dash-title').innerText = `مرحباً بك في المنصة`;
+                    document.getElementById('dash-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'}`;
+                    switchView('view-dashboard');
+                } else {
+                    alert("الرمز غير صحيح أو غير مخصص لهذه المادة/الصف.");
+                    switchView('view-home');
+                }
             } else {
-                errorElement.classList.remove('hidden');
+                alert("حدث خطأ في تحديد المرحلة أو المادة.");
+                switchView('view-home');
             }
+        }
+
+        function goBackToHome() {
+            switchView('view-home');
         }
 
         function logout() {
@@ -225,40 +216,6 @@
             currentGrade = "";
             switchView('view-home');
         }
-  const schoolCodes = {
-    third: {
-        math: ["7834192", "4592018", "6102837", "9023481", "1298475", "5483019", "3092847", "8471920", "2918347", "6382019"],
-        english: ["1928374", "5647382", "9019283", "4857692", "3829102", "7485961", "2039485", "6152438", "8910293", "5049382"],
-        physics: ["4920183", "7382910", "2837465", "9102938", "5647383", "8392019", "3049586", "6758493", "1928384", "9485762"],
-        chemistry: ["1122334", "5566778", "9900112", "3344556", "7788990", "1234567", "7654321", "1357924", "2468135", "9876543"],
-        arabic: ["2233445", "6677889", "0011223", "4455667", "8899001", "2345678", "8765432", "2468135", "3579246", "8765431"],
-        biology: ["4433221", "8877665", "2211009", "6655443", "0099887", "7651234", "1237654", "2461357", "1352468", "3456789"]
-    },
-    sixth: {
-        math: ["8392014", "3920184", "6574839", "2019384", "7485962", "1029384", "5948372", "8374652", "4859602", "9182736"],
-        english: ["3829104", "7485960", "2918374", "6543219", "8910294", "1029385", "4859603", "5748392", "9018273", "2837466"],
-        physics: ["9283746", "3847562", "1029386", "7584932", "5849302", "2918375", "8475632", "6758494", "4938201", "3049587"],
-        chemistry: ["4567890", "1122446", "3355779", "8866442", "9977553", "1472583", "3692581", "7418529", "9638527", "8529637"],
-        arabic: ["5678901", "2233557", "4466880", "9977331", "1188442", "2581473", "3691472", "8523691", "7419632", "9637418"],
-        biology: ["7412583", "3698521", "9632587", "1593578", "7531598", "9517538", "3571598", "8521473", "9631478", "7539512"]
-    }
-};
-
-function verifyStudentCode(grade, subject) {
-    let enteredCode = prompt("أدخل رمز الدخول المكون من 7 أرقام:");
-    if (!enteredCode) return;
-
-    if (schoolCodes[grade] && schoolCodes[grade][subject]) {
-        if (schoolCodes[grade][subject].includes(enteredCode)) {
-            alert("تم التحقق بنجاح! أهلاً بك في الدرس.");
-            // ضع هنا كود الانتقال لصفحة الدروس
-        } else {
-            alert("الرمز غير صحيح أو غير مخصص لهذه المادة/الصف.");
-        }
-    } else {
-        alert("حدث خطأ في تحديد المرحلة أو المادة.");
-    }
-
     </script>
 </body>
 </html>
