@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التعليم الذكي</title>
+    <!-- تضمين مكتبة Tailwind CSS للتصميم السريع والعصري -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-4xl bg-slate-800 rounded-2xl shadow-2xl p-6 md:p-10 border border-slate-700">
+
+        <!-- ================= الطبقة الأولى: واجهة الترحيب والمربعات الأربعة ================= -->
+        <div id="view-home" class="view-section">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-cyan-400 mb-2">منصة التعليم الإلكتروني</h1>
+                <p class="text-slate-400">اختر المادة الدراسية للبدء في التعلم</p>
+            </header>
+
+            <!-- شبكة المربعات (2 في الأعلى و 2 في الأسفل) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                
+                <!-- مربّع الرياضيات -->
+                <div onclick="selectSubject('الرياضيات')" class="bg-slate-700 hover:bg-slate-600 transition-all duration-300 p-5 rounded-xl cursor-pointer border border-slate-600 flex items-center gap-4 group">
+                    <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?w=150" alt="الرياضيات" class="w-20 h-20 rounded-lg object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">الرياضيات</h3>
+                        <p class="text-sm text-slate-300">الأستاذ: أحمد علي</p>
+                    </div>
+                </div>
+
+                <!-- مربّع الإنجليزي -->
+                <div onclick="selectSubject('اللغة الإنجليزية')" class="bg-slate-700 hover:bg-slate-600 transition-all duration-300 p-5 rounded-xl cursor-pointer border border-slate-600 flex items-center gap-4 group">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=150" alt="الانجليزي" class="w-20 h-20 rounded-lg object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">اللغة الإنجليزية</h3>
+                        <p class="text-sm text-slate-300">الأستاذة: سارة محمد</p>
+                    </div>
+                </div>
+
+                <!-- مربّع الفيزياء -->
+                <div onclick="selectSubject('الفيزياء')" class="bg-slate-700 hover:bg-slate-600 transition-all duration-300 p-5 rounded-xl cursor-pointer border border-slate-600 flex items-center gap-4 group">
+                    <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=150" alt="الفيزياء" class="w-20 h-20 rounded-lg object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">الفيزياء</h3>
+                        <p class="text-sm text-slate-300">الأستاذ: كرار حيدر</p>
+                    </div>
+                </div>
+
+                <!-- مربّع الكيمياء -->
+                <div onclick="selectSubject('الكيمياء')" class="bg-slate-700 hover:bg-slate-600 transition-all duration-300 p-5 rounded-xl cursor-pointer border border-slate-600 flex items-center gap-4 group">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=150" alt="الكيمياء" class="w-20 h-20 rounded-lg object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">الكيمياء</h3>
+                        <p class="text-sm text-slate-300">الأستاذة: فاطمة حسن</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= الطبقة الثانية: واجهة اختيار الصف الدراسي ================= -->
+        <div id="view-grades" class="view-section hidden">
+            <button onclick="goBackToHome()" class="mb-6 text-sm text-cyan-400 hover:underline flex items-center gap-1">
+                ← العودة للمواد الدراسية
+            </button>
+            <h2 id="selected-subject-title" class="text-2xl font-bold text-cyan-400 mb-6 text-center"></h2>
+            <p class="text-center text-slate-400 mb-8">اختر صفك الدراسي للمتابعة</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-xl mx-auto">
+                <button onclick="selectGrade('ثالث متوسط')" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
+                    ثالث متوسط
+                </button>
+                <button onclick="selectGrade('سادس علمي')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
+                    سادس علمي
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= الطبقة الثالثة: إدخال الكود السري (5 أرقام) ================= -->
+        <div id="view-auth" class="view-section hidden">
+            <button onclick="goBackToGrades()" class="mb-6 text-sm text-cyan-400 hover:underline flex items-center gap-1">
+                ← العودة لاختيار الصف
+            </button>
+            <div class="max-w-md mx-auto bg-slate-700 p-8 rounded-2xl border border-slate-600 text-center">
+                <h3 class="text-xl font-bold text-white mb-2">تسجيل الدخول للقسم</h3>
+                <p id="auth-subtitle" class="text-sm text-slate-300 mb-6"></p>
+                
+                <input type="password" id="passcode-input" maxlength="5" placeholder="أدخل الكود (5 أرقام)" class="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-center text-xl tracking-widest text-white mb-4 focus:outline-none focus:border-cyan-400">
+                
+                <button onclick="verifyCode()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-lg transition-all">
+                    دخول المنصة
+                </button>
+                
+                <p id="error-message" class="text-red-400 text-sm mt-4 hidden">الكود غير صحيح لهذا القسم! يرجى التأكد.</p>
+            </div>
+        </div>
+
+        <!-- ================= الطبقة الرابعة: واجهة الدروس النهائية ================= -->
+        <div id="view-dashboard" class="view-section hidden">
+            <div class="flex justify-between items-center mb-8 border-b border-slate-700 pb-4">
+                <div>
+                    <h2 id="dash-title" class="text-2xl font-bold text-emerald-400"></h2>
+                    <p id="dash-subtitle" class="text-slate-400 text-sm mt-1"></p>
+                </div>
+                <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
+                    تسجيل الخروج
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-slate-700 p-4 rounded-xl border border-slate-600">
+                    <h4 class="font-bold text-white mb-2">الدرس الأول</h4>
+                    <p class="text-xs text-slate-300 mb-4">مقدمة شاملة وأساسيات المنهج الدراسي.</p>
+                    <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
+                </div>
+                <div class="bg-slate-700 p-4 rounded-xl border border-slate-600">
+                    <h4 class="font-bold text-white mb-2">الدرس الثاني</h4>
+                    <p class="text-xs text-slate-300 mb-4">شرح الأمثلة والتمارين الوزارية المهمة.</p>
+                    <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
+                </div>
+                <div class="bg-slate-700 p-4 rounded-xl border border-slate-600">
+                    <h4 class="font-bold text-white mb-2">الدرس الثالث</h4>
+                    <p class="text-xs text-slate-300 mb-4">حل اختبارات الأفكار الوزارية المتطورة.</p>
+                    <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= منطق التشغيل (JavaScript Logic) ================= -->
+    <script>
+        // تخزين البيانات المؤقتة للاختيار الحالي
+        let currentSubject = "";
+        let currentGrade = "";
+
+        // الأكواد السرية الخاصة بكل صف دراسي (مكونة من 5 أرقام كما طلبت)
+        const validCodes = {
+            "ثالث متوسط": "12345",
+            "سادس علمي": "98765"
+        };
+
+        // دالة لإظهار واجهة معينة وإخفاء البقية (طبقات العرض)
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(viewId).classList.remove('hidden');
+        }
+
+        // 1. الضغط على مادة معينة
+        function selectSubject(subject) {
+            currentSubject = subject;
+            document.getElementById('selected-subject-title').innerText = `المادة: ${subject}`;
+            switchView('view-grades');
+        }
+
+        // العودة للرئيسية
+        function goBackToHome() {
+            switchView('view-home');
+        }
+
+        // 2. اختيار الصف الدراسي
+        function selectGrade(grade) {
+            currentGrade = grade;
+            document.getElementById('auth-subtitle').innerText = `قسم ${currentSubject} - ${grade}`;
+            document.getElementById('passcode-input').value = "";
+            document.getElementById('error-message').classList.add('hidden');
+            switchView('view-auth');
+        }
+
+        // العودة لاختيار الصفوف
+        function goBackToGrades() {
+            switchView('view-grades');
+        }
+
+        // 3. التحقق من الكود (منع تداخل الأكواد كما طلبت)
+        function verifyCode() {
+            const enteredCode = document.getElementById('passcode-input').value;
+            const errorElement = document.getElementById('error-message');
+
+            // التحقق هل الكود مطابق تماماً للصف المطلوب
+            if (enteredCode === validCodes[currentGrade]) {
+                errorElement.classList.add('hidden');
+                // تجهيز واجهة الدروس النهائية
+                document.getElementById('dash-title').innerText = `مرحباً بك في قسم ${currentSubject}`;
+                document.getElementById('dash-subtitle').innerText = `المرحلة الدراسية: ${currentGrade}`;
+                switchView('view-dashboard');
+            } else {
+                // إذا كتب طالب الثالث كود السادس أو العكس، يتم الرفض
+                errorElement.classList.remove('hidden');
+            }
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            currentSubject = "";
+            currentGrade = "";
+            switchView('view-home');
+        }
+    </script>
+</body>
+</html>
