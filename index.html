@@ -8,83 +8,95 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
         body { font-family: 'Cairo', sans-serif; }
+        
+        /* تخصيص الخلفية الفخمة */
+        .custom-bg {
+            background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.85), rgba(2, 6, 23, 0.95)), url('bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
         .subject-card {
             transition: all 0.3s ease-in-out;
+            background-color: rgba(15, 23, 42, 0.85); /* خلفية شبه شفافة للمربعات لتظهر تفاصيل الصورة خلفها */
+            backdrop-filter: blur(8px);
         }
         .subject-card:hover {
             transform: translateY(-4px);
+            background-color: rgba(30, 41, 59, 0.9);
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-8 flex items-center justify-center">
+<body class="custom-bg text-slate-100 min-h-screen p-4 md:p-8 flex items-center justify-center">
 
-    <div class="w-full max-w-7xl mx-auto bg-slate-900 rounded-3xl shadow-2xl p-6 md:p-10 border border-slate-800">
+    <div class="w-full max-w-7xl mx-auto bg-slate-950/80 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-10 border border-slate-700/50">
 
-        <!-- ================= الطبقة الأولى: واجهة الترحيب والمربعات الستة العريضة ================= -->
+        <!-- ================= الطبقة الأولى: واجهة الترحيب والمربعات الستة ================= -->
         <div id="view-home" class="view-section">
             <header class="text-center mb-10">
-                <h1 class="text-3xl md:text-4xl font-black text-cyan-400 mb-2">منصة التعليم الإلكتروني</h1>
-                <p class="text-slate-400">اختر المادة الدراسية للبدء في التعلم</p>
+                <h1 class="text-3xl md:text-5xl font-black text-amber-400 mb-2 drop-shadow-md">منصة التعليم الإلكتروني</h1>
+                <p class="text-slate-300">اختر المادة الدراسية للبدء في التعلم</p>
             </header>
 
-            <!-- شبكة المواد (3 في الأعلى و 3 في الأسفل - عريضة ومرتبة) -->
+            <!-- شبكة المواد -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 <!-- 1. الرياضيات -->
-                <div onclick="selectSubject('الرياضيات')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
-                    <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?w=200" alt="الرياضيات" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
+                <div onclick="selectSubject('الرياضيات')" class="subject-card p-6 rounded-2xl cursor-pointer border border-amber-500/30 flex items-center gap-5 shadow-lg group">
+                    <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?w=200" alt="الرياضيات" class="w-28 h-28 rounded-xl object-cover border-2 border-amber-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
-                        <span class="text-xs text-cyan-400 font-bold">المادة الأولى</span>
+                        <span class="text-xs text-amber-400 font-bold">المادة الأولى</span>
                         <h3 class="text-2xl font-bold text-white mt-1">الرياضيات</h3>
                         <p class="text-sm text-slate-300 mt-1">الأستاذ: أحمد علي</p>
                     </div>
                 </div>
 
                 <!-- 2. اللغة الإنجليزية -->
-                <div onclick="selectSubject('اللغة الإنجليزية')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
-                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=200" alt="الانجليزي" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
+                <div onclick="selectSubject('اللغة الإنجليزية')" class="subject-card p-6 rounded-2xl cursor-pointer border border-amber-500/30 flex items-center gap-5 shadow-lg group">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=200" alt="الانجليزي" class="w-28 h-28 rounded-xl object-cover border-2 border-amber-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
-                        <span class="text-xs text-cyan-400 font-bold">المادة الثانية</span>
+                        <span class="text-xs text-amber-400 font-bold">المادة الثانية</span>
                         <h3 class="text-2xl font-bold text-white mt-1">اللغة الإنجليزية</h3>
                         <p class="text-sm text-slate-300 mt-1">الأستاذة: سارة محمد</p>
                     </div>
                 </div>
 
                 <!-- 3. الفيزياء -->
-                <div onclick="selectSubject('الفيزياء')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
-                    <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=200" alt="الفيزياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
+                <div onclick="selectSubject('الفيزياء')" class="subject-card p-6 rounded-2xl cursor-pointer border border-amber-500/30 flex items-center gap-5 shadow-lg group">
+                    <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=200" alt="الفيزياء" class="w-28 h-28 rounded-xl object-cover border-2 border-amber-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
-                        <span class="text-xs text-cyan-400 font-bold">المادة الثالثة</span>
+                        <span class="text-xs text-amber-400 font-bold">المادة الثالثة</span>
                         <h3 class="text-2xl font-bold text-white mt-1">الفيزياء</h3>
                         <p class="text-sm text-slate-300 mt-1">الأستاذ: كرار حيدر</p>
                     </div>
                 </div>
 
                 <!-- 4. الكيمياء -->
-                <div onclick="selectSubject('الكيمياء')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
-                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=200" alt="الكيمياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
+                <div onclick="selectSubject('الكيمياء')" class="subject-card p-6 rounded-2xl cursor-pointer border border-amber-500/30 flex items-center gap-5 shadow-lg group">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=200" alt="الكيمياء" class="w-28 h-28 rounded-xl object-cover border-2 border-amber-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
-                        <span class="text-xs text-cyan-400 font-bold">المادة الرابعة</span>
+                        <span class="text-xs text-amber-400 font-bold">المادة الرابعة</span>
                         <h3 class="text-2xl font-bold text-white mt-1">الكيمياء</h3>
                         <p class="text-sm text-slate-300 mt-1">الأستاذة: فاطمة حسن</p>
                     </div>
                 </div>
 
                 <!-- 5. اللغة العربية -->
-                <div onclick="selectSubject('اللغة العربية')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
-                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=200" alt="اللغة العربية" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
+                <div onclick="selectSubject('اللغة العربية')" class="subject-card p-6 rounded-2xl cursor-pointer border border-amber-500/30 flex items-center gap-5 shadow-lg group">
+                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=200" alt="اللغة العربية" class="w-28 h-28 rounded-xl object-cover border-2 border-amber-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
-                        <span class="text-xs text-cyan-400 font-bold">المادة الخامسة</span>
+                        <span class="text-xs text-amber-400 font-bold">المادة الخامسة</span>
                         <h3 class="text-2xl font-bold text-white mt-1">اللغة العربية</h3>
                         <p class="text-sm text-slate-300 mt-1">الأستاذ: يوسف الجراح</p>
                     </div>
                 </div>
 
                 <!-- 6. الأحياء -->
-                <div onclick="selectSubject('الأحياء')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
-                    <img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=200" alt="الأحياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
+                <div onclick="selectSubject('الأحياء')" class="subject-card p-6 rounded-2xl cursor-pointer border border-amber-500/30 flex items-center gap-5 shadow-lg group">
+                    <img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=200" alt="الأحياء" class="w-28 h-28 rounded-xl object-cover border-2 border-amber-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
-                        <span class="text-xs text-cyan-400 font-bold">المادة السادسة</span>
+                        <span class="text-xs text-amber-400 font-bold">المادة السادسة</span>
                         <h3 class="text-2xl font-bold text-white mt-1">الأحياء</h3>
                         <p class="text-sm text-slate-300 mt-1">الأستاذة: ليلى مراد</p>
                     </div>
@@ -95,17 +107,17 @@
 
         <!-- ================= الطبقة الثانية: واجهة اختيار الصف الدراسي ================= -->
         <div id="view-grades" class="view-section hidden">
-            <button onclick="goBackToHome()" class="mb-6 text-sm text-cyan-400 hover:underline flex items-center gap-1">
+            <button onclick="goBackToHome()" class="mb-6 text-sm text-amber-400 hover:underline flex items-center gap-1">
                 ← العودة للمواد الدراسية
             </button>
-            <h2 id="selected-subject-title" class="text-2xl font-bold text-cyan-400 mb-6 text-center"></h2>
-            <p class="text-center text-slate-400 mb-8">اختر صفك الدراسي للمتابعة</p>
+            <h2 id="selected-subject-title" class="text-2xl font-bold text-amber-400 mb-6 text-center"></h2>
+            <p class="text-center text-slate-300 mb-8">اختر صفك الدراسي للمتابعة</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-xl mx-auto">
-                <button onclick="selectGrade('ثالث متوسط')" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
+                <button onclick="selectGrade('ثالث متوسط')" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
                     ثالث متوسط
                 </button>
-                <button onclick="selectGrade('سادس علمي')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
+                <button onclick="selectGrade('سادس علمي')" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
                     سادس علمي
                 </button>
             </div>
@@ -113,16 +125,16 @@
 
         <!-- ================= الطبقة الثالثة: إدخال الكود السري (5 أرقام) ================= -->
         <div id="view-auth" class="view-section hidden">
-            <button onclick="goBackToGrades()" class="mb-6 text-sm text-cyan-400 hover:underline flex items-center gap-1">
+            <button onclick="goBackToGrades()" class="mb-6 text-sm text-amber-400 hover:underline flex items-center gap-1">
                 ← العودة لاختيار الصف
             </button>
-            <div class="max-w-md mx-auto bg-slate-800 p-8 rounded-2xl border border-slate-700 text-center">
+            <div class="max-w-md mx-auto bg-slate-900/90 backdrop-blur-md p-8 rounded-2xl border border-slate-700 text-center">
                 <h3 class="text-xl font-bold text-white mb-2">تسجيل الدخول للقسم</h3>
                 <p id="auth-subtitle" class="text-sm text-slate-300 mb-6"></p>
                 
-                <input type="password" id="passcode-input" maxlength="5" placeholder="أدخل الكود (5 أرقام)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-center text-xl tracking-widest text-white mb-4 focus:outline-none focus:border-cyan-400">
+                <input type="password" id="passcode-input" maxlength="5" placeholder="أدخل الكود (5 أرقام)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-center text-xl tracking-widest text-white mb-4 focus:outline-none focus:border-amber-400">
                 
-                <button onclick="verifyCode()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-lg transition-all">
+                <button onclick="verifyCode()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-lg transition-all">
                     دخول المنصة
                 </button>
                 
@@ -134,8 +146,8 @@
         <div id="view-dashboard" class="view-section hidden">
             <div class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
                 <div>
-                    <h2 id="dash-title" class="text-2xl font-bold text-emerald-400"></h2>
-                    <p id="dash-subtitle" class="text-slate-400 text-sm mt-1"></p>
+                    <h2 id="dash-title" class="text-2xl font-bold text-amber-400"></h2>
+                    <p id="dash-subtitle" class="text-slate-300 text-sm mt-1"></p>
                 </div>
                 <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
                     تسجيل الخروج
@@ -143,20 +155,20 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700">
                     <h4 class="font-bold text-white mb-2">الدرس الأول</h4>
                     <p class="text-xs text-slate-300 mb-4">مقدمة شاملة وأساسيات المنهج الدراسي.</p>
-                    <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
+                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
                 </div>
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700">
                     <h4 class="font-bold text-white mb-2">الدرس الثاني</h4>
                     <p class="text-xs text-slate-300 mb-4">شرح الأمثلة والتمارين الوزارية المهمة.</p>
-                    <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
+                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
                 </div>
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700">
                     <h4 class="font-bold text-white mb-2">الدرس الثالث</h4>
                     <p class="text-xs text-slate-300 mb-4">حل اختبارات الأفكار الوزارية المتطورة.</p>
-                    <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
+                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
                 </div>
             </div>
         </div>
