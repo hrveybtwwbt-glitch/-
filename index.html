@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة التعليم الذكي - التحقق الملكي</title>
+    <title>منصة التعليم الذكي - التحقق الشامل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
@@ -33,7 +33,7 @@
             transform: translateY(-4px);
         }
 
-        /* نافذة التحقق السينمائية - تظهر فيها صورتك kaon.png مع طبقة تعتيم خفيفة */
+        /* نافذة التحقق السينمائية للرياضيات */
         .royal-otp-overlay {
             position: fixed;
             inset: 0;
@@ -266,6 +266,311 @@
         }
         .welcome-text-line::after { content: '|'; animation: blink 0.7s infinite; color: #38bdf8; }
         .welcome-text-line.done::after { content: ''; }
+
+        /* ================= تصميم الصندوق الذهبي للغة الإنجليزية (ثالث & سادس) ================= */
+        .english-otp-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: #050505;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            overflow: hidden;
+            transition: background-color 0.5s ease;
+        }
+        .english-otp-overlay.active {
+            display: flex;
+        }
+
+        .gold-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: 450px;
+            padding: 40px;
+            background: linear-gradient(145deg, #b8860b, #ffd700, #daa520, #b8860b);
+            color: #000;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.6),
+                0 0 40px rgba(218, 165, 32, 0.4),
+                0 0 80px rgba(184, 134, 11, 0.2);
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 1000;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .gold-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle, rgba(0,0,0,0.15) 15%, transparent 16%),
+                linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.15) 75%),
+                linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.15) 75%);
+            background-size: 30px 30px;
+            background-position: 0 0, 0 0, 15px 15px;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .gold-box.hide {
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, -50%) scale(0.7);
+        }
+
+        .gold-box h2 {
+            position: relative;
+            z-index: 2;
+            margin-top: 0;
+            font-size: 26px;
+            color: #3a2a00;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .inputs-container-eng {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            direction: ltr;
+        }
+
+        .inputs-container-eng input {
+            width: 45px;
+            height: 55px;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            background-color: rgba(255, 215, 0, 0.2);
+            border: 2px solid #daa520;
+            border-radius: 10px;
+            outline: none;
+            color: #3a2a00;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .inputs-container-eng input.filled {
+            border-color: #fff;
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px #fff, 0 0 5px #fff;
+            color: #000;
+        }
+
+        .inputs-container-eng input:focus {
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .submit-btn-eng {
+            position: relative;
+            z-index: 2;
+            padding: 10px 30px;
+            background: linear-gradient(45deg, #1a1a1a, #000);
+            color: #ffd700;
+            border: 1px solid #daa520;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .submit-btn-eng:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        .gold-box::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to bottom right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(30deg);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .new-gold-box {
+            position: fixed;
+            top: 150%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            height: 275px;
+            padding: 25px 40px;
+            background: linear-gradient(145deg, #b8860b, #ffd700, #daa520, #b8860b);
+            color: #000;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 25px rgba(255, 215, 0, 0.8),
+                0 0 50px rgba(218, 165, 32, 0.6),
+                0 0 90px rgba(184, 134, 11, 0.4);
+            z-index: 2000;
+            opacity: 0;
+            transition: top 2s cubic-bezier(0.25, 1, 0.5, 1), opacity 2s ease, transform 1s ease;
+            overflow: hidden;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .new-gold-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle, rgba(0,0,0,0.15) 15%, transparent 16%),
+                linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.15) 75%),
+                linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.15) 75%);
+            background-size: 30px 30px;
+            background-position: 0 0, 0 0, 15px 15px;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .new-gold-box.active {
+            top: 50%;
+            opacity: 1;
+        }
+
+        .new-inputs-container {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            direction: ltr;
+            margin-bottom: 10px;
+        }
+
+        .gear-box {
+            width: 55px;
+            height: 65px;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 2px solid #fff;
+            border-radius: 12px;
+            color: #000;
+            box-shadow: 0 0 15px #fff, 0 0 5px #fff;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gears-ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 135px;
+            z-index: 2;
+            overflow: hidden;
+            opacity: 1;
+        }
+
+        .ground-gear {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px dashed #ffd700;
+            background: radial-gradient(circle, #b8860b 35%, rgba(0,0,0,0.6) 70%);
+            box-shadow: 0 0 6px rgba(255, 215, 0, 0.7);
+        }
+
+        .gears-ground.play .cw {
+            animation: spinCW 4s linear infinite;
+        }
+        .gears-ground.play .ccw {
+            animation: spinCCW 4s linear infinite;
+        }
+
+        @keyframes spinCW {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes spinCCW {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        .gg1 { width: 65px; height: 65px; bottom: -15px; left: -10px; }
+        .gg2 { width: 50px; height: 50px; bottom: 25px; left: 45px; border-color: #fff; }
+        .gg3 { width: 75px; height: 75px; bottom: -20px; left: 80px; }
+        .gg4 { width: 55px; height: 55px; bottom: 35px; left: 140px; border-color: #ffcc00; }
+        .gg5 { width: 70px; height: 70px; bottom: -10px; left: 185px; }
+        .gg6 { width: 45px; height: 45px; bottom: 45px; left: 245px; border-color: #fff; }
+        .gg7 { width: 80px; height: 80px; bottom: -25px; left: 275px; }
+        .gg8 { width: 60px; height: 60px; bottom: 30px; left: 340px; border-color: #ffd700; }
+        .gg9 { width: 65px; height: 65px; bottom: -10px; left: 395px; }
+
+        .flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, #fff7cc 0%, #ffd700 40%, #daa520 80%, #000 100%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 3000;
+            transition: opacity 1s ease-in-out;
+        }
+        .flash-overlay.show-flash {
+            opacity: 1;
+        }
+
+        .welcome-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            font-size: 50px;
+            font-weight: bold;
+            color: #1a1200;
+            text-shadow: 0 0 20px #fff, 0 0 40px #ffd700, 0 0 60px #daa520;
+            z-index: 4000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+        .welcome-message.show-welcome {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
     </style>
 </head>
 <body class="text-slate-100 min-h-screen p-4 md:p-8 flex items-center justify-center">
@@ -386,7 +691,7 @@
             </div>
         </div>
 
-        <!-- ================= 4. واجهة رياضيات سادس علمي الفخمة الخاصة ================= -->
+        <!-- ================= 4. واجهة رياضيات سادس علمي الفخمة ================= -->
         <div id="view-royal-math" class="view-section">
             <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
                 <div>
@@ -417,9 +722,40 @@
             </div>
         </div>
 
+        <!-- ================= 5. واجهة لغة إنجليزية الفخمة (ثالث & سادس) ================= -->
+        <div id="view-royal-english" class="view-section">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 id="english-header-title" class="text-3xl font-black text-amber-400">مرحباً بك في عالم اللغة الإنجليزية</h2>
+                    <p id="english-header-subtitle" class="text-slate-400 text-sm mt-1">المرحلة الدراسية | الكورس الأول</p>
+                </div>
+                <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
+                    تسجيل الخروج
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+                <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+                    <h4 class="font-bold text-white text-lg mb-2">قواعد القواعد (Grammar)</h4>
+                    <p class="text-xs text-slate-300 mb-4">أهم القواعد الوزارية المشروحة بالتفصيل.</p>
+                    <span class="text-xs bg-amber-500/20 text-amber-400 px-3 py-1.5 rounded-lg font-bold">ابدأ الدرس</span>
+                </div>
+                <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+                    <h4 class="font-bold text-white text-lg mb-2">القطع الاستيعابية (Passages)</h4>
+                    <p class="text-xs text-slate-300 mb-4">أسئلة وأجوبة القطع المهمة للامتحان.</p>
+                    <span class="text-xs bg-amber-500/20 text-amber-400 px-3 py-1.5 rounded-lg font-bold">ابدأ الدرس</span>
+                </div>
+                <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+                    <h4 class="font-bold text-white text-lg mb-2">الاسقاطات والاملاء (Vocabulary)</h4>
+                    <p class="text-xs text-slate-300 mb-4">تدريبات مكثفة للأسئلة الوزارية المتكررة.</p>
+                    <span class="text-xs bg-amber-500/20 text-amber-400 px-3 py-1.5 rounded-lg font-bold">ابدأ الدرس</span>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- نافذة التحقق السينمائية للرياضيات (سادس علمي) - تظهر صورتك kaon.png في الخلفية -->
+    <!-- نافذة التحقق السينمائية للرياضيات -->
     <div class="royal-otp-overlay" id="royalOtpOverlay">
         <div class="screen-flash-glow" id="screenFlash"></div>
         <div class="sparkles-container" id="sparklesContainer"></div>
@@ -468,6 +804,54 @@
         </div>
     </div>
 
+    <!-- نافذة التحقق السينمائية للغة الإنجليزية (ثالث وسادس) -->
+    <div class="english-otp-overlay" id="englishOtpOverlay">
+        <!-- الصندوق الذهبي الأول -->
+        <div class="gold-box show" id="goldBoxEng">
+            <h2 id="englishBoxTitle">أدخل الرمز السري للغة الإنجليزية</h2>
+            
+            <div class="inputs-container-eng" id="inputsContainerEng">
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+            </div>
+
+            <button class="submit-btn-eng" onclick="submitCodeEng()">موافق</button>
+            <button onclick="closeEnglishModal()" style="margin-top: 15px; background: transparent; border: none; color: #3a2a00; cursor: pointer; font-size: 14px; font-weight: bold;">إلغاء والعودة</button>
+        </div>
+
+        <!-- الصندوق الذهبي الجديد الثاني -->
+        <div class="new-gold-box" id="newGoldBoxEng">
+            <div class="new-inputs-container">
+                <div class="gear-box" id="box1"></div>
+                <div class="gear-box" id="box2"></div>
+                <div class="gear-box" id="box3"></div>
+            </div>
+
+            <div class="gears-ground" id="gearsGroundEng">
+                <div class="ground-gear gg1 cw"></div>
+                <div class="ground-gear gg2 ccw"></div>
+                <div class="ground-gear gg3 cw"></div>
+                <div class="ground-gear gg4 ccw"></div>
+                <div class="ground-gear gg5 cw"></div>
+                <div class="ground-gear gg6 ccw"></div>
+                <div class="ground-gear gg7 cw"></div>
+                <div class="ground-gear gg8 ccw"></div>
+                <div class="ground-gear gg9 cw"></div>
+            </div>
+        </div>
+
+        <!-- طبقة الضوء الساطع الذهبي -->
+        <div class="flash-overlay" id="flashOverlayEng"></div>
+
+        <!-- رسالة الترحيب -->
+        <div class="welcome-message" id="welcomeMessageEng">أهلاً وسهلاً</div>
+    </div>
+
     <!-- منطق التشغيل -->
     <script>
         let currentSubject = "";
@@ -505,9 +889,17 @@
         function selectGrade(grade) {
             currentGrade = grade;
             
+            // تحقق الرياضيات (سادس علمي فقط)
             if (currentSubject === 'math' && currentGrade === 'sixth') {
                 document.getElementById('royalOtpOverlay').classList.add('active');
                 resetRoyalModal();
+                return;
+            }
+
+            // تحقق اللغة الإنجليزية (للثالث متوسط والسادس علمي)
+            if (currentSubject === 'english') {
+                document.getElementById('englishOtpOverlay').classList.add('active');
+                resetEnglishModal();
                 return;
             }
 
@@ -545,6 +937,11 @@
             switchView('view-grades');
         }
 
+        function closeEnglishModal() {
+            document.getElementById('englishOtpOverlay').classList.remove('active');
+            switchView('view-grades');
+        }
+
         function resetRoyalModal() {
             document.getElementById('inputSection').style.display = 'block';
             document.getElementById('resultSection').style.display = 'none';
@@ -571,6 +968,33 @@
                 i.value = '';
                 i.classList.remove('filled');
             });
+        }
+
+        function resetEnglishModal() {
+            const goldBox = document.getElementById('goldBoxEng');
+            const newGoldBox = document.getElementById('newGoldBoxEng');
+            const flashOverlay = document.getElementById('flashOverlayEng');
+            const welcomeMessage = document.getElementById('welcomeMessageEng');
+            const gearsGround = document.getElementById('gearsGroundEng');
+
+            goldBox.classList.remove('hide');
+            goldBox.classList.add('show');
+            newGoldBox.classList.remove('active');
+            newGoldBox.style.opacity = '1';
+            flashOverlay.classList.remove('show-flash');
+            welcomeMessage.classList.remove('show-welcome');
+            gearsGround.classList.remove('play');
+            document.getElementById('englishOtpOverlay').style.backgroundColor = '#050505';
+
+            inputsEng.forEach(i => {
+                i.value = '';
+                i.classList.remove('filled');
+            });
+            document.getElementById('box1').innerText = '';
+            document.getElementById('box2').innerText = '';
+            document.getElementById('box3').innerText = '';
+            
+            if(inputsEng[0]) inputsEng[0].focus();
         }
 
         const royalInputs = document.querySelectorAll('#otpForm input');
@@ -601,6 +1025,112 @@
                 }
             });
         });
+
+        // دوال صندوق اللغة الإنجليزية وتفاعل الرموز
+        function handleInputEng(current) {
+            if (current.value.length >= 1) {
+                current.value = current.value.replace(/[^0-9]/g, '');
+                
+                if(current.value.length === 1) {
+                    current.classList.add('filled');
+                    const next = current.nextElementSibling;
+                    if (next) {
+                        next.focus();
+                    }
+                }
+            } else if (current.value.length === 0) {
+                current.classList.remove('filled');
+            }
+        }
+
+        const inputsEng = document.querySelectorAll('.inputs-container-eng input');
+        inputsEng.forEach((input, index) => {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && input.value === '') {
+                    if (index > 0) {
+                        inputsEng[index - 1].focus();
+                        inputsEng[index - 1].classList.remove('filled');
+                    }
+                }
+            });
+        });
+
+        function submitCodeEng() {
+            let code = '';
+            inputsEng.forEach(input => code += input.value);
+
+            if (code.length !== 7) {
+                alert('الرجاء إكمال كتابة الأرقام الـ 7 أولاً!');
+                return;
+            }
+
+            // تحقق الرمز من قاعدة البيانات المخصصة للصف والمادة (الثالث أو السادس إنجليزي)
+            if (!schoolCodes[currentGrade]['english'].includes(code)) {
+                alert('الرمز المدخل غير صحيح!');
+                return;
+            }
+
+            // 1. إخفاء الصندوق القديم وتصبح الشاشة سوداء بالكامل
+            const oldBox = document.getElementById('goldBoxEng');
+            oldBox.classList.add('hide');
+            document.getElementById('englishOtpOverlay').style.backgroundColor = '#000000';
+
+            // 2. إظهار الصندوق الجديد ليرتفع ويتوسط الشاشة
+            setTimeout(() => {
+                const newBox = document.getElementById('newGoldBoxEng');
+                newBox.classList.add('active');
+                
+                const b1 = document.getElementById('box1');
+                const b2 = document.getElementById('box2');
+                const b3 = document.getElementById('box3');
+                const gearsGround = document.getElementById('gearsGroundEng');
+                const flashOverlay = document.getElementById('flashOverlayEng');
+                const welcomeMessage = document.getElementById('welcomeMessageEng');
+
+                // 3. كتابة الحروف A S A واحد تلو الآخر في الثلاث مربعات
+                setTimeout(() => {
+                    b1.innerText = 'A';
+
+                    setTimeout(() => {
+                        b2.innerText = 'S';
+
+                        setTimeout(() => {
+                            b3.innerText = 'A';
+
+                            // 4. بعد اكتمال الحروف، تبدأ التروس بالدوران
+                            setTimeout(() => {
+                                gearsGround.classList.add('play');
+
+                                // 5. بعد بدء دوران التروس بـ 2 ثانية، يظهر الضوء الساطع الذهبي
+                                setTimeout(() => {
+                                    flashOverlay.classList.add('show-flash');
+                                    newBox.style.opacity = '0';
+
+                                    // 6. بعد ظهور الضوء، تظهر رسالة الترحيب "أهلاً وسهلاً" ثم الانتقال لصفحة الإنجليزي
+                                    setTimeout(() => {
+                                        welcomeMessage.classList.add('show-welcome');
+                                        
+                                        setTimeout(() => {
+                                            document.getElementById('englishOtpOverlay').classList.remove('active');
+                                            document.getElementById('english-header-title').innerText = `مرحباً بك في عالم اللغة الإنجليزية (${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'})`;
+                                            document.getElementById('english-header-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'} | الكورس الأول`;
+                                            switchView('view-royal-english');
+                                        }, 1500);
+
+                                    }, 600);
+
+                                }, 2000);
+
+                            }, 400);
+
+                        }, 500);
+
+                    }, 500);
+
+                }, 2000);
+
+            }, 300);
+        }
 
         function createGoldenSparkles() {
             const container = document.getElementById('sparklesContainer');
@@ -635,27 +1165,6 @@
                 }
             }
             type();
-        }
-
-        function playMetalScrapingSound() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(80, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 1.2);
-                
-                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.2);
-                
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                
-                osc.start();
-                osc.stop(audioCtx.currentTime + 1.2);
-            } catch (e) {}
         }
 
         function verifyRoyalOtp() {
@@ -694,7 +1203,6 @@
 
                                             setTimeout(() => {
                                                 document.getElementById('gearsPortal').classList.add('gears-paused');
-                                                playMetalScrapingSound();
 
                                                 setTimeout(() => {
                                                     document.getElementById('gearsPortal').style.display = 'none';
@@ -710,7 +1218,6 @@
 
                                                             setTimeout(() => {
                                                                 document.getElementById('mainContainer').classList.remove('shaking');
-                                                                document.getElementById('mainContainer').classList.add('split-left');
                                                                 
                                                                 const container = document.getElementById('mainContainer');
                                                                 container.style.transition = 'transform 1.2s ease, opacity 1.2s ease';
