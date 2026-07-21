@@ -33,11 +33,13 @@
             transform: translateY(-4px);
         }
 
-        /* نافذة التحقق السينمائية - خلفية سوداء صلبة ومعتمة تماماً لإخفاء ما خلفها */
+        /* نافذة التحقق السينمائية - تظهر فيها صورتك kaon.png مع طبقة تعتيم خفيفة */
         .royal-otp-overlay {
             position: fixed;
             inset: 0;
-            background: #03060c !important;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('kaon.png') !important;
+            background-size: cover !important;
+            background-position: center !important;
             display: none;
             align-items: center;
             justify-content: center;
@@ -48,14 +50,6 @@
         }
         .royal-otp-overlay.active {
             display: flex;
-        }
-        .royal-otp-overlay::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: #03060c;
-            z-index: 1;
-            pointer-events: none;
         }
         
         .scene-wrapper {
@@ -425,7 +419,7 @@
 
     </div>
 
-    <!-- نافذة التحقق السينمائية للرياضيات (سادس علمي) - بخلفية سوداء صلبة تامة -->
+    <!-- نافذة التحقق السينمائية للرياضيات (سادس علمي) - تظهر صورتك kaon.png في الخلفية -->
     <div class="royal-otp-overlay" id="royalOtpOverlay">
         <div class="screen-flash-glow" id="screenFlash"></div>
         <div class="sparkles-container" id="sparklesContainer"></div>
@@ -511,14 +505,12 @@
         function selectGrade(grade) {
             currentGrade = grade;
             
-            // تخصيص واجهة الباب والفخامة حصراً لـ رياضيات سادس علمي
             if (currentSubject === 'math' && currentGrade === 'sixth') {
                 document.getElementById('royalOtpOverlay').classList.add('active');
                 resetRoyalModal();
                 return;
             }
 
-            // باقي المواد والصفوف تستخدم نافذة إدخال كلمة المرور (الـ Prompt) في الواجهة الأصلية
             let enteredCode = prompt("أدخل رمز الدخول المكون من 7 أرقام:");
             if (!enteredCode) return;
 
@@ -725,11 +717,8 @@
                                                                 container.style.transform = 'translateX(-500px) rotateY(-45deg)';
                                                                 container.style.opacity = '0';
 
-                                                                document.getElementById('royalOtpOverlay').style.background = '#03060c';
-
                                                                 setTimeout(() => {
                                                                     document.getElementById('royalOtpOverlay').classList.remove('active');
-                                                                    document.getElementById('royalOtpOverlay').style.background = '';
                                                                     switchView('view-royal-math');
                                                                 }, 1100);
 
