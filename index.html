@@ -1049,6 +1049,206 @@
         @keyframes lightSweep { 0% { left: -150%; } 20%, 100% { left: 150%; } }
         @keyframes moveFog { 0% { transform: translate(0,0); } 100% { transform: translate(-5%, -5%); } }
         @keyframes driftParticles { 0% { background-position: 0 0; } 100% { background-position: 100px 150px; } }
+
+        /* ================= نافذة التحقق السينمائية لمادة الفيزياء (ثالث & سادس) ================= */
+        .physics-otp-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #020208 0%, #050b1a 50%, #000000 100%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            overflow: hidden;
+        }
+        .physics-otp-overlay.active { display: flex; }
+
+        .phys-space-inner { position: relative; width: 100%; height: 100%; overflow: hidden; }
+
+        .phys-nebula {
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4;
+            mix-blend-mode: screen; animation: physPulseNebula 10s infinite alternate; z-index: 1;
+        }
+        .phys-nebula-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(0, 119, 255, 0.6) 0%, rgba(75, 0, 130, 0.2) 70%, transparent 100%); top: -100px; left: -100px; }
+        .phys-nebula-2 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(138, 43, 226, 0.5) 0%, rgba(0, 41, 102, 0.3) 60%, transparent 100%); bottom: -150px; right: -150px; animation-delay: 5s; }
+        @keyframes physPulseNebula { 0% { transform: scale(1); opacity: 0.3; } 100% { transform: scale(1.1); opacity: 0.5; } }
+
+        .phys-stars {
+            position: absolute; width: 100%; height: 100%;
+            background-image: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 120px, #e0f7ff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 200px 200px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 300px 250px, #d4d4ff, rgba(0,0,0,0)), radial-gradient(1px 1px at 450px 150px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat; background-size: 400px 400px;
+            animation: physTwinkle 4s infinite alternate; z-index: 1;
+        }
+        @keyframes physTwinkle { 0% { opacity: 0.6; } 100% { opacity: 1; } }
+
+        .phys-tesla-coil { position: absolute; bottom: 20px; width: 40px; height: 180px; background: linear-gradient(90deg, #111, #333, #111); border: 1px solid #555; border-radius: 5px; z-index: 8; }
+        .phys-left-coil { left: 50px; }
+        .phys-right-coil { right: 50px; }
+        .phys-coil-top { position: absolute; top: -15px; left: -10px; width: 60px; height: 30px; background: radial-gradient(circle, #00ffff, #0066ff); border-radius: 50%; box-shadow: 0 0 15px #00ffff; }
+        .phys-tesla-spark { position: absolute; top: -50px; left: 20px; width: 2px; height: 0; background: #fff; box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #ffffff; opacity: 0; z-index: 9; pointer-events: none; animation: physTeslaLightning 4s infinite; }
+        .phys-right-coil .phys-tesla-spark { animation-delay: 2s; }
+        @keyframes physTeslaLightning {
+            0%, 80%, 100% { height: 0; opacity: 0; transform: scale(1); }
+            82% { height: 90px; opacity: 1; transform: rotate(-15deg); }
+            84% { height: 70px; opacity: 0.6; transform: rotate(15deg); }
+            86% { height: 110px; opacity: 1; transform: rotate(-5deg); }
+            90% { height: 0; opacity: 0; }
+        }
+
+        .phys-center-box {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 70vw; height: 42vw; min-width: 360px; min-height: 220px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(130, 220, 255, 0.4);
+            border-radius: 15px; backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(100, 200, 255, 0.3), inset 0 0 20px rgba(100, 200, 255, 0.2);
+            z-index: 10; display: flex; justify-content: center; align-items: center; overflow: hidden;
+        }
+
+        .phys-electric-counter {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            display: flex; gap: 10px; z-index: 25; padding: 10px 18px;
+            background: rgba(0, 5, 15, 0.2); border: 2px solid rgba(0, 240, 255, 0.8); border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.3);
+            backdrop-filter: blur(2px); animation: physElectricFrameGlow 3s infinite alternate;
+        }
+        @keyframes physElectricFrameGlow {
+            0% { box-shadow: 0 0 12px rgba(0, 240, 255, 0.4), inset 0 0 8px rgba(0, 240, 255, 0.2); border-color: rgba(0, 180, 216, 0.7); }
+            100% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.8), inset 0 0 18px rgba(0, 240, 255, 0.5); border-color: rgba(144, 224, 239, 0.9); }
+        }
+        .phys-digit-cell {
+            position: relative; width: 48px; height: 64px; background: rgba(0, 0, 0, 0.25);
+            border: 2px solid rgba(0, 150, 199, 0.7); border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            backdrop-filter: blur(1px); box-shadow: inset 0 0 8px rgba(0, 180, 216, 0.2);
+        }
+        .phys-digit-cell input {
+            width: 100%; height: 100%; background: transparent; border: none; color: #caf0f8;
+            font-size: 34px; font-weight: bold; text-align: center; font-family: monospace; outline: none;
+            text-shadow: 0 0 10px #00b4d8, 0 0 20px #0077b6; z-index: 2;
+        }
+        .phys-cell-flash { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); opacity: 0; pointer-events: none; z-index: 3; }
+        .phys-flashing { animation: physCellSparkEffect 0.35s ease-out; }
+        @keyframes physCellSparkEffect {
+            0% { opacity: 1; background: #ffffff; box-shadow: inset 0 0 20px #00ffff, 0 0 15px #fff; }
+            50% { opacity: 0.7; background: rgba(0, 212, 255, 0.8); }
+            100% { opacity: 0; background: transparent; box-shadow: none; }
+        }
+
+        .phys-reactor-btn {
+            position: absolute; top: calc(50% + 22vw + 15px); left: 50%; transform: translateX(-50%);
+            width: 220px; padding: 12px 0;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.35) 0%, rgba(0, 60, 140, 0.8) 100%);
+            border: 2px solid #00f0ff; color: #ffffff; font-size: 20px; font-weight: bold; font-family: monospace;
+            border-radius: 10px; cursor: pointer; text-shadow: 0 0 10px #00ffff;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.6), inset 0 0 10px rgba(0, 240, 255, 0.4);
+            z-index: 30; transition: all 0.3s ease;
+        }
+        .phys-reactor-btn:hover { background: radial-gradient(circle, rgba(0, 240, 255, 0.65) 0%, rgba(0, 100, 200, 0.95) 100%); box-shadow: 0 0 25px rgba(0, 240, 255, 0.95), inset 0 0 15px rgba(0, 240, 255, 0.7); transform: translateX(-50%) scale(1.03); }
+
+        .phys-cancel-btn {
+            position: absolute; top: calc(50% + 22vw + 65px); left: 50%; transform: translateX(-50%);
+            background: transparent; border: none; color: #94a3b8; cursor: pointer; font-size: 14px; z-index: 30;
+        }
+
+        .phys-expanding-energy-sphere {
+            position: fixed; top: 50%; left: 50%; width: 100px; height: 100px; margin-top: -50px; margin-left: -50px;
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(0,240,255,0.8) 40%, rgba(0, 100, 200, 0.9) 75%, rgba(2,2,8,0.95) 100%);
+            border-radius: 50%; z-index: 100000; pointer-events: none; transform: scale(0);
+            box-shadow: 0 0 80px #fff, 0 0 150px #00ffff, 0 0 300px #0077b6;
+            transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .phys-expanding-energy-sphere.expand { transform: scale(60); }
+
+        .phys-magnetic-field { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 5; opacity: 0.35; }
+        .phys-mag-line { position: absolute; border: 1px dashed rgba(0, 212, 255, 0.6); border-radius: 50%; animation: physRotateMag 25s linear infinite; }
+        .phys-mag-1 { width: 85%; height: 65%; top: 17.5%; left: 7.5%; animation-duration: 35s; }
+        .phys-mag-2 { width: 65%; height: 85%; top: 7.5%; left: 17.5%; animation-duration: 45s; animation-direction: reverse; }
+        @keyframes physRotateMag { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .phys-atom-container { position: relative; width: 100%; height: 100%; animation: physRotateSystem 20s linear infinite; z-index: 11; }
+        .phys-nucleus { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: radial-gradient(circle, #fff 0%, #8af 60%, #00f 100%); border-radius: 50%; box-shadow: 0 0 20px #fff, 0 0 40px #8af, 0 0 60px #00f; z-index: 12; transition: all 3s ease; }
+        .phys-orbit { position: absolute; top: 50%; left: 50%; border: 1px solid rgba(100, 200, 255, 0.3); border-radius: 50%; transform-style: preserve-3d; animation: physSlowOrbitMove 10s linear infinite alternate; }
+        .phys-orbit-1 { width: 150px; height: 150px; margin-top: -75px; margin-left: -75px; }
+        .phys-orbit-2 { width: 250px; height: 250px; margin-top: -125px; margin-left: -125px; }
+        .phys-orbit-3 { width: 350px; height: 350px; margin-top: -175px; margin-left: -175px; border: 1px solid rgba(100, 200, 255, 0.2); }
+        .phys-electron { position: absolute; top: 50%; width: 12px; height: 12px; background-color: #8ad; border-radius: 50%; box-shadow: 0 0 10px #8ad, 0 0 5px #fff; margin-top: -6px; left: -6px; transition: all 3s ease; }
+        @keyframes physRotateSystem { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes physSlowOrbitMove { 0% { transform: rotateX(0deg) rotateY(-10deg); } 100% { transform: rotateX(10deg) rotateY(10deg); } }
+
+        .phys-black-hole-container { position: absolute; bottom: 40px; left: 40px; width: 100px; height: 100px; z-index: 12; pointer-events: none; }
+        .phys-black-hole { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 22px; height: 22px; background: #000; border-radius: 50%; box-shadow: 0 0 12px #90e0ef, 0 0 25px rgba(138, 43, 226, 0.6), inset 0 0 4px #fff; animation: physPulseBH 3s infinite alternate; }
+        @keyframes physPulseBH { 0% { box-shadow: 0 0 8px #90e0ef, 0 0 20px rgba(138, 43, 226, 0.4); } 100% { box-shadow: 0 0 15px #caf0f8, 0 0 30px rgba(138, 43, 226, 0.8); } }
+        .phys-light-particle { position: absolute; width: 3px; height: 3px; background: #fff; border-radius: 50%; box-shadow: 0 0 5px #fff, 0 0 8px #00b4d8; opacity: 0; }
+        .phys-lp-1 { top: -30px; left: 20px; animation: physPullLight1 3s linear infinite; }
+        .phys-lp-2 { top: 60px; left: -30px; animation: physPullLight2 2.5s linear infinite; animation-delay: 0.5s; }
+        .phys-lp-3 { top: 70px; left: 80px; animation: physPullLight3 3.5s linear infinite; animation-delay: 1s; }
+        @keyframes physPullLight1 { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(30px, 50px) scale(0.1); opacity: 0; } }
+        @keyframes physPullLight2 { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(60px, -20px) scale(0.1); opacity: 0; } }
+        @keyframes physPullLight3 { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(-40px, -40px) scale(0.1); opacity: 0; } }
+
+        .phys-rising-magnet {
+            position: fixed; bottom: -200px; width: 62px; height: 74px; box-sizing: border-box; background: transparent;
+            border: 15px solid #cc0000; border-top: none;
+            border-image: linear-gradient(180deg, #ff5c5c 0%, #e00000 40%, #a30000 75%, #7a0000 100%) 1;
+            border-radius: 0 0 31px 31px;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.55), inset 0 6px 10px rgba(255, 255, 255, 0.25), inset 0 -6px 10px rgba(0, 0, 0, 0.35);
+            z-index: 100005; transition: bottom 3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .phys-magnet-left { left: calc(50% - 240px); }
+        .phys-magnet-right { left: calc(50% + 168px); }
+        .phys-rising-magnet::after { content: ''; position: absolute; top: 4px; left: -15px; width: 6px; height: 60%; background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0)); border-radius: 3px; pointer-events: none; }
+        .phys-pole { position: absolute; top: -11px; width: 15px; height: 15px; border-radius: 4px 4px 2px 2px; background: linear-gradient(180deg, #fefefe 0%, #d9d9d9 45%, #9a9a9a 100%); box-shadow: 0 0 10px rgba(255, 255, 255, 0.9), inset 0 -2px 3px rgba(0, 0, 0, 0.25); }
+        .phys-pole-left { left: -1px; }
+        .phys-pole-right { right: -1px; }
+
+        .phys-energy-center-wrapper { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 420px; height: 110px; z-index: 100006; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.5s ease; }
+        .phys-energy-center-wrapper.phys-show { opacity: 1; }
+        .phys-electric-rectangle { position: absolute; width: 100%; height: 100%; border: 2px dashed rgba(0, 240, 255, 0.9); border-radius: 12px; box-shadow: 0 0 20px #00f0ff, inset 0 0 20px #00f0ff; animation: physRectSparkAnim 0.25s infinite alternate; }
+        @keyframes physRectSparkAnim { 0% { border-color: #00f0ff; box-shadow: 0 0 15px #00f0ff, inset 0 0 15px #00f0ff; } 100% { border-color: #ffffff; box-shadow: 0 0 30px #00f0ff, 0 0 50px #ffffff, inset 0 0 30px #00ffff; } }
+        .phys-gold-welcome-text { position: relative; overflow: hidden; direction: rtl; unicode-bidi: isolate; color: #ffd700; font-size: 24px; font-weight: bold; font-family: 'Cairo', 'Tahoma', sans-serif; text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff9900, 0 0 30px #ff4500; z-index: 108; letter-spacing: 0; text-align: center; white-space: nowrap; }
+        .phys-gold-text-inner { display: inline-block; clip-path: inset(0 0 0 100%); }
+        .phys-gold-text-inner.phys-reveal { clip-path: inset(0 0 0 0%); }
+        .phys-gold-reveal-spark { position: absolute; top: 0; bottom: 0; right: 0; width: 3px; background: #ffffff; box-shadow: 0 0 10px #ffffff, 0 0 18px #ffd700, 0 0 28px #ff9900; opacity: 0; pointer-events: none; }
+        .phys-gold-reveal-spark.phys-active { opacity: 1; animation: physGoldSparkFlicker 0.12s infinite; }
+        @keyframes physGoldSparkFlicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+        .phys-tiny-electric-spark { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 12px; height: 12px; background: #ffffff; border-radius: 50%; box-shadow: 0 0 10px #ffffff, 0 0 20px #ffd700, 0 0 30px #ff4500; animation: physTinySparkMove 0.4s infinite alternate; z-index: 109; }
+        @keyframes physTinySparkMove { 0% { transform: translateX(-50%) scale(0.7) translateY(0); opacity: 0.6; } 100% { transform: translateX(-50%) scale(1.4) translateY(-6px); opacity: 1; } }
+
+        .phys-space-dim-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); z-index: 100002; opacity: 1; pointer-events: none; }
+        .phys-magnet-glow { box-shadow: 0 0 45px rgba(0, 240, 255, 0.9), 0 0 20px rgba(255, 0, 0, 0.5), inset 0 0 12px rgba(255, 255, 255, 0.5); }
+        .phys-magnet-spark { position: absolute; bottom: -22px; width: 2px; height: 0; background: #fff; box-shadow: 0 0 8px #00f0ff, 0 0 16px #00f0ff; opacity: 0; pointer-events: none; }
+        .phys-magnet-spark-1 { left: 2px; animation: physMagnetSparkFlicker 0.5s infinite; }
+        .phys-magnet-spark-2 { right: 2px; animation: physMagnetSparkFlicker 0.5s infinite 0.18s; }
+        @keyframes physMagnetSparkFlicker { 0%, 65%, 100% { height: 0; opacity: 0; } 75% { height: 22px; opacity: 0.9; } 88% { height: 12px; opacity: 0.5; } }
+
+        .phys-magnet-arc { position: fixed; top: calc(50% - 97px); left: 50%; transform: translateX(-50%); width: 336px; height: 46px; z-index: 100006; opacity: 0; pointer-events: none; background: radial-gradient(ellipse at center, rgba(0, 240, 255, 0.55) 0%, rgba(0, 240, 255, 0.2) 45%, transparent 80%); filter: blur(1px); transition: opacity 0.25s ease; }
+        .phys-magnet-arc.phys-show { opacity: 1; }
+        .phys-magnet-arc::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, #00f0ff 15%, #ffffff 50%, #00f0ff 85%, transparent); box-shadow: 0 0 12px #00f0ff, 0 0 25px #00f0ff; transform: translateY(-50%) scaleX(0); transform-origin: center; }
+        .phys-magnet-arc.phys-show::before { animation: physArcExtendFlicker 0.5s ease-out forwards; }
+        @keyframes physArcExtendFlicker { 0% { transform: translateY(-50%) scaleX(0); opacity: 1; } 40% { transform: translateY(-50%) scaleX(1.05); opacity: 0.7; } 55% { transform: translateY(-50%) scaleX(0.9); opacity: 1; } 100% { transform: translateY(-50%) scaleX(1); opacity: 1; } }
+
+        .phys-energy-center-wrapper.phys-hologram-build .phys-electric-rectangle { opacity: 0; transform: scaleY(0.04); transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .phys-energy-center-wrapper.phys-hologram-build.phys-show .phys-electric-rectangle { opacity: 1; transform: scaleY(1); }
+        .phys-hologram-scan { position: absolute; left: 0; width: 100%; height: 6px; top: 0; background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.95), transparent); box-shadow: 0 0 15px #00f0ff, 0 0 25px #00f0ff; opacity: 0; pointer-events: none; }
+        .phys-energy-center-wrapper.phys-hologram-build.phys-show .phys-hologram-scan { opacity: 1; animation: physHologramScanMove 1s ease-in-out forwards; }
+        @keyframes physHologramScanMove { 0% { top: 0; opacity: 1; } 85% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        .phys-energy-center-wrapper.phys-hologram-build .phys-tiny-electric-spark { opacity: 0; transition: opacity 0.4s ease; }
+        .phys-energy-center-wrapper.phys-hologram-build.phys-show .phys-tiny-electric-spark { opacity: 1; transition-delay: 0.9s; }
+
+        .phys-text-light-sweep { position: absolute; top: 0; left: 100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent); mix-blend-mode: screen; pointer-events: none; animation: physSweepRTL 0.9s ease-in-out forwards; }
+        @keyframes physSweepRTL { 0% { left: 100%; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: -60%; opacity: 0; } }
+
+        @keyframes physMagnetIdleShake { 0%, 100% { transform: translateX(0) rotate(0deg); } 25% { transform: translateX(-1px) rotate(-0.4deg); } 50% { transform: translateX(1px) rotate(0.4deg); } 75% { transform: translateX(-1px) rotate(0.25deg); } }
+        .phys-magnet-idle-shake { animation: physMagnetIdleShake 0.18s ease-in-out infinite; }
+
+        @keyframes physShakeWrong {
+            0%, 100% { transform: translate(-50%, -50%) translateX(0); }
+            20% { transform: translate(-50%, -50%) translateX(-10px); }
+            40% { transform: translate(-50%, -50%) translateX(10px); }
+            60% { transform: translate(-50%, -50%) translateX(-8px); }
+            80% { transform: translate(-50%, -50%) translateX(8px); }
+        }
+        .phys-center-box.phys-wrong-shake { animation: physShakeWrong 0.45s ease-in-out; border-color: rgba(255, 60, 60, 0.7); }
     </style>
 </head>
 <body class="text-slate-100 min-h-screen p-4 md:p-8 flex items-center justify-center">
@@ -1262,6 +1462,37 @@
             </div>
         </div>
 
+        <!-- ================= 7. واجهة الفيزياء الفخمة (ثالث & سادس) ================= -->
+        <div id="view-royal-physics" class="view-section">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 id="physics-header-title" class="text-3xl font-black text-sky-400">مرحباً بك في عالم الفيزياء</h2>
+                    <p id="physics-header-subtitle" class="text-slate-400 text-sm mt-1">المرحلة الدراسية | الكورس الأول</p>
+                </div>
+                <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
+                    تسجيل الخروج
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+                <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+                    <h4 class="font-bold text-white text-lg mb-2">الحركة والقوى</h4>
+                    <p class="text-xs text-slate-300 mb-4">قوانين نيوتن وتطبيقاتها في الحركة الخطية.</p>
+                    <span class="text-xs bg-sky-500/20 text-sky-400 px-3 py-1.5 rounded-lg font-bold">ابدأ الدرس</span>
+                </div>
+                <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+                    <h4 class="font-bold text-white text-lg mb-2">الكهرباء والمغناطيسية</h4>
+                    <p class="text-xs text-slate-300 mb-4">المجالات الكهربائية والمغناطيسية وتطبيقاتها.</p>
+                    <span class="text-xs bg-sky-500/20 text-sky-400 px-3 py-1.5 rounded-lg font-bold">ابدأ الدرس</span>
+                </div>
+                <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+                    <h4 class="font-bold text-white text-lg mb-2">الأسئلة الوزارية</h4>
+                    <p class="text-xs text-slate-300 mb-4">حل وتدريب على الأسئلة الوزارية السابقة.</p>
+                    <span class="text-xs bg-sky-500/20 text-sky-400 px-3 py-1.5 rounded-lg font-bold">ابدأ الدرس</span>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- نافذة التحقق السينمائية للرياضيات -->
@@ -1438,6 +1669,69 @@
         </div>
     </div>
 
+    <!-- نافذة التحقق السينمائية لمادة الفيزياء (ثالث وسادس) -->
+    <div class="physics-otp-overlay" id="physicsOtpOverlay">
+        <div class="phys-space-inner">
+            <div class="phys-nebula phys-nebula-1"></div>
+            <div class="phys-nebula phys-nebula-2"></div>
+            <div class="phys-stars"></div>
+
+            <!-- ملفات تسلا على الأطراف -->
+            <div class="phys-tesla-coil phys-left-coil">
+                <div class="phys-coil-top"></div>
+                <div class="phys-tesla-spark"></div>
+            </div>
+            <div class="phys-tesla-coil phys-right-coil">
+                <div class="phys-coil-top"></div>
+                <div class="phys-tesla-spark"></div>
+            </div>
+
+            <!-- الصندوق الزجاجي الكبير في المنتصف -->
+            <div class="phys-center-box" id="physCenterBox">
+                <div class="phys-magnetic-field">
+                    <div class="phys-mag-line phys-mag-1"></div>
+                    <div class="phys-mag-line phys-mag-2"></div>
+                </div>
+
+                <div class="phys-atom-container" id="physAtomContainer">
+                    <div class="phys-nucleus"></div>
+                    <div class="phys-orbit phys-orbit-1">
+                        <div class="phys-electron" id="physElectron0"></div>
+                    </div>
+                    <div class="phys-orbit phys-orbit-2">
+                        <div class="phys-electron" id="physElectron1"></div>
+                        <div class="phys-electron" id="physElectron2"></div>
+                    </div>
+                    <div class="phys-orbit phys-orbit-3">
+                        <div class="phys-electron" id="physElectron3"></div>
+                    </div>
+                </div>
+
+                <div class="phys-electric-counter" id="physOtpForm">
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                </div>
+            </div>
+
+            <!-- زر دخول تحت الصندوق الكبير مباشرة -->
+            <button class="phys-reactor-btn" id="physEnterBtn">دخول</button>
+            <button class="phys-cancel-btn" onclick="closePhysicsModal()">إلغاء والعودة</button>
+
+            <!-- الثقب الأسود في أحد الأركان مع جزيئات الضوء المسحوبة -->
+            <div class="phys-black-hole-container">
+                <div class="phys-black-hole"></div>
+                <div class="phys-light-particle phys-lp-1"></div>
+                <div class="phys-light-particle phys-lp-2"></div>
+                <div class="phys-light-particle phys-lp-3"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- منطق التشغيل -->
     <script>
         let currentSubject = "";
@@ -1496,6 +1790,13 @@
                 return;
             }
 
+            // تحقق الفيزياء (للثالث متوسط والسادس علمي)
+            if (currentSubject === 'physics') {
+                document.getElementById('physicsOtpOverlay').classList.add('active');
+                resetPhysicsModal();
+                return;
+            }
+
             let enteredCode = prompt("أدخل رمز الدخول المكون من 7 أرقام:");
             if (!enteredCode) return;
 
@@ -1532,6 +1833,11 @@
 
         function closeEnglishModal() {
             document.getElementById('englishOtpOverlay').classList.remove('active');
+            switchView('view-grades');
+        }
+
+        function closePhysicsModal() {
+            document.getElementById('physicsOtpOverlay').classList.remove('active');
             switchView('view-grades');
         }
 
@@ -2006,6 +2312,287 @@
 
             }, 6050);
         });
+
+        // ================= منطق نافذة التحقق السينمائية لمادة الفيزياء (ثالث & سادس) =================
+        (function () {
+            const physOrbits = [
+                { el: document.getElementById('physElectron0'), radius: 75 },
+                { el: document.getElementById('physElectron1'), radius: 125 },
+                { el: document.getElementById('physElectron2'), radius: 125 },
+                { el: document.getElementById('physElectron3'), radius: 175 }
+            ];
+
+            physOrbits.forEach((item, index) => {
+                if (!item.el) return;
+                const animationName = `physRevolve${index}`;
+                const keyframes = `
+                    @keyframes ${animationName} {
+                        from { transform: rotate(0deg) translateX(${item.radius}px) rotate(0deg); }
+                        to { transform: rotate(360deg) translateX(${item.radius}px) rotate(-360deg); }
+                    }
+                `;
+                const styleSheet = document.createElement('style');
+                styleSheet.type = 'text/css';
+                styleSheet.innerText = keyframes;
+                document.head.appendChild(styleSheet);
+
+                const duration = 3 + (index * 2);
+                item.el.style.animation = `${animationName} ${duration}s linear infinite`;
+                if (index === 2) {
+                    item.el.style.animationDelay = `-${duration / 2}s`;
+                }
+            });
+
+            const physInputs = document.querySelectorAll('#physOtpForm .phys-code-input');
+            const physEnterBtn = document.getElementById('physEnterBtn');
+
+            physInputs.forEach((input, index) => {
+                input.addEventListener('input', () => {
+                    const cell = input.parentElement;
+                    const flash = cell.querySelector('.phys-cell-flash');
+                    const val = input.value.replace(/[^0-9]/g, '');
+                    input.value = val.charAt(val.length - 1) || '';
+
+                    flash.classList.remove('phys-flashing');
+                    void flash.offsetWidth;
+                    flash.classList.add('phys-flashing');
+
+                    if (input.value.length >= 1 && index < physInputs.length - 1) {
+                        physInputs[index + 1].focus();
+                    }
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+                        physInputs[index - 1].focus();
+                    } else if (e.key === 'Enter') {
+                        physEnterBtn.click();
+                    }
+                });
+            });
+
+            window.resetPhysicsModal = function () {
+                physInputs.forEach(i => { i.value = ''; });
+                document.getElementById('physCenterBox').classList.remove('phys-wrong-shake');
+                if (physInputs[0]) physInputs[0].focus();
+            };
+
+            physEnterBtn.addEventListener('click', () => {
+                let enteredCode = '';
+                physInputs.forEach(i => enteredCode += i.value);
+
+                if (enteredCode.length !== 7) {
+                    alert('الرجاء إكمال إدخال الرمز المكون من 7 أرقام!');
+                    return;
+                }
+
+                // التحقق من مطابقة الرمز لرموز المنصة الرسمية الخاصة بصف الطالب في مادة الفيزياء
+                if (!schoolCodes[currentGrade] || !schoolCodes[currentGrade]['physics'] || !schoolCodes[currentGrade]['physics'].includes(enteredCode)) {
+                    const box = document.getElementById('physCenterBox');
+                    box.classList.remove('phys-wrong-shake');
+                    void box.offsetWidth;
+                    box.classList.add('phys-wrong-shake');
+                    alert('الرمز المدخل غير صحيح خاص بقسم الفيزياء في المنصة!');
+                    return;
+                }
+
+                // 1. تسارع تدريجي للذرة على مدار 3 ثوانٍ
+                const atomContainer = document.getElementById('physAtomContainer');
+                if (atomContainer) {
+                    atomContainer.style.animation = 'physRotateSystem 0.1s linear infinite';
+                }
+
+                // 2. زيادة تدريجية في لمعان الإلكترونات والنواة
+                document.querySelectorAll('#physicsOtpOverlay .phys-electron').forEach(el => {
+                    el.style.backgroundColor = '#ffffff';
+                    el.style.boxShadow = '0 0 30px #ffffff, 0 0 60px #00ffff';
+                });
+                const nucleus = document.querySelector('#physicsOtpOverlay .phys-nucleus');
+                if (nucleus) {
+                    nucleus.style.boxShadow = '0 0 50px #fff, 0 0 100px #00ffff, 0 0 150px #00f0ff';
+                }
+
+                // 3. بدء تكون وتوسع كرة الطاقة ببطء وتدريجياً طوال الـ 3 ثوانٍ
+                const energySphere = document.createElement('div');
+                energySphere.className = 'phys-expanding-energy-sphere';
+                document.body.appendChild(energySphere);
+
+                setTimeout(() => {
+                    energySphere.classList.add('expand');
+                }, 50);
+
+                // 4. بعد اكتمال الـ 3 ثوانٍ، تتلاشى كرة الطاقة وعناصر الواجهة بسلاسة
+                setTimeout(() => {
+                    energySphere.style.transition = 'opacity 1.2s ease';
+                    energySphere.style.opacity = '0';
+
+                    const centerBox = document.getElementById('physCenterBox');
+                    centerBox.style.transition = 'opacity 1s ease';
+                    centerBox.style.opacity = '0';
+                    physEnterBtn.style.transition = 'opacity 1s ease';
+                    physEnterBtn.style.opacity = '0';
+                    document.querySelectorAll('#physicsOtpOverlay .phys-tesla-coil').forEach(c => {
+                        c.style.transition = 'opacity 1s ease';
+                        c.style.opacity = '0';
+                    });
+                    const bh = document.querySelector('#physicsOtpOverlay .phys-black-hole-container');
+                    if (bh) {
+                        bh.style.transition = 'opacity 1s ease';
+                        bh.style.opacity = '0';
+                    }
+
+                    // حذف العناصر نهائياً بعد التلاشي وبدء حركة المغناطيسين
+                    setTimeout(() => {
+                        energySphere.remove();
+                        startPhysicsMagnetsSequence();
+                    }, 1200);
+
+                }, 3000);
+            });
+
+            // دالة تسلسل المغناطيسين والطاقة عبر المراحل السبع، ثم الانتقال لدرس الفيزياء
+            function startPhysicsMagnetsSequence() {
+                // المرحلة 1: تعتيم خفيف للشاشة
+                const dimOverlay = document.createElement('div');
+                dimOverlay.className = 'phys-space-dim-overlay';
+                document.body.appendChild(dimOverlay);
+
+                setTimeout(() => {
+                    dimOverlay.style.transition = 'opacity 0.35s ease';
+                    dimOverlay.style.opacity = '0';
+                    setTimeout(() => dimOverlay.remove(), 350);
+
+                    // المرحلة 2: صعود المغناطيسين
+                    const magLeft = document.createElement('div');
+                    magLeft.className = 'phys-rising-magnet phys-magnet-left';
+                    magLeft.innerHTML = '<div class="phys-pole phys-pole-left"></div><div class="phys-pole phys-pole-right"></div><div class="phys-magnet-spark phys-magnet-spark-1"></div><div class="phys-magnet-spark phys-magnet-spark-2"></div>';
+
+                    const magRight = document.createElement('div');
+                    magRight.className = 'phys-rising-magnet phys-magnet-right';
+                    magRight.innerHTML = '<div class="phys-pole phys-pole-left"></div><div class="phys-pole phys-pole-right"></div><div class="phys-magnet-spark phys-magnet-spark-1"></div><div class="phys-magnet-spark phys-magnet-spark-2"></div>';
+
+                    document.body.appendChild(magLeft);
+                    document.body.appendChild(magRight);
+
+                    magLeft.offsetHeight;
+                    magRight.offsetHeight;
+
+                    magLeft.style.transition = 'bottom 1s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1s ease';
+                    magRight.style.transition = 'bottom 1s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1s ease';
+                    magLeft.classList.add('phys-magnet-glow');
+                    magRight.classList.add('phys-magnet-glow');
+                    magLeft.style.bottom = 'calc(50% - 32px)';
+                    magRight.style.bottom = 'calc(50% - 32px)';
+
+                    // المرحلة 3: قوس كهربائي أزرق بين المغناطيسين
+                    setTimeout(() => {
+                        const arc = document.createElement('div');
+                        arc.className = 'phys-magnet-arc';
+                        document.body.appendChild(arc);
+
+                        setTimeout(() => { arc.classList.add('phys-show'); }, 30);
+
+                        setTimeout(() => {
+                            arc.style.transition = 'opacity 0.2s ease';
+                            arc.style.opacity = '0';
+                            setTimeout(() => arc.remove(), 200);
+
+                            // المرحلة 4: تشكّل المستطيل تدريجياً كهولوغرام
+                            const energyWrapper = document.createElement('div');
+                            energyWrapper.className = 'phys-energy-center-wrapper phys-hologram-build';
+                            energyWrapper.innerHTML = `
+                                <div class="phys-electric-rectangle"></div>
+                                <div class="phys-hologram-scan"></div>
+                                <div class="phys-tiny-electric-spark"></div>
+                                <div class="phys-gold-welcome-text" id="physGoldWelcomeText"></div>
+                            `;
+                            document.body.appendChild(energyWrapper);
+
+                            setTimeout(() => { energyWrapper.classList.add('phys-show'); }, 50);
+
+                            // المرحلة 5: كتابة عبارة الترحيب بالفيزياء
+                            setTimeout(() => {
+                                const text = `أهلاً بك في عالم الفيزياء (${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'})`;
+                                const textEl = document.getElementById('physGoldWelcomeText');
+                                const charCount = Math.max(Array.from(text).length, 6);
+
+                                textEl.innerHTML = `
+                                    <span class="phys-gold-text-inner" id="physGoldTextInner">${text}</span>
+                                    <span class="phys-gold-reveal-spark" id="physGoldRevealSpark"></span>
+                                `;
+
+                                const textInner = document.getElementById('physGoldTextInner');
+                                const revealSpark = document.getElementById('physGoldRevealSpark');
+
+                                textInner.style.transition = `clip-path 0.7s steps(${charCount}, end)`;
+                                revealSpark.style.transition = `right 0.7s steps(${charCount}, end)`;
+                                revealSpark.style.right = '0%';
+
+                                requestAnimationFrame(() => {
+                                    textInner.classList.add('phys-reveal');
+                                    revealSpark.classList.add('phys-active');
+                                    revealSpark.style.right = '100%';
+                                });
+
+                                setTimeout(() => {
+                                    revealSpark.classList.remove('phys-active');
+                                    revealSpark.style.opacity = '0';
+
+                                    // المرحلة 6: موجة ضوء تعبر النص
+                                    setTimeout(() => {
+                                        const sweep = document.createElement('div');
+                                        sweep.className = 'phys-text-light-sweep';
+                                        textEl.appendChild(sweep);
+                                        setTimeout(() => sweep.remove(), 950);
+
+                                        // المرحلة 7: اهتزاز خفيف مستمر للمغناطيسين
+                                        magLeft.classList.add('phys-magnet-idle-shake');
+                                        magRight.classList.add('phys-magnet-idle-shake');
+
+                                        // الانتقال إلى واجهة درس الفيزياء بعد استقرار المشهد
+                                        setTimeout(() => {
+                                            document.getElementById('physicsOtpOverlay').classList.remove('active');
+                                            document.getElementById('physics-header-title').innerText = `مرحباً بك في عالم الفيزياء (${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'})`;
+                                            document.getElementById('physics-header-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'} | الكورس الأول`;
+                                            switchView('view-royal-physics');
+
+                                            // تنظيف عناصر المشهد المؤقتة من الصفحة
+                                            energyWrapper.style.transition = 'opacity 0.6s ease';
+                                            energyWrapper.style.opacity = '0';
+                                            magLeft.style.transition += ', opacity 0.6s ease';
+                                            magRight.style.transition += ', opacity 0.6s ease';
+                                            magLeft.style.opacity = '0';
+                                            magRight.style.opacity = '0';
+                                            setTimeout(() => {
+                                                energyWrapper.remove();
+                                                magLeft.remove();
+                                                magRight.remove();
+                                                // إعادة ضبط نافذة الفيزياء لتكون جاهزة في حال احتاج الطالب الدخول ثانية
+                                                document.getElementById('physCenterBox').style.opacity = '1';
+                                                physEnterBtn.style.opacity = '1';
+                                                document.querySelectorAll('#physicsOtpOverlay .phys-tesla-coil').forEach(c => { c.style.opacity = '1'; });
+                                                const bh2 = document.querySelector('#physicsOtpOverlay .phys-black-hole-container');
+                                                if (bh2) bh2.style.opacity = '1';
+                                                if (atomContainer) atomContainer.style.animation = 'physRotateSystem 20s linear infinite';
+                                                document.querySelectorAll('#physicsOtpOverlay .phys-electron').forEach(el => {
+                                                    el.style.backgroundColor = '';
+                                                    el.style.boxShadow = '';
+                                                });
+                                                if (nucleus) nucleus.style.boxShadow = '';
+                                                resetPhysicsModal();
+                                            }, 700);
+                                        }, 2500);
+                                    }, 200);
+                                }, 700);
+                            }, 1000);
+
+                        }, 500);
+
+                    }, 1000);
+
+                }, 500);
+            }
+        })();
     </script>
 </body>
 </html>
