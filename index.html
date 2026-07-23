@@ -3,40 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة التعليم الذكي</title>
+    <title>منصة التعليم الذكي - التحقق الشامل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-        body { font-family: 'Cairo', sans-serif; }
-        .subject-card {
-            transition: all 0.3s ease-in-out;
-        }
-        .subject-card:hover {
-            transform: translateY(-4px);
-        }
-        body {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('bg.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-    </style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&display=swap');
+body { font-family: 'Cairo', sans-serif; background-color: #03060c; color: #f3f4f6; min-height: 100vh; margin: 0; background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('bg.png'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; align-items: center; justify-content: center; }
+.view-section { display: none; width: 100%; }
+.view-section.active { display: block; }
+.subject-card { transition: all 0.3s ease-in-out; }
+.subject-card:hover { transform: translateY(-4px); }
+.royal-otp-overlay { position: fixed; inset: 0; background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('kaon.png') !important; background-size: cover !important; background-position: center !important; display: none; align-items: center; justify-content: center; z-index: 99999; perspective: 1200px; overflow: hidden; transition: background 1.5s ease; }
+.royal-otp-overlay.active { display: flex; }
+.scene-wrapper { position: relative; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; z-index: 2; }
+.otp-container { position: relative; background: linear-gradient(135deg, rgba(17, 24, 39, 0.98), rgba(5, 9, 18, 1)); border: 2px solid; border-image: linear-gradient(to bottom right, #38bdf8, #1e3a8a, #38bdf8) 1; border-radius: 20px; padding: 35px 40px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(56, 189, 248, 0.15); text-align: center; min-width: 460px; z-index: 2; transform-style: preserve-3d; transform-origin: center center; animation: riseFromGround 3.2s cubic-bezier(0.15, 0.85, 0.35, 1) forwards; }
+@keyframes riseFromGround {
+0% { transform: translateY(450px) scale(0.6); opacity: 0; }
+100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.otp-container.shaking { animation: doorShake 0.4s ease-in-out infinite; }
+@keyframes doorShake {
+0%, 100% { transform: translate(0, 0) rotate(0deg); }
+20% { transform: translate(-4px, 2px) rotate(-0.5deg); }
+40% { transform: translate(4px, -2px) rotate(0.5deg); }
+60% { transform: translate(-2px, -3px) rotate(-0.3deg); }
+80% { transform: translate(3px, 3px) rotate(0.3deg); }
+}
+.otp-container.fully-lit { border-color: #ffffff; box-shadow: 0 0 50px #38bdf8, 0 0 90px rgba(56, 189, 248, 0.8), inset 0 0 35px rgba(56, 189, 248, 0.5); }
+.otp-container::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: #ffffff; box-shadow: 0 0 20px #38bdf8, 0 0 40px #38bdf8, 0 0 60px #ffffff; opacity: 0; transform: translateX(-50%); transition: opacity 0.5s ease; z-index: 10; }
+.otp-container.crack-active::after { opacity: 1; }
+.screen-flash-glow { position: fixed; inset: -100px; background: radial-gradient(circle at center, rgba(255, 255, 255, 1) 0%, rgba(56, 189, 248, 0.9) 40%, transparent 80%); opacity: 0; pointer-events: none; z-index: 999999; }
+.screen-flash-glow.active { animation: intenseFlash 2.5s ease-in-out forwards; }
+@keyframes intenseFlash {
+0% { opacity: 0; transform: scale(0.3); }
+40% { opacity: 0.7; transform: scale(1.1); }
+70% { opacity: 1; transform: scale(1.5); }
+100% { opacity: 0; transform: scale(2); }
+}
+.sparkles-container { position: fixed; inset: 0; pointer-events: none; z-index: 999999; overflow: hidden; display: none; }
+.sparkles-container.active { display: block; }
+.sparkle { position: absolute; width: 10px; height: 10px; background: radial-gradient(circle, #fff 0%, #ffd700 70%); box-shadow: 0 0 15px #ffd700, 0 0 25px #ffae00; border-radius: 50%; animation: explodeSparkle 2.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
+@keyframes explodeSparkle {
+0% { transform: translate(0, 0) scale(1); opacity: 1; }
+100% { transform: translate(var(--tx), var(--ty)) scale(0.1); opacity: 0; }
+}
+.royal-otp-inputs { display: flex; gap: 10px; justify-content: center; margin: 20px 0; direction: ltr; }
+.royal-otp-inputs input { width: 45px; height: 55px; text-align: center; font-size: 24px; font-weight: bold; color: #38bdf8; background: rgba(255, 255, 255, 0.03); border: 2px solid rgba(56, 189, 248, 0.3); border-radius: 12px; outline: none; transition: all 0.3s ease; }
+.royal-otp-inputs input:focus, .royal-otp-inputs input.filled { border-color: #ffd700; background: rgba(255, 215, 0, 0.12); box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), inset 0 0 10px rgba(255, 215, 0, 0.4); color: #ffd700; }
+.royal-submit-btn { background: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(30, 58, 138, 0.8)); color: #ffffff; border: 2px solid #38bdf8; border-radius: 14px; padding: 12px 40px; font-size: 17px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); transition: all 0.3s ease; width: 100%; }
+.royal-submit-btn:hover { box-shadow: 0 0 35px rgba(56, 189, 248, 0.9); }
+.math-steps { display: flex; flex-direction: column; gap: 12px; margin-bottom: 10px; direction: ltr; min-height: 160px; }
+.math-step-line { font-size: 20px; color: #38bdf8; font-weight: bold; min-height: 28px; text-shadow: 0 0 15px rgba(56, 189, 248, 0.6); }
+.math-step-line::after { content: '|'; animation: blink 0.7s infinite; color: #fff; }
+.math-step-line.done::after { content: ''; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.gears-container { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; opacity: 0; transition: opacity 0.6s ease; }
+.gears-container.show { display: flex; opacity: 1; }
+.scifi-portal-wrapper { position: relative; width: 150px; height: 150px; margin: 5px auto; display: flex; align-items: center; justify-content: center; }
+.energy-ring { position: absolute; inset: 0; border: 2px dashed rgba(56, 189, 248, 0.6); border-radius: 50%; animation: spinRing 10s linear infinite; }
+@keyframes spinRing { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.scifi-gear { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(15,23,42,0.9), rgba(5,9,18,0.95)); border: 3px solid #38bdf8; }
+.gear-primary { width: 95px; height: 95px; animation: rotateClockwise 7s linear infinite; }
+.gear-secondary { width: 60px; height: 60px; top: 2px; right: 2px; border-color: #60a5fa; animation: rotateCounterClockwise 4.5s linear infinite; }
+.gears-paused .energy-ring,
+.gears-paused .scifi-gear,
+.gears-paused .energy-core { animation-play-state: paused !important; filter: drop-shadow(0 0 12px #ffd700); border-color: #ffd700; }
+.energy-core { position: absolute; width: 20px; height: 20px; background: radial-gradient(circle, #fff, #38bdf8); border-radius: 50%; box-shadow: 0 0 25px #38bdf8; animation: pulseCore 1.5s ease-in-out infinite; z-index: 5; }
+@keyframes pulseCore { 0%, 100% { transform: scale(0.85); opacity: 0.8; } 50% { transform: scale(1.25); opacity: 1; } }
+@keyframes rotateClockwise { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes rotateCounterClockwise { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+.welcome-text-line { font-size: 26px; font-weight: 900; color: #ffd700; text-shadow: 0 0 15px #ffd700, 0 0 30px #38bdf8, 0 0 45px #38bdf8; margin-top: 20px; min-height: 40px; direction: rtl; display: none; opacity: 0; transform: scale(0.9); transition: all 0.5s ease; }
+.welcome-text-line.show { display: block; opacity: 1; transform: scale(1); }
+.welcome-text-line::after { content: '|'; animation: blink 0.7s infinite; color: #38bdf8; }
+.welcome-text-line.done::after { content: ''; }
+.english-otp-overlay { position: fixed; inset: 0; background-color: #050505; display: none; justify-content: center; align-items: center; z-index: 99999; overflow: hidden; transition: background-color 0.5s ease; }
+.english-otp-overlay.active { display: flex; }
+.gold-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1); width: 450px; padding: 40px; background: linear-gradient(145deg, #b8860b, #ffd700, #daa520, #b8860b); color: #000; text-align: center; border-radius: 20px; box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(218, 165, 32, 0.4), 0 0 80px rgba(184, 134, 11, 0.2); opacity: 1; visibility: visible; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 1000; overflow: hidden; box-sizing: border-box; }
+.gold-box::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle, rgba(0,0,0,0.15) 15%, transparent 16%), linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.15) 75%), linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.15) 75%); background-size: 30px 30px; background-position: 0 0, 0 0, 15px 15px; opacity: 0.35; pointer-events: none; }
+.gold-box.hide { opacity: 0; visibility: hidden; transform: translate(-50%, -50%) scale(0.7); }
+.gold-box h2 { position: relative; z-index: 2; margin-top: 0; font-size: 26px; color: #3a2a00; margin-bottom: 25px; text-shadow: 1px 1px 0 rgba(255,255,255,0.3); }
+.inputs-container-eng { position: relative; z-index: 2; display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; direction: ltr; }
+.inputs-container-eng input { width: 45px; height: 55px; font-size: 28px; font-weight: bold; text-align: center; background-color: rgba(255, 215, 0, 0.2); border: 2px solid #daa520; border-radius: 10px; outline: none; color: #3a2a00; transition: all 0.3s ease; box-sizing: border-box; }
+.inputs-container-eng input.filled { border-color: #fff; background-color: rgba(255, 255, 255, 0.3); box-shadow: 0 0 15px #fff, 0 0 5px #fff; color: #000; }
+.inputs-container-eng input:focus { border-color: #fff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); background-color: rgba(255, 255, 255, 0.4); }
+.submit-btn-eng { position: relative; z-index: 2; padding: 10px 30px; background: linear-gradient(45deg, #1a1a1a, #000); color: #ffd700; border: 1px solid #daa520; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s ease; text-transform: uppercase; }
+.submit-btn-eng:hover { background: #fff; color: #000; box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); }
+.gold-box::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to bottom right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%); transform: rotate(30deg); pointer-events: none; z-index: 1; }
+.new-gold-box { position: fixed; top: 150%; left: 50%; transform: translate(-50%, -50%); width: 450px; height: 275px; padding: 25px 40px; background: linear-gradient(145deg, #b8860b, #ffd700, #daa520, #b8860b); color: #000; text-align: center; border-radius: 20px; box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 0 0 50px rgba(218, 165, 32, 0.6), 0 0 90px rgba(184, 134, 11, 0.4); z-index: 2000; opacity: 0; transition: top 2s cubic-bezier(0.25, 1, 0.5, 1), opacity 2s ease, transform 1s ease; overflow: hidden; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; }
+.new-gold-box::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle, rgba(0,0,0,0.15) 15%, transparent 16%), linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.15) 75%), linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.15) 75%); background-size: 30px 30px; background-position: 0 0, 0 0, 15px 15px; opacity: 0.35; pointer-events: none; }
+.new-gold-box.active { top: 50%; opacity: 1; }
+.new-inputs-container { position: relative; z-index: 3; display: flex; justify-content: center; gap: 15px; direction: ltr; margin-bottom: 10px; }
+.gear-box { width: 55px; height: 65px; font-size: 30px; font-weight: bold; text-align: center; background-color: rgba(0, 0, 0, 0.2); border: 2px solid #fff; border-radius: 12px; color: #000; box-shadow: 0 0 15px #fff, 0 0 5px #fff; box-sizing: border-box; display: flex; justify-content: center; align-items: center; }
+.gears-ground { position: absolute; bottom: 0; left: 0; width: 100%; height: 135px; z-index: 2; overflow: hidden; opacity: 1; }
+.ground-gear { position: absolute; border-radius: 50%; border: 3px dashed #ffd700; background: radial-gradient(circle, #b8860b 35%, rgba(0,0,0,0.6) 70%); box-shadow: 0 0 6px rgba(255, 215, 0, 0.7); }
+.gears-ground.play .cw { animation: spinCW 4s linear infinite; }
+.gears-ground.play .ccw { animation: spinCCW 4s linear infinite; }
+@keyframes spinCW {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+@keyframes spinCCW {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(-360deg); }
+}
+.gg1 { width: 65px; height: 65px; bottom: -15px; left: -10px; }
+.gg2 { width: 50px; height: 50px; bottom: 25px; left: 45px; border-color: #fff; }
+.gg3 { width: 75px; height: 75px; bottom: -20px; left: 80px; }
+.gg4 { width: 55px; height: 55px; bottom: 35px; left: 140px; border-color: #ffcc00; }
+.gg5 { width: 70px; height: 70px; bottom: -10px; left: 185px; }
+.gg6 { width: 45px; height: 45px; bottom: 45px; left: 245px; border-color: #fff; }
+.gg7 { width: 80px; height: 80px; bottom: -25px; left: 275px; }
+.gg8 { width: 60px; height: 60px; bottom: 30px; left: 340px; border-color: #ffd700; }
+.gg9 { width: 65px; height: 65px; bottom: -10px; left: 395px; }
+.flash-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle, #fff7cc 0%, #ffd700 40%, #daa520 80%, #000 100%); opacity: 0; pointer-events: none; z-index: 3000; transition: opacity 1s ease-in-out; }
+.flash-overlay.show-flash { opacity: 1; }
+.welcome-message { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5); font-size: 50px; font-weight: bold; color: #1a1200; text-shadow: 0 0 20px #fff, 0 0 40px #ffd700, 0 0 60px #daa520; z-index: 4000; opacity: 0; visibility: hidden; transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; pointer-events: none; letter-spacing: 2px; }
+.welcome-message.show-welcome { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+.biology-otp-overlay { position: fixed; inset: 0; display: none; justify-content: center; align-items: center; background: linear-gradient(135deg, #000000 0%, #021a0c 50%, #012b14 100%); overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; z-index: 99999; }
+.biology-otp-overlay.active { display: flex; }
+.fog-layer { position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: radial-gradient(circle, rgba(16, 85, 45, 0.15) 0%, transparent 60%); animation: moveFog 20s linear infinite alternate; pointer-events: none; z-index: 1; }
+.ambient-particles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; background-image: radial-gradient(rgba(129, 199, 132, 0.8) 1.5px, transparent 1.5px), radial-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px); background-size: 80px 80px, 120px 120px; animation: driftParticles 30s linear infinite; pointer-events: none; z-index: 2; opacity: 0.5; }
+.bio-box-container { position: relative; width: 750px; height: 380px; z-index: 3; perspective: 1000px; }
+.bio-box { width: 100%; height: 100%; background: rgba(10, 35, 20, 0.25); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 3px solid transparent; border-image: linear-gradient(135deg, #ffd700, #c0c0c0, #39ff14) 1; border-radius: 30px; box-shadow: 0 0 50px rgba(57, 255, 20, 0.5), inset 0 0 25px rgba(57, 255, 20, 0.2); position: absolute; top: 0; left: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.3s ease, transform 0.3s ease; z-index: 2; }
+.empty-bio-box { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 35, 20, 0.25); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 3px solid transparent; border-image: linear-gradient(135deg, #ffd700, #c0c0c0, #39ff14) 1; border-radius: 30px; box-shadow: 0 0 50px rgba(57, 255, 20, 0.5), inset 0 0 25px rgba(57, 255, 20, 0.2); opacity: 0; transform: translateY(500px) scale(0.8); pointer-events: none; z-index: 4; overflow: hidden; transition: opacity 3s cubic-bezier(0.25, 1, 0.5, 1), transform 3s cubic-bezier(0.25, 1, 0.5, 1); }
+.empty-bio-box.show { opacity: 1; transform: translateY(0) scale(1); }
+.glass-black-box { position: absolute; top: 50%; transform: translateY(-50%); width: 90px; height: 90px; background: rgba(5, 12, 8, 0.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 2px solid rgba(57, 255, 20, 0.4); border-radius: 16px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(57, 255, 20, 0.15); z-index: 15; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.glass-box-left { left: 65px; }
+.glass-box-right { right: 65px; }
+.box-letter { position: absolute; font-size: 42px; font-weight: bold; color: #ffd700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.4); opacity: 0; z-index: 5; transition: opacity 0.5s ease; }
+.box-letter.visible { opacity: 1; }
+.ecg-bridge-container { position: absolute; top: 50%; left: 160px; right: 160px; height: 100px; transform: translateY(-50%); z-index: 10; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+.ecg-bridge-container.active { opacity: 1; }
+.ecg-bridge-svg { width: 100%; height: 100%; overflow: visible; }
+.ecg-bridge-line { fill: none; stroke: #39ff14; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 8px #39ff14) drop-shadow(0 0 15px rgba(57,255,20,0.6)); stroke-dasharray: 647; stroke-dashoffset: 647; }
+.ecg-bridge-container.animate .ecg-bridge-line { animation: drawBridgeEcg 3s linear forwards; }
+@keyframes drawBridgeEcg {
+0% { stroke-dashoffset: 647; }
+100% { stroke-dashoffset: 0; }
+}
+.bio-box.frozen { filter: brightness(1.3) contrast(1.2) drop-shadow(0 0 25px rgba(200, 240, 255, 0.9)); animation: freezePulse 0.5s ease; }
+.bio-box.frozen::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(150,220,255,0.2) 60%, transparent 100%); backdrop-filter: blur(3px); z-index: 50; pointer-events: none; }
+@keyframes freezePulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.02); }
+100% { transform: scale(1); }
+}
+.cracks-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 55; opacity: 0; background-image: linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.9) 49%, rgba(255,255,255,0.9) 51%, transparent 52%), linear-gradient(-35deg, transparent 46%, rgba(255,255,255,0.8) 48%, rgba(255,255,255,0.8) 52%, transparent 54%), linear-gradient(75deg, transparent 40%, rgba(200,255,255,0.8) 48%, rgba(255,255,255,0.9) 52%, transparent 60%), linear-gradient(-75deg, transparent 30%, rgba(255,255,255,0.7) 48%, rgba(255,255,255,0.9) 52%, transparent 70%); filter: drop-shadow(0 0 4px #ffffff); transition: opacity 0.1s ease; }
+.bio-box.cracked .cracks-overlay { opacity: 1; }
+.dna-border-text { position: absolute; inset: 6px; border: 1.5px dashed rgba(212, 175, 55, 0.6); border-radius: 24px; pointer-events: none; z-index: 11; font-size: 8px; letter-spacing: 12px; color: rgba(255, 215, 0, 0.5); display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; opacity: 0.8; }
+.corner-metal { position: absolute; width: 25px; height: 25px; border: 3px solid #ffd700; z-index: 15; pointer-events: none; box-shadow: 0 0 10px rgba(255, 215, 0, 0.7); }
+.corner-tl { top: 8px; left: 8px; border-right: none; border-bottom: none; border-top-left-radius: 22px; }
+.corner-tr { top: 8px; right: 8px; border-left: none; border-bottom: none; border-top-right-radius: 22px; }
+.corner-bl { bottom: 8px; left: 8px; border-right: none; border-top: none; border-bottom-left-radius: 22px; }
+.corner-br { bottom: 8px; right: 8px; border-left: none; border-top: none; border-bottom-right-radius: 22px; }
+.light-sweep-effect { position: absolute; top: -50%; left: -150%; width: 50%; height: 200%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent); transform: rotate(30deg); animation: lightSweep 5s ease-in-out infinite; pointer-events: none; z-index: 12; }
+.bio-grid-bg { position: absolute; width: 100%; height: 100%; background-image: radial-gradient(rgba(76, 175, 80, 0.15) 2px, transparent 2px), radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 30px 30px; opacity: 0.6; z-index: 0; }
+.content-wrapper { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; width: 100%; }
+.code-inputs-container { display: flex; gap: 12px; align-items: center; justify-content: center; }
+.capsule-wrapper { position: relative; width: 70px; height: 95px; border-radius: 48px; padding: 3px; overflow: hidden; }
+.code-input { position: relative; width: 100%; height: 100%; background: rgba(5, 15, 35, 0.5); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); border: 3.5px solid rgba(0, 149, 255, 0.6); border-radius: 48px; color: #00d2ff; font-size: 40px; font-weight: bold; text-align: center; outline: none; box-shadow: 0 0 12px rgba(0, 149, 255, 0.3), inset 0 0 10px rgba(0, 149, 255, 0.2); transition: all 0.3s ease; z-index: 2; }
+.code-input:focus { border-color: #00d2ff; box-shadow: 0 0 22px rgba(0, 210, 255, 0.9), inset 0 0 15px rgba(0, 210, 255, 0.5); background: rgba(10, 30, 60, 0.7); }
+@keyframes numberPulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.2); filter: drop-shadow(0 0 12px #00d2ff); }
+100% { transform: scale(1); }
+}
+.pulsing { animation: numberPulse 0.4s ease-in-out; }
+.capsule-wrapper.active-capsule::before { content: ''; position: absolute; inset: -50%; background: conic-gradient(from 0deg, transparent 0%, transparent 70%, #00d2ff 100%); animation: rotateLightBeam 2s linear infinite; z-index: 1; }
+@keyframes rotateLightBeam {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+.submit-btn { margin-top: 35px; position: relative; width: 170px; height: 48px; background: rgba(10, 35, 20, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 2px solid #39ff14; border-radius: 25px; color: #ffd700; font-size: 18px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; box-shadow: 0 0 15px rgba(57, 255, 20, 0.4), inset 0 0 10px rgba(57, 255, 20, 0.2); transition: all 0.3s ease; outline: none; }
+.submit-btn:hover { background: rgba(57, 255, 20, 0.15); box-shadow: 0 0 25px rgba(57, 255, 20, 0.8); transform: scale(1.03); }
+.submit-btn.clicked { background: rgba(57, 255, 20, 0.4); box-shadow: 0 0 35px #39ff14, 0 0 60px rgba(57, 255, 20, 0.9); border-color: #ffffff; color: #ffffff; }
+.floating-elements { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; }
+.dna-helix-container { position: absolute; display: flex; gap: 15px; align-items: center; font-size: 24px; letter-spacing: 15px; animation: slowRotateDna 10s linear infinite, pulseDna 4s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.8)); z-index: 2; }
+.dividing-cell-container { position: absolute; top: 30px; left: 60px; display: flex; gap: 4px; animation: floatCellMove 14s ease-in-out infinite; }
+.cell-half { width: 35px; height: 50px; border: 2px solid rgba(129, 199, 132, 0.8); background: rgba(129, 199, 132, 0.1); border-radius: 50%; animation: mitosisSplit 4s ease-in-out infinite alternate; }
+.cell-half:nth-child(2) { animation-direction: alternate-reverse; }
+.random-bacteria { position: absolute; width: 45px; height: 22px; border: 2px solid rgba(165, 214, 167, 0.9); border-radius: 20px; background: rgba(76, 175, 80, 0.2); animation: randomBactMove 12s ease-in-out infinite; }
+.glowing-droplet { position: absolute; width: 18px; height: 24px; background: radial-gradient(circle at 30% 30%, #adff2f, #00fa9a); border-radius: 50%; box-shadow: 0 0 15px #39ff14; animation: floatDroplet 7s ease-in-out infinite; }
+.drop-1 { top: 50px; right: 100px; }
+.drop-2 { bottom: 40px; left: 120px; animation-delay: 2.5s; }
+.green-particle { position: absolute; width: 10px; height: 10px; background: rgba(57, 255, 20, 0.7); border-radius: 50%; box-shadow: 0 0 8px rgba(57, 255, 20, 0.9); animation: floatGreenPart 9s linear infinite; }
+.gp-1 { top: 200px; left: 80px; }
+.gp-2 { top: 80px; right: 200px; animation-delay: 4s; }
+.gp-3 { bottom: 30px; right: 150px; animation-delay: 2s; }
+.mitochondria-pulse { position: absolute; width: 85px; height: 40px; border: 2px solid rgba(165, 214, 167, 0.9); border-radius: 40px; bottom: 30px; right: 60px; transform: rotate(-25deg); background: rgba(46, 125, 50, 0.3); animation: mitosPulseGlow 3s ease-in-out infinite, floatMito 11s ease-in-out infinite; }
+.freeze-all *, .freeze-all { animation-play-state: paused !important; pointer-events: none !important; }
+.shards-container { position: absolute; inset: 0; pointer-events: none; z-index: 100; overflow: hidden; }
+.glass-shard { position: absolute; top: 50%; left: 50%; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(57,255,20,0.7)); box-shadow: 0 0 10px #39ff14, inset 0 0 5px #fff; opacity: 0; }
+@keyframes explodeAndFadeShard {
+0% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+30% { opacity: 1; background: rgba(57, 255, 20, 0.9); box-shadow: 0 0 15px #39ff14; }
+100% { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.1); background: rgba(57, 255, 20, 0); box-shadow: 0 0 0px transparent; }
+}
+.shattering .glass-shard { animation: explodeAndFadeShard 1.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
+@keyframes slowRotateDna { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes pulseDna { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+@keyframes mitosisSplit { 0% { transform: scale(1) translateX(0); } 100% { transform: scale(1.15) translateX(6px); } }
+@keyframes floatCellMove { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(60px, 40px); } }
+@keyframes randomBactMove { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-70px, -30px) rotate(45deg); } }
+@keyframes floatDroplet { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+@keyframes floatGreenPart { 0% { transform: translate(0,0); opacity: 0.2; } 50% { transform: translate(-40px,-50px); opacity: 0.9; } 100% { transform: translate(30px,-90px); opacity: 0.2; } }
+@keyframes mitosPulseGlow { 0%, 100% { box-shadow: 0 0 5px rgba(57,255,20,0.4); } 50% { box-shadow: 0 0 30px rgba(57,255,20,0.9); } }
+@keyframes floatMito { 0%, 100% { transform: rotate(-25deg); } 50% { transform: translate(-40px,-20px) rotate(-10deg); } }
+@keyframes lightSweep { 0% { left: -150%; } 20%, 100% { left: 150%; } }
+@keyframes moveFog { 0% { transform: translate(0,0); } 100% { transform: translate(-5%, -5%); } }
+@keyframes driftParticles { 0% { background-position: 0 0; } 100% { background-position: 100px 150px; } }
+.physics-otp-overlay { position: fixed; inset: 0; background: linear-gradient(135deg, #020208 0%, #050b1a 50%, #000000 100%); display: none; align-items: center; justify-content: center; z-index: 99999; overflow: hidden; }
+.physics-otp-overlay.active { display: flex; }
+.phys-space-inner { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.phys-nebula { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; mix-blend-mode: screen; animation: physPulseNebula 10s infinite alternate; z-index: 1; }
+.phys-nebula-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(0, 119, 255, 0.6) 0%, rgba(75, 0, 130, 0.2) 70%, transparent 100%); top: -100px; left: -100px; }
+.phys-nebula-2 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(138, 43, 226, 0.5) 0%, rgba(0, 41, 102, 0.3) 60%, transparent 100%); bottom: -150px; right: -150px; animation-delay: 5s; }
+@keyframes physPulseNebula { 0% { transform: scale(1); opacity: 0.3; } 100% { transform: scale(1.1); opacity: 0.5; } }
+.phys-stars { position: absolute; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 120px, #e0f7ff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 200px 200px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 300px 250px, #d4d4ff, rgba(0,0,0,0)), radial-gradient(1px 1px at 450px 150px, #fff, rgba(0,0,0,0)); background-repeat: repeat; background-size: 400px 400px; animation: physTwinkle 4s infinite alternate; z-index: 1; }
+@keyframes physTwinkle { 0% { opacity: 0.6; } 100% { opacity: 1; } }
+.phys-tesla-coil { position: absolute; bottom: 20px; width: 40px; height: 180px; background: linear-gradient(90deg, #111, #333, #111); border: 1px solid #555; border-radius: 5px; z-index: 8; }
+.phys-left-coil { left: 50px; }
+.phys-right-coil { right: 50px; }
+.phys-coil-top { position: absolute; top: -15px; left: -10px; width: 60px; height: 30px; background: radial-gradient(circle, #00ffff, #0066ff); border-radius: 50%; box-shadow: 0 0 15px #00ffff; }
+.phys-tesla-spark { position: absolute; top: -50px; left: 20px; width: 2px; height: 0; background: #fff; box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #ffffff; opacity: 0; z-index: 9; pointer-events: none; animation: physTeslaLightning 4s infinite; }
+.phys-right-coil .phys-tesla-spark { animation-delay: 2s; }
+@keyframes physTeslaLightning {
+0%, 80%, 100% { height: 0; opacity: 0; transform: scale(1); }
+82% { height: 90px; opacity: 1; transform: rotate(-15deg); }
+84% { height: 70px; opacity: 0.6; transform: rotate(15deg); }
+86% { height: 110px; opacity: 1; transform: rotate(-5deg); }
+90% { height: 0; opacity: 0; }
+}
+.phys-center-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70vw; height: 42vw; min-width: 360px; min-height: 220px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(130, 220, 255, 0.4); border-radius: 15px; backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(100, 200, 255, 0.3), inset 0 0 20px rgba(100, 200, 255, 0.2); z-index: 10; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+.phys-electric-counter { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; gap: 10px; z-index: 25; padding: 10px 18px; background: rgba(0, 5, 15, 0.2); border: 2px solid rgba(0, 240, 255, 0.8); border-radius: 10px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.3); backdrop-filter: blur(2px); animation: physElectricFrameGlow 3s infinite alternate; }
+@keyframes physElectricFrameGlow {
+0% { box-shadow: 0 0 12px rgba(0, 240, 255, 0.4), inset 0 0 8px rgba(0, 240, 255, 0.2); border-color: rgba(0, 180, 216, 0.7); }
+100% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.8), inset 0 0 18px rgba(0, 240, 255, 0.5); border-color: rgba(144, 224, 239, 0.9); }
+}
+.phys-digit-cell { position: relative; width: 48px; height: 64px; background: rgba(0, 0, 0, 0.25); border: 2px solid rgba(0, 150, 199, 0.7); border-radius: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; backdrop-filter: blur(1px); box-shadow: inset 0 0 8px rgba(0, 180, 216, 0.2); }
+.phys-digit-cell input { width: 100%; height: 100%; background: transparent; border: none; color: #caf0f8; font-size: 34px; font-weight: bold; text-align: center; font-family: monospace; outline: none; text-shadow: 0 0 10px #00b4d8, 0 0 20px #0077b6; z-index: 2; }
+.phys-cell-flash { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); opacity: 0; pointer-events: none; z-index: 3; }
+.phys-flashing { animation: physCellSparkEffect 0.35s ease-out; }
+@keyframes physCellSparkEffect {
+0% { opacity: 1; background: #ffffff; box-shadow: inset 0 0 20px #00ffff, 0 0 15px #fff; }
+50% { opacity: 0.7; background: rgba(0, 212, 255, 0.8); }
+100% { opacity: 0; background: transparent; box-shadow: none; }
+}
+.phys-reactor-btn { position: absolute; top: calc(50% + 22vw + 15px); left: 50%; transform: translateX(-50%); width: 220px; padding: 12px 0; background: radial-gradient(circle, rgba(0, 240, 255, 0.35) 0%, rgba(0, 60, 140, 0.8) 100%); border: 2px solid #00f0ff; color: #ffffff; font-size: 20px; font-weight: bold; font-family: monospace; border-radius: 10px; cursor: pointer; text-shadow: 0 0 10px #00ffff; box-shadow: 0 0 15px rgba(0, 240, 255, 0.6), inset 0 0 10px rgba(0, 240, 255, 0.4); z-index: 30; transition: all 0.3s ease; }
+.phys-reactor-btn:hover { background: radial-gradient(circle, rgba(0, 240, 255, 0.65) 0%, rgba(0, 100, 200, 0.95) 100%); box-shadow: 0 0 25px rgba(0, 240, 255, 0.95), inset 0 0 15px rgba(0, 240, 255, 0.7); transform: translateX(-50%) scale(1.03); }
+.phys-cancel-btn { position: absolute; top: calc(50% + 22vw + 65px); left: 50%; transform: translateX(-50%); background: transparent; border: none; color: #94a3b8; cursor: pointer; font-size: 14px; z-index: 30; }
+.phys-expanding-energy-sphere { position: fixed; top: 50%; left: 50%; width: 100px; height: 100px; margin-top: -50px; margin-left: -50px; background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(0,240,255,0.8) 40%, rgba(0, 100, 200, 0.9) 75%, rgba(2,2,8,0.95) 100%); border-radius: 50%; z-index: 100000; pointer-events: none; transform: scale(0); box-shadow: 0 0 80px #fff, 0 0 150px #00ffff, 0 0 300px #0077b6; transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1); }
+.phys-expanding-energy-sphere.expand { transform: scale(60); }
+.phys-magnetic-field { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 5; opacity: 0.35; }
+.phys-mag-line { position: absolute; border: 1px dashed rgba(0, 212, 255, 0.6); border-radius: 50%; animation: physRotateMag 25s linear infinite; }
+.phys-mag-1 { width: 85%; height: 65%; top: 17.5%; left: 7.5%; animation-duration: 35s; }
+.phys-mag-2 { width: 65%; height: 85%; top: 7.5%; left: 17.5%; animation-duration: 45s; animation-direction: reverse; }
+@keyframes physRotateMag { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.phys-atom-container { position: relative; width: 100%; height: 100%; animation: physRotateSystem 20s linear infinite; z-index: 11; }
+.phys-nucleus { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: radial-gradient(circle, #fff 0%, #8af 60%, #00f 100%); border-radius: 50%; box-shadow: 0 0 20px #fff, 0 0 40px #8af, 0 0 60px #00f; z-index: 12; transition: all 3s ease; }
+.phys-orbit { position: absolute; top: 50%; left: 50%; border: 1px solid rgba(100, 200, 255, 0.3); border-radius: 50%; transform-style: preserve-3d; animation: physSlowOrbitMove 10s linear infinite alternate; }
+.phys-orbit-1 { width: 150px; height: 150px; margin-top: -75px; margin-left: -75px; }
+.phys-orbit-2 { width: 250px; height: 250px; margin-top: -125px; margin-left: -125px; }
+.phys-orbit-3 { width: 350px; height: 350px; margin-top: -175px; margin-left: -175px; border: 1px solid rgba(100, 200, 255, 0.2); }
+.phys-electron { position: absolute; top: 50%; width: 12px; height: 12px; background-color: #8ad; border-radius: 50%; box-shadow: 0 0 10px #8ad, 0 0 5px #fff; margin-top: -6px; left: -6px; transition: all 3s ease; }
+@keyframes physRotateSystem { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes physSlowOrbitMove { 0% { transform: rotateX(0deg) rotateY(-10deg); } 100% { transform: rotateX(10deg) rotateY(10deg); } }
+.phys-black-hole-container { position: absolute; bottom: 40px; left: 40px; width: 100px; height: 100px; z-index: 12; pointer-events: none; }
+.phys-black-hole { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 22px; height: 22px; background: #000; border-radius: 50%; box-shadow: 0 0 12px #90e0ef, 0 0 25px rgba(138, 43, 226, 0.6), inset 0 0 4px #fff; animation: physPulseBH 3s infinite alternate; }
+@keyframes physPulseBH { 0% { box-shadow: 0 0 8px #90e0ef, 0 0 20px rgba(138, 43, 226, 0.4); } 100% { box-shadow: 0 0 15px #caf0f8, 0 0 30px rgba(138, 43, 226, 0.8); } }
+.phys-light-particle { position: absolute; width: 3px; height: 3px; background: #fff; border-radius: 50%; box-shadow: 0 0 5px #fff, 0 0 8px #00b4d8; opacity: 0; }
+.phys-lp-1 { top: -30px; left: 20px; animation: physPullLight1 3s linear infinite; }
+.phys-lp-2 { top: 60px; left: -30px; animation: physPullLight2 2.5s linear infinite; animation-delay: 0.5s; }
+.phys-lp-3 { top: 70px; left: 80px; animation: physPullLight3 3.5s linear infinite; animation-delay: 1s; }
+@keyframes physPullLight1 { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(30px, 50px) scale(0.1); opacity: 0; } }
+@keyframes physPullLight2 { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(60px, -20px) scale(0.1); opacity: 0; } }
+@keyframes physPullLight3 { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(-40px, -40px) scale(0.1); opacity: 0; } }
+.phys-rising-magnet { position: fixed; bottom: -200px; width: 62px; height: 74px; box-sizing: border-box; background: transparent; border: 15px solid #cc0000; border-top: none; border-image: linear-gradient(180deg, #ff5c5c 0%, #e00000 40%, #a30000 75%, #7a0000 100%) 1; border-radius: 0 0 31px 31px; box-shadow: 0 0 25px rgba(255, 0, 0, 0.55), inset 0 6px 10px rgba(255, 255, 255, 0.25), inset 0 -6px 10px rgba(0, 0, 0, 0.35); z-index: 100005; transition: bottom 3s cubic-bezier(0.25, 1, 0.5, 1); }
+.phys-magnet-left { left: calc(50% - 240px); }
+.phys-magnet-right { left: calc(50% + 168px); }
+.phys-rising-magnet::after { content: ''; position: absolute; top: 4px; left: -15px; width: 6px; height: 60%; background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0)); border-radius: 3px; pointer-events: none; }
+.phys-pole { position: absolute; top: -11px; width: 15px; height: 15px; border-radius: 4px 4px 2px 2px; background: linear-gradient(180deg, #fefefe 0%, #d9d9d9 45%, #9a9a9a 100%); box-shadow: 0 0 10px rgba(255, 255, 255, 0.9), inset 0 -2px 3px rgba(0, 0, 0, 0.25); }
+.phys-pole-left { left: -1px; }
+.phys-pole-right { right: -1px; }
+.phys-energy-center-wrapper { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 420px; height: 110px; z-index: 100006; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.5s ease; }
+.phys-energy-center-wrapper.phys-show { opacity: 1; }
+.phys-electric-rectangle { position: absolute; width: 100%; height: 100%; border: 2px dashed rgba(0, 240, 255, 0.9); border-radius: 12px; box-shadow: 0 0 20px #00f0ff, inset 0 0 20px #00f0ff; animation: physRectSparkAnim 0.25s infinite alternate; }
+@keyframes physRectSparkAnim { 0% { border-color: #00f0ff; box-shadow: 0 0 15px #00f0ff, inset 0 0 15px #00f0ff; } 100% { border-color: #ffffff; box-shadow: 0 0 30px #00f0ff, 0 0 50px #ffffff, inset 0 0 30px #00ffff; } }
+.phys-gold-welcome-text { position: relative; overflow: hidden; direction: rtl; unicode-bidi: isolate; color: #ffd700; font-size: 24px; font-weight: bold; font-family: 'Cairo', 'Tahoma', sans-serif; text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff9900, 0 0 30px #ff4500; z-index: 108; letter-spacing: 0; text-align: center; white-space: nowrap; }
+.phys-gold-text-inner { display: inline-block; clip-path: inset(0 0 0 100%); }
+.phys-gold-text-inner.phys-reveal { clip-path: inset(0 0 0 0%); }
+.phys-gold-reveal-spark { position: absolute; top: 0; bottom: 0; right: 0; width: 3px; background: #ffffff; box-shadow: 0 0 10px #ffffff, 0 0 18px #ffd700, 0 0 28px #ff9900; opacity: 0; pointer-events: none; }
+.phys-gold-reveal-spark.phys-active { opacity: 1; animation: physGoldSparkFlicker 0.12s infinite; }
+@keyframes physGoldSparkFlicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.phys-tiny-electric-spark { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 12px; height: 12px; background: #ffffff; border-radius: 50%; box-shadow: 0 0 10px #ffffff, 0 0 20px #ffd700, 0 0 30px #ff4500; animation: physTinySparkMove 0.4s infinite alternate; z-index: 109; }
+@keyframes physTinySparkMove { 0% { transform: translateX(-50%) scale(0.7) translateY(0); opacity: 0.6; } 100% { transform: translateX(-50%) scale(1.4) translateY(-6px); opacity: 1; } }
+.phys-space-dim-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); z-index: 100002; opacity: 1; pointer-events: none; }
+.phys-magnet-glow { box-shadow: 0 0 45px rgba(0, 240, 255, 0.9), 0 0 20px rgba(255, 0, 0, 0.5), inset 0 0 12px rgba(255, 255, 255, 0.5); }
+.phys-magnet-spark { position: absolute; bottom: -22px; width: 2px; height: 0; background: #fff; box-shadow: 0 0 8px #00f0ff, 0 0 16px #00f0ff; opacity: 0; pointer-events: none; }
+.phys-magnet-spark-1 { left: 2px; animation: physMagnetSparkFlicker 0.5s infinite; }
+.phys-magnet-spark-2 { right: 2px; animation: physMagnetSparkFlicker 0.5s infinite 0.18s; }
+@keyframes physMagnetSparkFlicker { 0%, 65%, 100% { height: 0; opacity: 0; } 75% { height: 22px; opacity: 0.9; } 88% { height: 12px; opacity: 0.5; } }
+.phys-magnet-arc { position: fixed; top: calc(50% - 97px); left: 50%; transform: translateX(-50%); width: 336px; height: 46px; z-index: 100006; opacity: 0; pointer-events: none; background: radial-gradient(ellipse at center, rgba(0, 240, 255, 0.55) 0%, rgba(0, 240, 255, 0.2) 45%, transparent 80%); filter: blur(1px); transition: opacity 0.25s ease; }
+.phys-magnet-arc.phys-show { opacity: 1; }
+.phys-magnet-arc::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, #00f0ff 15%, #ffffff 50%, #00f0ff 85%, transparent); box-shadow: 0 0 12px #00f0ff, 0 0 25px #00f0ff; transform: translateY(-50%) scaleX(0); transform-origin: center; }
+.phys-magnet-arc.phys-show::before { animation: physArcExtendFlicker 0.5s ease-out forwards; }
+@keyframes physArcExtendFlicker { 0% { transform: translateY(-50%) scaleX(0); opacity: 1; } 40% { transform: translateY(-50%) scaleX(1.05); opacity: 0.7; } 55% { transform: translateY(-50%) scaleX(0.9); opacity: 1; } 100% { transform: translateY(-50%) scaleX(1); opacity: 1; } }
+.phys-energy-center-wrapper.phys-hologram-build .phys-electric-rectangle { opacity: 0; transform: scaleY(0.04); transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.phys-energy-center-wrapper.phys-hologram-build.phys-show .phys-electric-rectangle { opacity: 1; transform: scaleY(1); }
+.phys-hologram-scan { position: absolute; left: 0; width: 100%; height: 6px; top: 0; background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.95), transparent); box-shadow: 0 0 15px #00f0ff, 0 0 25px #00f0ff; opacity: 0; pointer-events: none; }
+.phys-energy-center-wrapper.phys-hologram-build.phys-show .phys-hologram-scan { opacity: 1; animation: physHologramScanMove 1s ease-in-out forwards; }
+@keyframes physHologramScanMove { 0% { top: 0; opacity: 1; } 85% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+.phys-energy-center-wrapper.phys-hologram-build .phys-tiny-electric-spark { opacity: 0; transition: opacity 0.4s ease; }
+.phys-energy-center-wrapper.phys-hologram-build.phys-show .phys-tiny-electric-spark { opacity: 1; transition-delay: 0.9s; }
+.phys-text-light-sweep { position: absolute; top: 0; left: 100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent); mix-blend-mode: screen; pointer-events: none; animation: physSweepRTL 0.9s ease-in-out forwards; }
+@keyframes physSweepRTL { 0% { left: 100%; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: -60%; opacity: 0; } }
+@keyframes physMagnetIdleShake { 0%, 100% { transform: translateX(0) rotate(0deg); } 25% { transform: translateX(-1px) rotate(-0.4deg); } 50% { transform: translateX(1px) rotate(0.4deg); } 75% { transform: translateX(-1px) rotate(0.25deg); } }
+.phys-magnet-idle-shake { animation: physMagnetIdleShake 0.18s ease-in-out infinite; }
+@keyframes physShakeWrong {
+0%, 100% { transform: translate(-50%, -50%) translateX(0); }
+20% { transform: translate(-50%, -50%) translateX(-10px); }
+40% { transform: translate(-50%, -50%) translateX(10px); }
+60% { transform: translate(-50%, -50%) translateX(-8px); }
+80% { transform: translate(-50%, -50%) translateX(8px); }
+}
+.phys-center-box.phys-wrong-shake { animation: physShakeWrong 0.45s ease-in-out; border-color: rgba(255, 60, 60, 0.7); }
+.arabic-otp-overlay { position: fixed; inset: 0; z-index: 99999; display: none; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(ellipse at center, #08132b 0%, #030814 65%, #000000 100%); }
+.arabic-otp-overlay.active { display: flex; }
+#arabicBgCanvas { display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+.arb-glass-box { position: relative; z-index: 2; width: 520px; height: 340px; max-width: 90%; max-height: 80%; border-radius: 24px; background: rgba(255,250,240,0.12); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); border: 1.5px solid rgba(255,235,190,0.45); box-shadow: 0 0 35px rgba(255,215,0,0.3), 0 0 70px rgba(255,248,220,0.15), inset 0 0 25px rgba(255,255,255,0.25), 0 20px 50px rgba(0,0,0,0.6); animation: arbGlassGlow 4s ease-in-out infinite alternate; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; padding: 25px 20px; transition: transform 0.3s ease; }
+@keyframes arbGlassGlow { 0% { box-shadow: 0 0 30px rgba(255,215,0,0.25), 0 0 60px rgba(255,248,220,0.12), inset 0 0 20px rgba(255,255,255,0.2), 0 20px 50px rgba(0,0,0,0.6); border-color: rgba(255,235,190,0.35); } 100% { box-shadow: 0 0 45px rgba(255,215,0,0.45), 0 0 90px rgba(255,248,220,0.25), inset 0 0 35px rgba(255,255,255,0.35), 0 20px 50px rgba(0,0,0,0.6); border-color: rgba(255,245,210,0.65); } }
+.arb-glass-box.arb-shattering { animation: arbShatterBox 3s cubic-bezier(0.1,0.8,0.2,1) forwards !important; pointer-events: none; }
+@keyframes arbShatterBox { 0% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0px); } 15% { opacity: 0.9; transform: scale(1.04) rotate(1deg); filter: blur(1px); } 40% { opacity: 0.6; transform: scale(0.92) rotate(-2deg); filter: blur(6px); clip-path: polygon(0% 10%, 90% 0%, 100% 85%, 15% 100%); } 100% { opacity: 0; transform: scale(1.35) rotate(8deg); filter: blur(35px); clip-path: polygon(20% 40%, 70% 20%, 80% 80%, 10% 70%); } }
+.arb-glass-shard { position: absolute; z-index: 100000; background: rgba(255,250,240,0.25); border: 1px solid rgba(255,235,190,0.7); backdrop-filter: blur(10px); box-shadow: 0 0 15px rgba(255,215,0,0.5); pointer-events: none; animation: arbShardExplode 3s cubic-bezier(0.1,0.8,0.2,1) forwards; }
+@keyframes arbShardExplode { 0% { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.1); filter: blur(10px); } }
+.arb-code-title { color: #ffe89e; font-size: 1.2rem; font-weight: 600; text-align: center; text-shadow: 0 0 12px rgba(255,215,0,0.6); letter-spacing: 1px; }
+.arb-code-container { display: flex; gap: 10px; direction: ltr; }
+.arb-code-input { width: 48px; height: 58px; text-align: center; font-size: 24px; font-weight: bold; color: #ffd700; background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,235,190,0.4); border-radius: 12px; outline: none; backdrop-filter: blur(8px); box-shadow: inset 0 0 10px rgba(255,215,0,0.1); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+.arb-code-input:focus { border-color: #ffd700; background: rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(255,215,0,0.6), inset 0 0 12px rgba(255,255,255,0.4); transform: translateY(-3px) scale(1.05); }
+.arb-submit-btn { margin-top: 8px; padding: 10px 42px; background: rgba(255,215,0,0.12); border: 1.5px solid #ffd700; border-radius: 12px; color: #ffd700; font-size: 1.15rem; font-weight: bold; font-family: inherit; cursor: pointer; backdrop-filter: blur(6px); box-shadow: 0 0 15px rgba(255,215,0,0.25), inset 0 0 10px rgba(255,215,0,0.15); transition: all 0.3s ease; }
+.arb-submit-btn:hover { background: rgba(255,215,0,0.28); border-color: #ffe89e; color: #ffffff; box-shadow: 0 0 25px rgba(255,215,0,0.6), inset 0 0 15px rgba(255,255,255,0.3); transform: translateY(-2px) scale(1.03); }
+.arb-submit-btn:active { transform: translateY(0) scale(0.98); }
+.arb-cancel-btn { margin-top: 4px; background: transparent; border: none; color: #d8c48f; cursor: pointer; font-size: 14px; }
+.arb-welcome-wrapper { position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; pointer-events: none; width: 90%; max-width: 900px; }
+.arb-welcome-title { font-family: 'Amiri','Traditional Arabic',serif; font-size: 3.5rem; color: #ffe89e; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; direction: rtl; transition: opacity 1.5s ease; }
+.arb-welcome-word { display: inline-flex; white-space: nowrap; }
+.arb-char-span { display: inline-block; opacity: 0; will-change: transform, opacity, filter; transition: transform 4.5s cubic-bezier(0.16,1,0.3,1), opacity 3.5s ease-out, filter 4s ease; filter: blur(12px); }
+.arb-char-span.arb-assembled { opacity: 1; filter: blur(0px); transform: translate(0,0) rotate(0deg) scale(1) !important; text-shadow: 0 0 15px #ffd700, 0 0 35px rgba(255,215,0,0.8); }
+.arb-welcome-title.arb-merged-out { opacity: 0; }
+.arb-connected-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 100%; font-family: 'Amiri','Traditional Arabic',serif; font-size: 3.5rem; color: #ffe89e; text-align: center; direction: rtl; white-space: nowrap; opacity: 0; filter: blur(10px); transition: opacity 1.8s ease, filter 1.8s ease, text-shadow 2s ease; }
+.arb-connected-text.active { opacity: 1; filter: blur(0px); text-shadow: 0 0 18px #ffd700, 0 0 40px rgba(255,215,0,0.85), 0 0 70px rgba(255,235,190,0.6); }
+.video-slot { position: relative; width: 100%; padding-top: 56.25%; background: #0b1220; border-radius: 12px; overflow: hidden; margin-top: 10px; border: 1px solid rgba(148,163,184,0.2); }
+.video-slot iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 12px; text-align: center; padding: 10px; }
+.chemistry-otp-overlay { position: fixed; inset: 0; background-color: #000000; display: none; justify-content: center; align-items: center; z-index: 99999; overflow: hidden; font-family: system-ui, -apple-system, sans-serif; }
+.chemistry-otp-overlay.active { display: flex; }
+#chemLabCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; z-index: 1; cursor: pointer; }
+.chem-ui-layer { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; }
+.chem-enter-btn { padding: 16px 50px; font-size: 1.3rem; color: #00f0ff; background: rgba(0, 0, 0, 0.6); border: 2px solid #00f0ff; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; outline: none; box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); backdrop-filter: blur(5px); font-family: inherit; }
+.chem-enter-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 30px rgba(0, 240, 255, 0.8); }
+.chem-flash-overlay { position: absolute; inset: 0; background-color: #ffffff; opacity: 0; pointer-events: none; transition: opacity 0.2s ease-out; z-index: 20; }
+.chem-flash-overlay.active { opacity: 0.3; }
+.chem-flash-overlay.error { background-color: #ff2020; }
+#chemHiddenCodeInput { position: fixed; top: -100px; left: -100px; opacity: 0; pointer-events: none; }
+.chem-cancel-btn { position: absolute; top: 20px; right: 20px; z-index: 30; background: transparent; border: 1px solid rgba(0, 240, 255, 0.4); color: #9fe9ff; padding: 8px 18px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 13px; transition: all 0.2s ease; }
+.chem-cancel-btn:hover { background: rgba(0, 240, 255, 0.15); }
+</style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-8 flex items-center justify-center">
-
+<body class="text-slate-100 min-h-screen p-4 md:p-8 flex items-center justify-center">
     <div class="w-full max-w-7xl mx-auto bg-slate-900 rounded-3xl shadow-2xl p-6 md:p-10 border border-slate-800">
-
-        <!-- ================= الطبقة الأولى: واجهة الترحيب والمربعات الستة العريضة ================= -->
-        <div id="view-home" class="view-section">
+        <div id="view-home" class="view-section active">
             <header class="text-center mb-10">
                 <h1 class="text-3xl md:text-4xl font-black text-cyan-400 mb-2">منصة التعليم الإلكتروني</h1>
                 <p class="text-slate-400">اختر المادة الدراسية للبدء في التعلم</p>
             </header>
-
-            <!-- شبكة المواد (3 في الأعلى و 3 في الأسفل - عريضة ومرتبة) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- 1. الرياضيات -->
                 <div onclick="selectSubject('math')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="math-bg.png" alt="الرياضيات" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
@@ -45,8 +385,6 @@
                         <p class="text-sm text-slate-300 mt-1">الأستاذ: أحمد علي</p>
                     </div>
                 </div>
-
-                <!-- 2. اللغة الإنجليزية -->
                 <div onclick="selectSubject('english')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="engl-bg.png" alt="الانجليزي" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
@@ -55,8 +393,6 @@
                         <p class="text-sm text-slate-300 mt-1">الأستاذة: سارة محمد</p>
                     </div>
                 </div>
-
-                <!-- 3. الفيزياء -->
                 <div onclick="selectSubject('physics')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="fezeia.png" alt="الفيزياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
@@ -65,8 +401,6 @@
                         <p class="text-sm text-slate-300 mt-1">الأستاذ: كرار حيدر</p>
                     </div>
                 </div>
-
-                <!-- 4. الكيمياء -->
                 <div onclick="selectSubject('chemistry')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="kemea.png" alt="الكيمياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
@@ -75,8 +409,6 @@
                         <p class="text-sm text-slate-300 mt-1">الأستاذة: فاطمة حسن</p>
                     </div>
                 </div>
-
-                <!-- 5. اللغة العربية -->
                 <div onclick="selectSubject('arabic')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="arpeq.png" alt="اللغة العربية" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
@@ -85,8 +417,6 @@
                         <p class="text-sm text-slate-300 mt-1">الأستاذ: يوسف الجراح</p>
                     </div>
                 </div>
-
-                <!-- 6. الأحياء -->
                 <div onclick="selectSubject('biology')" class="subject-card bg-slate-800 hover:bg-slate-700 p-6 rounded-2xl cursor-pointer border border-slate-700 flex items-center gap-5 shadow-lg group">
                     <img src="paelowje.png" alt="الأحياء" class="w-28 h-28 rounded-xl object-cover border-2 border-cyan-400 group-hover:scale-105 transition-transform flex-shrink-0">
                     <div>
@@ -95,18 +425,14 @@
                         <p class="text-sm text-slate-300 mt-1">الأستاذة: ليلى مراد</p>
                     </div>
                 </div>
-
             </div>
         </div>
-
-        <!-- ================= الطبقة الثانية: واجهة اختيار الصف الدراسي ================= -->
-        <div id="view-grades" class="view-section hidden">
+        <div id="view-grades" class="view-section">
             <button onclick="goBackToHome()" class="mb-6 text-sm text-cyan-400 hover:underline flex items-center gap-1">
                 ← العودة للمواد الدراسية
             </button>
-            <h2 id="selected-subject-title" class="text-2xl font-bold text-cyan-400 mb-6 text-center"></h2>
+            <h2 id="selected-subject-title" class="text-2xl font-bold text-cyan-400 mb-6 text-center">اختر صفك الدراسي</h2>
             <p class="text-center text-slate-400 mb-8">اختر صفك الدراسي للمتابعة</p>
-
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-xl mx-auto">
                 <button onclick="selectGrade('third')" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold p-6 rounded-xl shadow-lg transition-all text-xl">
                     ثالث متوسط
@@ -116,106 +442,1938 @@
                 </button>
             </div>
         </div>
-
-        <!-- ================= الطبقة الرابعة: واجهة الدروس النهائية ================= -->
-        <div id="view-dashboard" class="view-section hidden">
+        <div id="view-dashboard" class="view-section">
             <div class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
                 <div>
-                    <h2 id="dash-title" class="text-2xl font-bold text-emerald-400"></h2>
+                    <h2 id="dash-title" class="text-2xl font-bold text-emerald-400">مرحباً بك في المنصة</h2>
                     <p id="dash-subtitle" class="text-slate-400 text-sm mt-1"></p>
                 </div>
                 <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
                     تسجيل الخروج
                 </button>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                    <h4 class="font-bold text-white mb-2">الدرس الأول</h4>
-                    <p class="text-xs text-slate-300 mb-4">مقدمة شاملة وأساسيات المنهج الدراسي.</p>
-                    <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="video-generic-grid"></div>
+        </div>
+        <div id="view-royal-math" class="view-section">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-3xl font-black text-cyan-400">مرحباً بك في عالم الرياضيات (سادس علمي)</h2>
+                    <p class="text-slate-400 text-sm mt-1">المرحلة: سادس علمي | الفصل الدراسي الأول</p>
                 </div>
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                    <h4 class="font-bold text-white mb-2">الدرس الثاني</h4>
-                    <p class="text-xs text-slate-300 mb-4">شرح الأمثلة والتمارين الوزارية المهمة.</p>
-                    <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
+                <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
+                    تسجيل الخروج
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6" id="video-math-grid"></div>
+        </div>
+        <div id="view-royal-english" class="view-section">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 id="english-header-title" class="text-3xl font-black text-amber-400">مرحباً بك في عالم اللغة الإنجليزية</h2>
+                    <p id="english-header-subtitle" class="text-slate-400 text-sm mt-1">المرحلة الدراسية | الكورس الأول</p>
                 </div>
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                    <h4 class="font-bold text-white mb-2">الدرس الثالث</h4>
-                    <p class="text-xs text-slate-300 mb-4">حل اختبارات الأفكار الوزارية المتطورة.</p>
-                    <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">متاح للمشاهدة</span>
+                <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
+                    تسجيل الخروج
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6" id="video-english-grid"></div>
+        </div>
+        <div id="view-royal-biology" class="view-section">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 id="biology-header-title" class="text-3xl font-black text-emerald-400">مرحباً بك في عالم الأحياء</h2>
+                    <p id="biology-header-subtitle" class="text-slate-400 text-sm mt-1">المرحلة الدراسية | الكورس الأول</p>
+                </div>
+                <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
+                    تسجيل الخروج
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6" id="video-biology-grid"></div>
+        </div>
+        <div id="view-royal-physics" class="view-section">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 id="physics-header-title" class="text-3xl font-black text-sky-400">مرحباً بك في عالم الفيزياء</h2>
+                    <p id="physics-header-subtitle" class="text-slate-400 text-sm mt-1">المرحلة الدراسية | الكورس الأول</p>
+                </div>
+                <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
+                    تسجيل الخروج
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6" id="video-physics-grid"></div>
+        </div>
+        <div id="view-royal-arabic" class="view-section">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 id="arabic-header-title" class="text-3xl font-black text-amber-400">مرحباً بك في عالم اللغة العربية</h2>
+                    <p id="arabic-header-subtitle" class="text-slate-400 text-sm mt-1">المرحلة الدراسية | الكورس الأول</p>
+                </div>
+                <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm border border-red-500/30 transition-all">
+                    تسجيل الخروج
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6" id="video-arabic-grid"></div>
+        </div>
+    </div>
+    <div class="royal-otp-overlay" id="royalOtpOverlay">
+        <div class="screen-flash-glow" id="screenFlash"></div>
+        <div class="sparkles-container" id="sparklesContainer"></div>
+        <div class="scene-wrapper" id="sceneWrapper">
+            <div class="otp-container" id="mainContainer">
+                <div id="inputSection">
+                    <div style="color: #f3f4f6; font-size: 17px; margin-bottom: 25px; font-weight: bold;">أدخل رمز الدخول المكون من 7 أرقام (سادس رياضيات)</div>
+                    <div class="royal-otp-inputs" id="otpForm">
+                        <input type="text" maxlength="1" inputmode="numeric" />
+                        <input type="text" maxlength="1" inputmode="numeric" />
+                        <input type="text" maxlength="1" inputmode="numeric" />
+                        <input type="text" maxlength="1" inputmode="numeric" />
+                        <input type="text" maxlength="1" inputmode="numeric" />
+                        <input type="text" maxlength="1" inputmode="numeric" />
+                        <input type="text" maxlength="1" inputmode="numeric" />
+                    </div>
+                    <button class="royal-submit-btn" onclick="verifyRoyalOtp()">موافق</button>
+                    <button onclick="closeRoyalModal()" style="margin-top: 15px; background: transparent; border: none; color: #94a3b8; cursor: pointer; font-size: 14px;">إلغاء والعودة</button>
+                </div>
+                <div id="resultSection" style="display: none; text-align: center;">
+                    <div id="checkIcon" style="font-size: 45px; color: #38bdf8; margin-bottom: 8px; opacity: 0; transform: scale(0.5); transition: all 0.5s ease;">✓</div>
+                    <div class="math-steps" id="mathStepsBox">
+                        <div class="math-step-line" id="line1" data-text="(x + yi)² = a + bi"></div>
+                        <div class="math-step-line" id="line2" data-text="x² - y² + 2xyi = a + bi"></div>
+                        <div class="math-step-line" id="line3" data-text="x² - y² = a  ,  2xy = b"></div>
+                        <div class="math-step-line" id="line4" data-text="x = ±(...), y = ±(...)"></div>
+                    </div>
+                    <div class="gears-container" id="gearsContainer">
+                        <div class="scifi-portal-wrapper" id="gearsPortal">
+                            <div class="energy-ring"></div>
+                            <div class="scifi-gear gear-primary"></div>
+                            <div class="scifi-gear gear-secondary"></div>
+                            <div class="energy-core"></div>
+                        </div>
+                    </div>
+                    <div class="welcome-text-line" id="welcomeTextLine" data-text="أهلاً وسهلاً في عالم الأرقام"></div>
                 </div>
             </div>
         </div>
-
     </div>
-
-    <!-- ================= منطق التشغيل (JavaScript Logic) ================= -->
+    <div class="english-otp-overlay" id="englishOtpOverlay">
+        <div class="gold-box show" id="goldBoxEng">
+            <h2 id="englishBoxTitle">أدخل الرمز السري للغة الإنجليزية</h2>
+            <div class="inputs-container-eng" id="inputsContainerEng">
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+                <input type="text" maxlength="1" oninput="handleInputEng(this)" />
+            </div>
+            <button class="submit-btn-eng" onclick="submitCodeEng()">موافق</button>
+            <button onclick="closeEnglishModal()" style="margin-top: 15px; background: transparent; border: none; color: #3a2a00; cursor: pointer; font-size: 14px; font-weight: bold;">إلغاء والعودة</button>
+        </div>
+        <div class="new-gold-box" id="newGoldBoxEng">
+            <div class="new-inputs-container">
+                <div class="gear-box" id="box1"></div>
+                <div class="gear-box" id="box2"></div>
+                <div class="gear-box" id="box3"></div>
+            </div>
+            <div class="gears-ground" id="gearsGroundEng">
+                <div class="ground-gear gg1 cw"></div>
+                <div class="ground-gear gg2 ccw"></div>
+                <div class="ground-gear gg3 cw"></div>
+                <div class="ground-gear gg4 ccw"></div>
+                <div class="ground-gear gg5 cw"></div>
+                <div class="ground-gear gg6 ccw"></div>
+                <div class="ground-gear gg7 cw"></div>
+                <div class="ground-gear gg8 ccw"></div>
+                <div class="ground-gear gg9 cw"></div>
+            </div>
+        </div>
+        <div class="flash-overlay" id="flashOverlayEng"></div>
+        <div class="welcome-message" id="welcomeMessageEng">أهلاً وسهلاً</div>
+    </div>
+    <div class="biology-otp-overlay" id="biologyOtpOverlay">
+        <div class="fog-layer"></div>
+        <div class="ambient-particles"></div>
+        <div class="bio-box-container" id="boxContainer">
+            <div class="bio-box" id="bioBox">
+                <div class="cracks-overlay"></div>
+                <div class="bio-grid-bg"></div>
+                <div class="corner-metal corner-tl"></div>
+                <div class="corner-metal corner-tr"></div>
+                <div class="corner-metal corner-bl"></div>
+                <div class="corner-metal corner-br"></div>
+                <div class="light-sweep-effect"></div>
+                <div class="content-wrapper">
+                    <div class="code-inputs-container">
+                        <div class="capsule-wrapper"><input type="text" class="code-input" maxlength="1" inputmode="numeric"></div>
+                        <div class="capsule-wrapper"><input type="text" class="code-input" maxlength="1" inputmode="numeric"></div>
+                        <div class="capsule-wrapper"><input type="text" class="code-input" maxlength="1" inputmode="numeric"></div>
+                        <div class="capsule-wrapper"><input type="text" class="code-input" maxlength="1" inputmode="numeric"></div>
+                        <div class="capsule-wrapper"><input type="text" class="code-input" maxlength="1" inputmode="numeric"></div>
+                        <div class="capsule-wrapper"><input type="text" class="code-input" maxlength="1" inputmode="numeric"></div>
+                        <div class="capsule-wrapper"><input type="text" class="code-input" maxlength="1" inputmode="numeric"></div>
+                    </div>
+                    <button class="submit-btn" id="submitBtn">دخول ↣</button>
+                </div>
+                <div class="floating-elements">
+                    <div class="dividing-cell-container">
+                        <div class="cell-half"></div>
+                        <div class="cell-half"></div>
+                    </div>
+                    <div class="random-bacteria" style="top: 150px; left: 100px;"></div>
+                    <div class="random-bacteria" style="top: 70px; right: 220px;"></div>
+                    <div class="glowing-droplet drop-1"></div>
+                    <div class="glowing-droplet drop-2"></div>
+                    <div class="green-particle gp-1"></div>
+                    <div class="green-particle gp-2"></div>
+                    <div class="green-particle gp-3"></div>
+                    <div class="mitochondria-pulse"></div>
+                </div>
+                <div class="dna-helix-container" style="z-index: 2;">🧬 🦠 🧬 🦠 🧬</div>
+                <div class="dna-border-text">🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬</div>
+            </div>
+            <div class="empty-bio-box" id="emptyBox">
+                <div class="bio-grid-bg"></div>
+                <div class="corner-metal corner-tl"></div>
+                <div class="corner-metal corner-tr"></div>
+                <div class="corner-metal corner-bl"></div>
+                <div class="corner-metal corner-br"></div>
+                <div class="light-sweep-effect"></div>
+                <div class="ecg-bridge-container" id="ecgBridgeContainer">
+                    <svg class="ecg-bridge-svg" viewBox="0 0 430 100" preserveAspectRatio="none">
+                        <path class="ecg-bridge-line" d="M 0,50 L 60,50 L 90,50 L 115,10 L 140,90 L 165,50 L 195,50 L 235,50 L 265,5 L 295,95 L 325,50 L 370,50 L 430,50" />
+                    </svg>
+                </div>
+                <div class="glass-black-box glass-box-left" id="leftSquare">
+                    <span class="box-letter" id="letterM">M</span>
+                </div>
+                <div class="glass-black-box glass-box-right" id="rightSquare">
+                    <span class="box-letter" id="letterR">R</span>
+                </div>
+                <div class="dna-border-text">🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬 🧬</div>
+            </div>
+            <div class="shards-container" id="shardsContainer"></div>
+        </div>
+    </div>
+    <div class="physics-otp-overlay" id="physicsOtpOverlay">
+        <div class="phys-space-inner">
+            <div class="phys-nebula phys-nebula-1"></div>
+            <div class="phys-nebula phys-nebula-2"></div>
+            <div class="phys-stars"></div>
+            <div class="phys-tesla-coil phys-left-coil">
+                <div class="phys-coil-top"></div>
+                <div class="phys-tesla-spark"></div>
+            </div>
+            <div class="phys-tesla-coil phys-right-coil">
+                <div class="phys-coil-top"></div>
+                <div class="phys-tesla-spark"></div>
+            </div>
+            <div class="phys-center-box" id="physCenterBox">
+                <div class="phys-magnetic-field">
+                    <div class="phys-mag-line phys-mag-1"></div>
+                    <div class="phys-mag-line phys-mag-2"></div>
+                </div>
+                <div class="phys-atom-container" id="physAtomContainer">
+                    <div class="phys-nucleus"></div>
+                    <div class="phys-orbit phys-orbit-1">
+                        <div class="phys-electron" id="physElectron0"></div>
+                    </div>
+                    <div class="phys-orbit phys-orbit-2">
+                        <div class="phys-electron" id="physElectron1"></div>
+                        <div class="phys-electron" id="physElectron2"></div>
+                    </div>
+                    <div class="phys-orbit phys-orbit-3">
+                        <div class="phys-electron" id="physElectron3"></div>
+                    </div>
+                </div>
+                <div class="phys-electric-counter" id="physOtpForm">
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                    <div class="phys-digit-cell"><input type="text" maxlength="1" inputmode="numeric" class="phys-code-input"><div class="phys-cell-flash"></div></div>
+                </div>
+            </div>
+            <button class="phys-reactor-btn" id="physEnterBtn">دخول</button>
+            <button class="phys-cancel-btn" onclick="closePhysicsModal()">إلغاء والعودة</button>
+            <div class="phys-black-hole-container">
+                <div class="phys-black-hole"></div>
+                <div class="phys-light-particle phys-lp-1"></div>
+                <div class="phys-light-particle phys-lp-2"></div>
+                <div class="phys-light-particle phys-lp-3"></div>
+            </div>
+        </div>
+    </div>
+    <div class="arabic-otp-overlay" id="arabicOtpOverlay">
+        <canvas id="arabicBgCanvas"></canvas>
+        <div class="arb-glass-box" id="arbMainGlassBox">
+            <div class="arb-code-title">أدخل رمز الدخول المكون من 7 أرقام (اللغة العربية)</div>
+            <div class="arb-code-container">
+                <input type="text" class="arb-code-input" maxlength="1" inputmode="numeric" />
+                <input type="text" class="arb-code-input" maxlength="1" inputmode="numeric" />
+                <input type="text" class="arb-code-input" maxlength="1" inputmode="numeric" />
+                <input type="text" class="arb-code-input" maxlength="1" inputmode="numeric" />
+                <input type="text" class="arb-code-input" maxlength="1" inputmode="numeric" />
+                <input type="text" class="arb-code-input" maxlength="1" inputmode="numeric" />
+                <input type="text" class="arb-code-input" maxlength="1" inputmode="numeric" />
+            </div>
+            <button class="arb-submit-btn" id="arbSubmitBtn">دخول</button>
+            <button class="arb-cancel-btn" onclick="closeArabicModal()">إلغاء والعودة</button>
+        </div>
+        <div class="arb-welcome-wrapper">
+            <div class="arb-welcome-title" id="arbWelcomeTitle"></div>
+            <div class="arb-connected-text" id="arbConnectedText">أهلاً وسهلاً بك في لغة الضاد</div>
+        </div>
+    </div>
+    <div class="chemistry-otp-overlay" id="chemistryOtpOverlay">
+        <button class="chem-cancel-btn" onclick="closeChemistryModal()">إلغاء والعودة</button>
+        <canvas id="chemLabCanvas"></canvas>
+        <input type="tel" id="chemHiddenCodeInput" maxlength="7" pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+        <div class="chem-ui-layer" id="chemUiLayer">
+            <button class="chem-enter-btn" id="chemEnterBtn">دخول</button>
+        </div>
+        <div class="chem-flash-overlay" id="chemFlashOverlay"></div>
+    </div>
     <script>
-        let currentSubject = "";
-        let currentGrade = "";
+let currentSubject = "";
+let currentGrade = "";
+const schoolCodes = {
+third: {
+math: ["7834192", "4592018", "6102837", "9023481", "1298475", "5483019", "3092847", "8471920", "2918347", "6382019"],
+english: ["1928374", "5647382", "9019283", "4857692", "3829102", "7485961", "2039485", "6152438", "8910293", "5049382"],
+physics: ["4920183", "7382910", "2837465", "9102938", "5647383", "8392019", "3049586", "6758493", "1928384", "9485762"],
+chemistry: ["1122334", "5566778", "9900112", "3344556", "7788990", "1234567", "7654321", "1357924", "2468135", "9876543"],
+arabic: ["2233445", "6677889", "0011223", "4455667", "8899001", "2345678", "8765432", "2468135", "3579246", "8765431"],
+biology: ["4433221", "8877665", "2211009", "6655443", "0099887", "7651234", "1237654", "2461357", "1352468", "3456789"]
+},
+sixth: {
+math: ["8392014", "3920184", "6574839", "2019384", "7485962", "1029384", "5948372", "8374652", "4859602", "9182736"],
+english: ["3829104", "7485960", "2918374", "6543219", "8910294", "1029385", "4859603", "5748392", "9018273", "2837466"],
+physics: ["9283746", "3847562", "1029386", "7584932", "5849302", "2918375", "8475632", "6758494", "4938201", "3049587"],
+chemistry: ["4567890", "1122446", "3355779", "8866442", "9977553", "1472583", "3692581", "7418529", "9638527", "8529637"],
+arabic: ["5678901", "2233557", "4466880", "9977331", "1188442", "2581473", "3691472", "8523691", "7419632", "9637418"],
+biology: ["7412583", "3698521", "9632587", "1593578", "7531598", "9517538", "3571598", "8521473", "9631478", "7539512"]
+}
+};
+/* ============================================================
+   قسم الدروس والفيديوهات: هنا تضيف أي عدد تريده من الدروس
+   لكل مادة، لكل صف. العدد مفتوح تماماً — أضف أو احذف أسطر براحتك.
+   كل درس عبارة عن سطر بهذا الشكل:
+   { title: "اسم الدرس", desc: "وصف قصير للدرس", link: "" }
+   - title: عنوان الدرس اللي يظهر فوق الفيديو.
+   - desc: وصف قصير يظهر تحت العنوان.
+   - link: رابط تضمين (embed) من Streamable. اتركه "" إذا ما رفعت الفيديو بعد.
+   طريقة الحصول على رابط التضمين من Streamable:
+   الرابط العادي يكون شكله: https://streamable.com/xxxxx
+   رابط التضمين المطلوب هنا شكله: https://streamable.com/e/xxxxx
+   (فقط استبدل الجزء بعد streamable.com/ بـ e/ ثم نفس الكود)
+   لإضافة درس جديد: انسخ سطر كامل { ... }, وغيّر العنوان والوصف والرابط.
+   لحذف درس: احذف سطره بالكامل.
+   ============================================================ */
+const courseContent = {
+third: {
+math: [
+{ title: "الدرس الأول", desc: "مقدمة شاملة وأساسيات المنهج الدراسي.", link: "" },
+{ title: "الدرس الثاني", desc: "شرح الأمثلة والتمارين الوزارية المهمة.", link: "" },
+{ title: "الدرس الثالث", desc: "حل اختبارات الأفكار الوزارية المتطورة.", link: "" }
+],
+english: [
+{ title: "قواعد القواعد (Grammar)", desc: "أهم القواعد الوزارية المشروحة بالتفصيل.", link: "" },
+{ title: "القطع الاستيعابية (Passages)", desc: "أسئلة وأجوبة القطع المهمة للامتحان.", link: "" },
+{ title: "الاسقاطات والاملاء (Vocabulary)", desc: "تدريبات مكثفة للأسئلة الوزارية المتكررة.", link: "" }
+],
+physics: [
+{ title: "الحركة والقوى", desc: "قوانين نيوتن وتطبيقاتها في الحركة الخطية.", link: "" },
+{ title: "الكهرباء والمغناطيسية", desc: "المجالات الكهربائية والمغناطيسية وتطبيقاتها.", link: "" },
+{ title: "الأسئلة الوزارية", desc: "حل وتدريب على الأسئلة الوزارية السابقة.", link: "" }
+],
+chemistry: [
+{ title: "الدرس الأول", desc: "مقدمة شاملة وأساسيات المنهج الدراسي.", link: "" },
+{ title: "الدرس الثاني", desc: "شرح الأمثلة والتمارين الوزارية المهمة.", link: "" },
+{ title: "الدرس الثالث", desc: "حل اختبارات الأفكار الوزارية المتطورة.", link: "" }
+],
+arabic: [
+{ title: "النحو والصرف", desc: "قواعد اللغة العربية وتطبيقاتها العملية.", link: "" },
+{ title: "النصوص الأدبية", desc: "تحليل النصوص والشعر العربي.", link: "" },
+{ title: "الأسئلة الوزارية", desc: "حل وتدريب على الأسئلة الوزارية السابقة.", link: "" }
+],
+biology: [
+{ title: "الخلية ووظائفها", desc: "شرح تفصيلي لمكونات الخلية والوظائف الحيوية.", link: "" },
+{ title: "الوراثة والجينات", desc: "أساسيات علم الوراثة والقوانين المهمة.", link: "" },
+{ title: "الأسئلة الوزارية", desc: "حل وتدريب على الأسئلة الوزارية السابقة.", link: "" }
+]
+},
+sixth: {
+math: [
+{ title: "الأعداد المركبة", desc: "شرح تفصيلي للخواص والعمليات الأساسية.", link: "" },
+{ title: "نتيجة دي موافر", desc: "تطبيقات ومبرهنات الأعداد المعقدة.", link: "" },
+{ title: "الأسئلة الوزارية", desc: "حل وتدريب على الأسئلة الوزارية السابقة.", link: "" }
+],
+english: [
+{ title: "قواعد القواعد (Grammar)", desc: "أهم القواعد الوزارية المشروحة بالتفصيل.", link: "" },
+{ title: "القطع الاستيعابية (Passages)", desc: "أسئلة وأجوبة القطع المهمة للامتحان.", link: "" },
+{ title: "الاسقاطات والاملاء (Vocabulary)", desc: "تدريبات مكثفة للأسئلة الوزارية المتكررة.", link: "" }
+],
+physics: [
+{ title: "الحركة والقوى", desc: "قوانين نيوتن وتطبيقاتها في الحركة الخطية.", link: "" },
+{ title: "الكهرباء والمغناطيسية", desc: "المجالات الكهربائية والمغناطيسية وتطبيقاتها.", link: "" },
+{ title: "الأسئلة الوزارية", desc: "حل وتدريب على الأسئلة الوزارية السابقة.", link: "" }
+],
+chemistry: [
+{ title: "الدرس الأول", desc: "مقدمة شاملة وأساسيات المنهج الدراسي.", link: "" },
+{ title: "الدرس الثاني", desc: "شرح الأمثلة والتمارين الوزارية المهمة.", link: "" },
+{ title: "الدرس الثالث", desc: "حل اختبارات الأفكار الوزارية المتطورة.", link: "" }
+],
+arabic: [
+{ title: "النحو والصرف", desc: "قواعد اللغة العربية وتطبيقاتها العملية.", link: "" },
+{ title: "النصوص الأدبية", desc: "تحليل النصوص والشعر العربي.", link: "" },
+{ title: "الأسئلة الوزارية", desc: "حل وتدريب على الأسئلة الوزارية السابقة.", link: "" }
+],
+biology: [
+{ title: "الخلية ووظائفها", desc: "شرح تفصيلي لمكونات الخلية والوظائف الحيوية.", link: "" },
+{ title: "الوراثة والجينات", desc: "أساسيات علم الوراثة والقوانين المهمة.", link: "" },
+{ title: "الأسئلة الوزارية", desc: "حل وتدريب على الأسئلة الوزارية السابقة.", link: "" }
+]
+}
+};
+function renderVideosInto(prefix, subject) {
+const grid = document.getElementById(`${prefix}-grid`);
+if (!grid) return;
+const lessons = (courseContent[currentGrade] && courseContent[currentGrade][subject]) || [];
+const isGeneric = prefix === 'video-generic';
+const cardClass = isGeneric ? 'bg-slate-800 p-4 rounded-xl border border-slate-700' : 'bg-slate-800/80 p-5 rounded-2xl border border-slate-700';
+const titleClass = isGeneric ? 'font-bold text-white mb-2' : 'font-bold text-white text-lg mb-2';
+grid.innerHTML = '';
+if (lessons.length === 0) {
+grid.innerHTML = `<p class="text-slate-400 text-sm">لا توجد دروس مضافة بعد.</p>`;
+return;
+}
+lessons.forEach((lesson, i) => {
+const title = (lesson && lesson.title) || `الدرس ${i + 1}`;
+const desc = (lesson && lesson.desc) || '';
+const link = (lesson && lesson.link) || '';
+const videoInner = link
+? `<iframe src="${link}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`
+: `<div class="video-placeholder">لم يتم إضافة الفيديو بعد</div>`;
+const card = document.createElement('div');
+card.className = cardClass;
+card.innerHTML = `<h4 class="${titleClass}">${title}</h4><p class="text-xs text-slate-300 mb-4">${desc}</p><div class="video-slot">${videoInner}</div>`;
+grid.appendChild(card);
+});
+}
+function switchView(viewId) {
+document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+document.getElementById(viewId).classList.add('active');
+}
+function selectSubject(subject) {
+currentSubject = subject;
+switchView('view-grades');
+}
+function selectGrade(grade) {
+currentGrade = grade;
+if (currentSubject === 'math' && currentGrade === 'sixth') {
+document.getElementById('royalOtpOverlay').classList.add('active');
+resetRoyalModal();
+return;
+}
+if (currentSubject === 'english') {
+document.getElementById('englishOtpOverlay').classList.add('active');
+resetEnglishModal();
+return;
+}
+if (currentSubject === 'biology') {
+document.getElementById('biologyOtpOverlay').classList.add('active');
+resetBiologyModal();
+return;
+}
+if (currentSubject === 'physics') {
+document.getElementById('physicsOtpOverlay').classList.add('active');
+resetPhysicsModal();
+return;
+}
+if (currentSubject === 'arabic') {
+document.getElementById('arabicOtpOverlay').classList.add('active');
+resetArabicModal();
+return;
+}
+if (currentSubject === 'chemistry') {
+document.getElementById('chemistryOtpOverlay').classList.add('active');
+resetChemistryModal();
+return;
+}
+let enteredCode = prompt("أدخل رمز الدخول المكون من 7 أرقام:");
+if (!enteredCode) return;
+if (schoolCodes[currentGrade] && schoolCodes[currentGrade][currentSubject]) {
+if (schoolCodes[currentGrade][currentSubject].includes(enteredCode)) {
+alert("تم التحقق بنجاح! أهلاً بك في الدرس.");
+document.getElementById('dash-title').innerText = `مرحباً بك في المنصة`;
+document.getElementById('dash-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'}`;
+renderVideosInto('video-generic', currentSubject);
+switchView('view-dashboard');
+} else {
+alert("الرمز غير صحيح أو غير مخصص لهذه المادة/الصف.");
+switchView('view-home');
+}
+} else {
+alert("حدث خطأ في تحديد المرحلة أو المادة.");
+switchView('view-home');
+}
+}
+function goBackToHome() {
+switchView('view-home');
+}
+function logout() {
+currentSubject = "";
+currentGrade = "";
+switchView('view-home');
+}
+function closeRoyalModal() {
+document.getElementById('royalOtpOverlay').classList.remove('active');
+switchView('view-grades');
+}
+function closeEnglishModal() {
+document.getElementById('englishOtpOverlay').classList.remove('active');
+switchView('view-grades');
+}
+function closePhysicsModal() {
+document.getElementById('physicsOtpOverlay').classList.remove('active');
+switchView('view-grades');
+}
+function closeChemistryModal() {
+document.getElementById('chemistryOtpOverlay').classList.remove('active');
+if (window.chemLabReset) window.chemLabReset();
+switchView('view-grades');
+}
+function resetChemistryModal() {
+if (window.chemLabReset) window.chemLabReset();
+}
+function resetRoyalModal() {
+document.getElementById('inputSection').style.display = 'block';
+document.getElementById('resultSection').style.display = 'none';
+document.getElementById('mainContainer').className = 'otp-container';
+document.getElementById('mainContainer').style.transform = '';
+document.getElementById('mainContainer').style.opacity = '1';
+document.getElementById('mathStepsBox').style.display = 'flex';
+document.getElementById('mathStepsBox').style.opacity = '1';
+document.getElementById('gearsContainer').classList.remove('show');
+document.getElementById('gearsPortal').style.display = 'flex';
+document.getElementById('gearsPortal').classList.remove('gears-paused');
+document.getElementById('welcomeTextLine').className = 'welcome-text-line';
+document.getElementById('welcomeTextLine').innerHTML = '';
+document.getElementById('checkIcon').style.opacity = '0';
+document.getElementById('checkIcon').style.transform = 'scale(0.5)';
+['line1', 'line2', 'line3', 'line4'].forEach(id => {
+const el = document.getElementById(id);
+el.innerHTML = '';
+el.classList.remove('done');
+});
+royalInputs.forEach(i => {
+i.value = '';
+i.classList.remove('filled');
+});
+}
+function resetEnglishModal() {
+const goldBox = document.getElementById('goldBoxEng');
+const newGoldBox = document.getElementById('newGoldBoxEng');
+const flashOverlay = document.getElementById('flashOverlayEng');
+const welcomeMessage = document.getElementById('welcomeMessageEng');
+const gearsGround = document.getElementById('gearsGroundEng');
+goldBox.classList.remove('hide');
+goldBox.classList.add('show');
+newGoldBox.classList.remove('active');
+newGoldBox.style.opacity = '1';
+flashOverlay.classList.remove('show-flash');
+welcomeMessage.classList.remove('show-welcome');
+gearsGround.classList.remove('play');
+document.getElementById('englishOtpOverlay').style.backgroundColor = '#050505';
+inputsEng.forEach(i => {
+i.value = '';
+i.classList.remove('filled');
+});
+document.getElementById('box1').innerText = '';
+document.getElementById('box2').innerText = '';
+document.getElementById('box3').innerText = '';
+if(inputsEng[0]) inputsEng[0].focus();
+}
+const royalInputs = document.querySelectorAll('#otpForm input');
+royalInputs.forEach((input, index) => {
+input.addEventListener('input', (e) => {
+const val = e.target.value;
+if (!/[0-9]/.test(val)) { e.target.value = ''; input.classList.remove('filled'); return; }
+if (val) {
+input.classList.add('filled');
+if (index < royalInputs.length - 1) royalInputs[index + 1].focus();
+if (index === 6 || Array.from(royalInputs).every(i => i.value.length === 1)) {
+document.getElementById('mainContainer').classList.add('fully-lit');
+}
+} else {
+input.classList.remove('filled');
+document.getElementById('mainContainer').classList.remove('fully-lit');
+}
+});
+input.addEventListener('keydown', (e) => {
+if (e.key === 'Backspace') {
+input.classList.remove('filled');
+document.getElementById('mainContainer').classList.remove('fully-lit');
+if (!input.value && index > 0) {
+royalInputs[index - 1].focus();
+royalInputs[index - 1].classList.remove('filled');
+}
+}
+});
+});
+function handleInputEng(current) {
+if (current.value.length >= 1) {
+current.value = current.value.replace(/[^0-9]/g, '');
+if(current.value.length === 1) {
+current.classList.add('filled');
+const next = current.nextElementSibling;
+if (next) {
+next.focus();
+}
+}
+} else if (current.value.length === 0) {
+current.classList.remove('filled');
+}
+}
+const inputsEng = document.querySelectorAll('.inputs-container-eng input');
+inputsEng.forEach((input, index) => {
+input.addEventListener('keydown', (e) => {
+if (e.key === 'Backspace' && input.value === '') {
+if (index > 0) {
+inputsEng[index - 1].focus();
+inputsEng[index - 1].classList.remove('filled');
+}
+}
+});
+});
+function submitCodeEng() {
+let code = '';
+inputsEng.forEach(input => code += input.value);
+if (code.length !== 7) {
+alert('الرجاء إكمال كتابة الأرقام الـ 7 أولاً!');
+return;
+}
+if (!schoolCodes[currentGrade]['english'].includes(code)) {
+alert('الرمز المدخل غير صحيح!');
+return;
+}
+const oldBox = document.getElementById('goldBoxEng');
+oldBox.classList.add('hide');
+document.getElementById('englishOtpOverlay').style.backgroundColor = '#000000';
+setTimeout(() => {
+const newBox = document.getElementById('newGoldBoxEng');
+newBox.classList.add('active');
+const b1 = document.getElementById('box1');
+const b2 = document.getElementById('box2');
+const b3 = document.getElementById('box3');
+const gearsGround = document.getElementById('gearsGroundEng');
+const flashOverlay = document.getElementById('flashOverlayEng');
+const welcomeMessage = document.getElementById('welcomeMessageEng');
+setTimeout(() => {
+b1.innerText = 'A';
+setTimeout(() => {
+b2.innerText = 'S';
+setTimeout(() => {
+b3.innerText = 'A';
+setTimeout(() => {
+gearsGround.classList.add('play');
+setTimeout(() => {
+flashOverlay.classList.add('show-flash');
+newBox.style.opacity = '0';
+setTimeout(() => {
+welcomeMessage.classList.add('show-welcome');
+setTimeout(() => {
+document.getElementById('englishOtpOverlay').classList.remove('active');
+document.getElementById('english-header-title').innerText = `مرحباً بك في عالم اللغة الإنجليزية (${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'})`;
+document.getElementById('english-header-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'} | الكورس الأول`;
+renderVideosInto('video-english', 'english');
+switchView('view-royal-english');
+}, 1500);
+}, 600);
+}, 2000);
+}, 400);
+}, 500);
+}, 500);
+}, 2000);
+}, 300);
+}
+function createGoldenSparkles() {
+const container = document.getElementById('sparklesContainer');
+container.classList.add('active');
+container.innerHTML = '';
+const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+for (let i = 0; i < 60; i++) {
+const s = document.createElement('div');
+s.classList.add('sparkle');
+s.style.left = `${cx}px`; s.style.top = `${cy}px`;
+const angle = Math.random() * Math.PI * 2;
+const dist = 200 + Math.random() * 500;
+s.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
+s.style.setProperty('--ty', `${Math.sin(angle) * dist}px`);
+container.appendChild(s);
+}
+setTimeout(() => { container.classList.remove('active'); container.innerHTML = ''; }, 2200);
+}
+function typeWriter(id, speed, cb) {
+const el = document.getElementById(id);
+const text = el.getAttribute('data-text');
+let i = 0;
+function type() {
+if (i < text.length) {
+el.innerHTML += text.charAt(i);
+i++;
+setTimeout(type, speed);
+} else {
+el.classList.add('done');
+if (cb) cb();
+}
+}
+type();
+}
+function verifyRoyalOtp() {
+let code = '';
+royalInputs.forEach(i => code += i.value);
+if (code.length !== 7) {
+alert('يرجى إكمال كتابة الرمز المكون من 7 أرقام');
+return;
+}
+if (!schoolCodes.sixth.math.includes(code)) {
+alert('الرمز المدخل غير صحيح!');
+return;
+}
+document.getElementById('inputSection').style.display = 'none';
+document.getElementById('resultSection').style.display = 'block';
+document.getElementById('screenFlash').classList.add('active');
+createGoldenSparkles();
+setTimeout(() => {
+document.getElementById('checkIcon').style.opacity = '1';
+document.getElementById('checkIcon').style.transform = 'scale(1)';
+setTimeout(() => {
+typeWriter('line1', 40, () => {
+typeWriter('line2', 30, () => {
+typeWriter('line3', 30, () => {
+typeWriter('line4', 30, () => {
+setTimeout(() => {
+document.getElementById('mathStepsBox').style.opacity = '0';
+setTimeout(() => {
+document.getElementById('mathStepsBox').style.display = 'none';
+document.getElementById('gearsContainer').classList.add('show');
+setTimeout(() => {
+document.getElementById('gearsPortal').classList.add('gears-paused');
+setTimeout(() => {
+document.getElementById('gearsPortal').style.display = 'none';
+const welcomeEl = document.getElementById('welcomeTextLine');
+welcomeEl.classList.add('show');
+typeWriter('welcomeTextLine', 50, () => {
+setTimeout(() => {
+document.getElementById('mainContainer').classList.add('crack-active');
+createGoldenSparkles();
+document.getElementById('mainContainer').classList.add('shaking');
+setTimeout(() => {
+document.getElementById('mainContainer').classList.remove('shaking');
+const container = document.getElementById('mainContainer');
+container.style.transition = 'transform 1.2s ease, opacity 1.2s ease';
+container.style.transform = 'translateX(-500px) rotateY(-45deg)';
+container.style.opacity = '0';
+setTimeout(() => {
+document.getElementById('royalOtpOverlay').classList.remove('active');
+renderVideosInto('video-math', 'math');
+switchView('view-royal-math');
+}, 1100);
+}, 1200);
+}, 800);
+});
+}, 1200);
+}, 1500);
+}, 500);
+}, 1000);
+});
+});
+});
+});
+}, 400);
+}, 2000);
+}
+const inputs = document.querySelectorAll('.code-input');
+const submitBtn = document.getElementById('submitBtn');
+const bioBox = document.getElementById('bioBox');
+const boxContainer = document.getElementById('boxContainer');
+const emptyBox = document.getElementById('emptyBox');
+const shardsContainer = document.getElementById('shardsContainer');
+const ecgBridgeContainer = document.getElementById('ecgBridgeContainer');
+const letterM = document.getElementById('letterM');
+const letterR = document.getElementById('letterR');
+inputs.forEach((input, index) => {
+const wrapper = input.parentElement;
+input.addEventListener('focus', () => {
+wrapper.classList.add('active-capsule');
+input.select();
+});
+input.addEventListener('blur', () => {
+if (input.value === '') wrapper.classList.remove('active-capsule');
+});
+input.addEventListener('input', (e) => {
+const val = e.target.value.replace(/[^0-9]/g, '');
+e.target.value = val;
+if (val.length > 0) {
+e.target.value = val.charAt(val.length - 1);
+wrapper.classList.add('active-capsule');
+input.classList.remove('pulsing');
+void input.offsetWidth;
+input.classList.add('pulsing');
+if (index < inputs.length - 1) inputs[index + 1].focus();
+} else {
+wrapper.classList.remove('active-capsule');
+}
+});
+input.addEventListener('keydown', (e) => {
+if (e.key === 'Backspace') {
+if (input.value === '' && index > 0) {
+inputs[index - 1].focus();
+inputs[index - 1].value = '';
+inputs[index - 1].parentElement.classList.remove('active-capsule');
+} else if (input.value !== '') {
+input.value = '';
+wrapper.classList.remove('active-capsule');
+e.preventDefault();
+}
+} else if (e.key === 'Enter') {
+submitBtn.click();
+}
+});
+});
+function createShards() {
+const cols = 15;
+const rows = 8;
+for (let i = 0; i < cols; i++) {
+for (let j = 0; j < rows; j++) {
+const shard = document.createElement('div');
+shard.className = 'glass-shard';
+const size = Math.random() * 25 + 15;
+shard.style.width = `${size}px`;
+shard.style.height = `${size}px`;
+shard.style.borderRadius = `${Math.random() * 50}%`;
+const tx = (Math.random() - 0.5) * 900;
+const ty = (Math.random() - 0.5) * 700;
+const rot = (Math.random() - 0.5) * 720;
+shard.style.setProperty('--tx', `${tx}px`);
+shard.style.setProperty('--ty', `${ty}px`);
+shard.style.setProperty('--rot', `${rot}deg`);
+shard.style.left = `${(i / cols) * 100}%`;
+shard.style.top = `${(j / rows) * 100}%`;
+shardsContainer.appendChild(shard);
+}
+}
+}
+createShards();
+function resetBiologyModal() {
+inputs.forEach(input => {
+input.value = '';
+input.classList.remove('pulsing');
+input.parentElement.classList.remove('active-capsule');
+});
+submitBtn.classList.remove('clicked');
+boxContainer.classList.remove('freeze-all');
+bioBox.classList.remove('frozen', 'cracked');
+bioBox.style.display = 'flex';
+emptyBox.classList.remove('show');
+shardsContainer.classList.remove('shattering');
+shardsContainer.innerHTML = '';
+createShards();
+ecgBridgeContainer.classList.remove('active', 'animate');
+letterM.classList.remove('visible');
+letterR.classList.remove('visible');
+if (inputs[0]) inputs[0].focus();
+}
+submitBtn.addEventListener('click', () => {
+let enteredCode = '';
+inputs.forEach(input => enteredCode += input.value);
+if (enteredCode.length !== 7) {
+alert('الرجاء إكمال إدخال الرمز المكون من 7 أرقام!');
+return;
+}
+if (!schoolCodes[currentGrade]['biology'].includes(enteredCode)) {
+alert('الرمز المدخل غير صحيح خاص بقسم الأحياء في المنصة!');
+return;
+}
+submitBtn.classList.add('clicked');
+setTimeout(() => {
+boxContainer.classList.add('freeze-all');
+bioBox.classList.add('frozen');
+}, 300);
+setTimeout(() => {
+bioBox.classList.add('cracked');
+}, 700);
+setTimeout(() => {
+bioBox.style.display = 'none';
+shardsContainer.classList.add('shattering');
+}, 1050);
+setTimeout(() => {
+shardsContainer.innerHTML = '';
+}, 2900);
+setTimeout(() => {
+boxContainer.classList.remove('freeze-all');
+emptyBox.classList.add('show');
+}, 2950);
+setTimeout(() => {
+letterM.style.transition = 'opacity 1s ease';
+letterM.classList.add('visible');
+setTimeout(() => {
+ecgBridgeContainer.classList.add('active', 'animate');
+}, 1000);
+setTimeout(() => {
+letterR.style.transition = 'opacity 1s ease';
+letterR.classList.add('visible');
+setTimeout(() => {
+document.getElementById('biologyOtpOverlay').classList.remove('active');
+document.getElementById('biology-header-title').innerText = `مرحباً بك في عالم الأحياء (${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'})`;
+document.getElementById('biology-header-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'} | الكورس الأول`;
+renderVideosInto('video-biology', 'biology');
+switchView('view-royal-biology');
+}, 1500);
+}, 4000);
+}, 6050);
+});
+(function () {
+const physOrbits = [
+{ el: document.getElementById('physElectron0'), radius: 75 },
+{ el: document.getElementById('physElectron1'), radius: 125 },
+{ el: document.getElementById('physElectron2'), radius: 125 },
+{ el: document.getElementById('physElectron3'), radius: 175 }
+];
+physOrbits.forEach((item, index) => {
+if (!item.el) return;
+const animationName = `physRevolve${index}`;
+const keyframes = `
+@keyframes ${animationName} {
+from { transform: rotate(0deg) translateX(${item.radius}px) rotate(0deg); }
+to { transform: rotate(360deg) translateX(${item.radius}px) rotate(-360deg); }
+}
+`;
+const styleSheet = document.createElement('style');
+styleSheet.type = 'text/css';
+styleSheet.innerText = keyframes;
+document.head.appendChild(styleSheet);
+const duration = 3 + (index * 2);
+item.el.style.animation = `${animationName} ${duration}s linear infinite`;
+if (index === 2) {
+item.el.style.animationDelay = `-${duration / 2}s`;
+}
+});
+const physInputs = document.querySelectorAll('#physOtpForm .phys-code-input');
+const physEnterBtn = document.getElementById('physEnterBtn');
+physInputs.forEach((input, index) => {
+input.addEventListener('input', () => {
+const cell = input.parentElement;
+const flash = cell.querySelector('.phys-cell-flash');
+const val = input.value.replace(/[^0-9]/g, '');
+input.value = val.charAt(val.length - 1) || '';
+flash.classList.remove('phys-flashing');
+void flash.offsetWidth;
+flash.classList.add('phys-flashing');
+if (input.value.length >= 1 && index < physInputs.length - 1) {
+physInputs[index + 1].focus();
+}
+});
+input.addEventListener('keydown', (e) => {
+if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+physInputs[index - 1].focus();
+} else if (e.key === 'Enter') {
+physEnterBtn.click();
+}
+});
+});
+window.resetPhysicsModal = function () {
+physInputs.forEach(i => { i.value = ''; });
+document.getElementById('physCenterBox').classList.remove('phys-wrong-shake');
+if (physInputs[0]) physInputs[0].focus();
+};
+physEnterBtn.addEventListener('click', () => {
+let enteredCode = '';
+physInputs.forEach(i => enteredCode += i.value);
+if (enteredCode.length !== 7) {
+alert('الرجاء إكمال إدخال الرمز المكون من 7 أرقام!');
+return;
+}
+if (!schoolCodes[currentGrade] || !schoolCodes[currentGrade]['physics'] || !schoolCodes[currentGrade]['physics'].includes(enteredCode)) {
+const box = document.getElementById('physCenterBox');
+box.classList.remove('phys-wrong-shake');
+void box.offsetWidth;
+box.classList.add('phys-wrong-shake');
+alert('الرمز المدخل غير صحيح خاص بقسم الفيزياء في المنصة!');
+return;
+}
+const atomContainer = document.getElementById('physAtomContainer');
+if (atomContainer) {
+atomContainer.style.animation = 'physRotateSystem 0.1s linear infinite';
+}
+document.querySelectorAll('#physicsOtpOverlay .phys-electron').forEach(el => {
+el.style.backgroundColor = '#ffffff';
+el.style.boxShadow = '0 0 30px #ffffff, 0 0 60px #00ffff';
+});
+const nucleus = document.querySelector('#physicsOtpOverlay .phys-nucleus');
+if (nucleus) {
+nucleus.style.boxShadow = '0 0 50px #fff, 0 0 100px #00ffff, 0 0 150px #00f0ff';
+}
+const energySphere = document.createElement('div');
+energySphere.className = 'phys-expanding-energy-sphere';
+document.body.appendChild(energySphere);
+setTimeout(() => {
+energySphere.classList.add('expand');
+}, 50);
+setTimeout(() => {
+energySphere.style.transition = 'opacity 1.2s ease';
+energySphere.style.opacity = '0';
+const centerBox = document.getElementById('physCenterBox');
+centerBox.style.transition = 'opacity 1s ease';
+centerBox.style.opacity = '0';
+physEnterBtn.style.transition = 'opacity 1s ease';
+physEnterBtn.style.opacity = '0';
+document.querySelectorAll('#physicsOtpOverlay .phys-tesla-coil').forEach(c => {
+c.style.transition = 'opacity 1s ease';
+c.style.opacity = '0';
+});
+const bh = document.querySelector('#physicsOtpOverlay .phys-black-hole-container');
+if (bh) {
+bh.style.transition = 'opacity 1s ease';
+bh.style.opacity = '0';
+}
+setTimeout(() => {
+energySphere.remove();
+startPhysicsMagnetsSequence();
+}, 1200);
+}, 3000);
+});
+function startPhysicsMagnetsSequence() {
+const dimOverlay = document.createElement('div');
+dimOverlay.className = 'phys-space-dim-overlay';
+document.body.appendChild(dimOverlay);
+setTimeout(() => {
+dimOverlay.style.transition = 'opacity 0.35s ease';
+dimOverlay.style.opacity = '0';
+setTimeout(() => dimOverlay.remove(), 350);
+const magLeft = document.createElement('div');
+magLeft.className = 'phys-rising-magnet phys-magnet-left';
+magLeft.innerHTML = '<div class="phys-pole phys-pole-left"></div><div class="phys-pole phys-pole-right"></div><div class="phys-magnet-spark phys-magnet-spark-1"></div><div class="phys-magnet-spark phys-magnet-spark-2"></div>';
+const magRight = document.createElement('div');
+magRight.className = 'phys-rising-magnet phys-magnet-right';
+magRight.innerHTML = '<div class="phys-pole phys-pole-left"></div><div class="phys-pole phys-pole-right"></div><div class="phys-magnet-spark phys-magnet-spark-1"></div><div class="phys-magnet-spark phys-magnet-spark-2"></div>';
+document.body.appendChild(magLeft);
+document.body.appendChild(magRight);
+magLeft.offsetHeight;
+magRight.offsetHeight;
+magLeft.style.transition = 'bottom 1s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1s ease';
+magRight.style.transition = 'bottom 1s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1s ease';
+magLeft.classList.add('phys-magnet-glow');
+magRight.classList.add('phys-magnet-glow');
+magLeft.style.bottom = 'calc(50% - 32px)';
+magRight.style.bottom = 'calc(50% - 32px)';
+setTimeout(() => {
+const arc = document.createElement('div');
+arc.className = 'phys-magnet-arc';
+document.body.appendChild(arc);
+setTimeout(() => { arc.classList.add('phys-show'); }, 30);
+setTimeout(() => {
+arc.style.transition = 'opacity 0.2s ease';
+arc.style.opacity = '0';
+setTimeout(() => arc.remove(), 200);
+const energyWrapper = document.createElement('div');
+energyWrapper.className = 'phys-energy-center-wrapper phys-hologram-build';
+energyWrapper.innerHTML = `
+<div class="phys-electric-rectangle"></div>
+<div class="phys-hologram-scan"></div>
+<div class="phys-tiny-electric-spark"></div>
+<div class="phys-gold-welcome-text" id="physGoldWelcomeText"></div>
+`;
+document.body.appendChild(energyWrapper);
+setTimeout(() => { energyWrapper.classList.add('phys-show'); }, 50);
+setTimeout(() => {
+const text = `أهلاً بك في عالم الفيزياء (${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'})`;
+const textEl = document.getElementById('physGoldWelcomeText');
+const charCount = Math.max(Array.from(text).length, 6);
+textEl.innerHTML = `
+<span class="phys-gold-text-inner" id="physGoldTextInner">${text}</span>
+<span class="phys-gold-reveal-spark" id="physGoldRevealSpark"></span>
+`;
+const textInner = document.getElementById('physGoldTextInner');
+const revealSpark = document.getElementById('physGoldRevealSpark');
+textInner.style.transition = `clip-path 0.7s steps(${charCount}, end)`;
+revealSpark.style.transition = `right 0.7s steps(${charCount}, end)`;
+revealSpark.style.right = '0%';
+requestAnimationFrame(() => {
+textInner.classList.add('phys-reveal');
+revealSpark.classList.add('phys-active');
+revealSpark.style.right = '100%';
+});
+setTimeout(() => {
+revealSpark.classList.remove('phys-active');
+revealSpark.style.opacity = '0';
+setTimeout(() => {
+const sweep = document.createElement('div');
+sweep.className = 'phys-text-light-sweep';
+textEl.appendChild(sweep);
+setTimeout(() => sweep.remove(), 950);
+magLeft.classList.add('phys-magnet-idle-shake');
+magRight.classList.add('phys-magnet-idle-shake');
+setTimeout(() => {
+document.getElementById('physicsOtpOverlay').classList.remove('active');
+document.getElementById('physics-header-title').innerText = `مرحباً بك في عالم الفيزياء (${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'})`;
+document.getElementById('physics-header-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'} | الكورس الأول`;
+renderVideosInto('video-physics', 'physics');
+switchView('view-royal-physics');
+energyWrapper.style.transition = 'opacity 0.6s ease';
+energyWrapper.style.opacity = '0';
+magLeft.style.transition += ', opacity 0.6s ease';
+magRight.style.transition += ', opacity 0.6s ease';
+magLeft.style.opacity = '0';
+magRight.style.opacity = '0';
+setTimeout(() => {
+energyWrapper.remove();
+magLeft.remove();
+magRight.remove();
+document.getElementById('physCenterBox').style.opacity = '1';
+physEnterBtn.style.opacity = '1';
+document.querySelectorAll('#physicsOtpOverlay .phys-tesla-coil').forEach(c => { c.style.opacity = '1'; });
+const bh2 = document.querySelector('#physicsOtpOverlay .phys-black-hole-container');
+if (bh2) bh2.style.opacity = '1';
+if (atomContainer) atomContainer.style.animation = 'physRotateSystem 20s linear infinite';
+document.querySelectorAll('#physicsOtpOverlay .phys-electron').forEach(el => {
+el.style.backgroundColor = '';
+el.style.boxShadow = '';
+});
+if (nucleus) nucleus.style.boxShadow = '';
+resetPhysicsModal();
+}, 700);
+}, 2500);
+}, 200);
+}, 700);
+}, 1000);
+}, 500);
+}, 1000);
+}, 500);
+}
+})();
+(function () {
+const arabicOverlay = document.getElementById('arabicOtpOverlay');
+const arabicCodeInputs = arabicOverlay.querySelectorAll('.arb-code-input');
+const arbSubmitBtn = document.getElementById('arbSubmitBtn');
+const arbMainGlassBox = document.getElementById('arbMainGlassBox');
+const arbWelcomeTitle = document.getElementById('arbWelcomeTitle');
+const arbConnectedText = document.getElementById('arbConnectedText');
+arabicCodeInputs.forEach((input, index) => {
+input.addEventListener('input', e => {
+e.target.value = e.target.value.replace(/[^0-9]/g, '');
+if (e.target.value.length === 1 && index < arabicCodeInputs.length - 1) arabicCodeInputs[index + 1].focus();
+});
+input.addEventListener('keydown', e => {
+if (e.key === 'Backspace' && !e.target.value && index > 0) arabicCodeInputs[index - 1].focus();
+if (e.key === 'Enter') arbSubmitBtn.click();
+});
+input.addEventListener('paste', e => {
+const pasteData = e.clipboardData.getData('text').trim();
+if (pasteData.length === arabicCodeInputs.length) {
+arabicCodeInputs.forEach((inp, i) => { inp.value = pasteData[i] || ''; });
+arabicCodeInputs[arabicCodeInputs.length - 1].focus();
+e.preventDefault();
+}
+});
+});
+function arbFinishFlow() {
+arabicOverlay.classList.remove('active');
+document.getElementById('arabic-header-title').innerText = `مرحباً بك في عالم اللغة العربية (${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'})`;
+document.getElementById('arabic-header-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'} | الكورس الأول`;
+renderVideosInto('video-arabic', 'arabic');
+switchView('view-royal-arabic');
+}
+function arbCreateWelcomeText() {
+const sentence = "أهلاً وسهلاً بك في لغة الضاد";
+const words = sentence.split(" ");
+arbWelcomeTitle.innerHTML = "";
+words.forEach(word => {
+const wordDiv = document.createElement('div');
+wordDiv.className = 'arb-welcome-word';
+for (let i = 0; i < word.length; i++) {
+const char = word[i];
+const span = document.createElement('span');
+span.className = 'arb-char-span';
+span.textContent = char;
+const randomX = (Math.random() - 0.5) * window.innerWidth * 1.5;
+const randomY = (Math.random() - 0.5) * window.innerHeight * 1.5;
+const randomRot = (Math.random() - 0.5) * 1080;
+const randomScale = Math.random() * 2.5 + 0.3;
+span.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRot}deg) scale(${randomScale})`;
+wordDiv.appendChild(span);
+}
+arbWelcomeTitle.appendChild(wordDiv);
+});
+setTimeout(() => {
+const spans = arbWelcomeTitle.querySelectorAll('.arb-char-span');
+spans.forEach((span, index) => {
+setTimeout(() => { span.classList.add('arb-assembled'); }, index * 110 + Math.random() * 120);
+});
+setTimeout(() => {
+arbWelcomeTitle.classList.add('arb-merged-out');
+arbConnectedText.classList.add('active');
+setTimeout(() => { arbFinishFlow(); }, 2600);
+}, 5200);
+}, 2600);
+}
+function arbTriggerShatterEffect() {
+if (arbMainGlassBox.classList.contains('arb-shattering')) return;
+const rect = arbMainGlassBox.getBoundingClientRect();
+const shardCount = 40;
+for (let i = 0; i < shardCount; i++) {
+const shard = document.createElement('div');
+shard.className = 'arb-glass-shard';
+const width = Math.random() * 45 + 15, height = Math.random() * 45 + 15;
+const left = rect.left + Math.random() * (rect.width - width);
+const top = rect.top + Math.random() * (rect.height - height);
+shard.style.width = `${width}px`; shard.style.height = `${height}px`;
+shard.style.left = `${left}px`; shard.style.top = `${top}px`;
+const p1 = `${Math.random() * 40}% 0%`, p2 = `100% ${Math.random() * 40}%`, p3 = `${60 + Math.random() * 40}% 100%`, p4 = `0% ${60 + Math.random() * 40}%`;
+shard.style.clipPath = `polygon(${p1}, ${p2}, ${p3}, ${p4})`;
+const tx = (Math.random() - 0.5) * 600, ty = (Math.random() - 0.5) * 600, rot = (Math.random() - 0.5) * 720;
+shard.style.setProperty('--tx', `${tx}px`); shard.style.setProperty('--ty', `${ty}px`); shard.style.setProperty('--rot', `${rot}deg`);
+document.body.appendChild(shard);
+setTimeout(() => { shard.remove(); }, 3000);
+}
+arbMainGlassBox.classList.add('arb-shattering');
+arbCreateWelcomeText();
+setTimeout(() => { arbMainGlassBox.style.display = 'none'; }, 3000);
+}
+window.resetArabicModal = function () {
+arabicCodeInputs.forEach(input => { input.value = ''; });
+arbSubmitBtn.disabled = false;
+arbMainGlassBox.classList.remove('arb-shattering');
+arbMainGlassBox.style.display = 'flex';
+arbWelcomeTitle.innerHTML = '';
+arbWelcomeTitle.classList.remove('arb-merged-out');
+arbConnectedText.classList.remove('active');
+document.querySelectorAll('.arb-glass-shard').forEach(s => s.remove());
+if (window.startArabicBg) startArabicBg();
+if (arabicCodeInputs[0]) arabicCodeInputs[0].focus();
+};
+window.closeArabicModal = function () {
+arabicOverlay.classList.remove('active');
+switchView('view-grades');
+};
+arbSubmitBtn.addEventListener('click', () => {
+let code = '';
+arabicCodeInputs.forEach(i => code += i.value);
+if (code.length !== 7) {
+alert('الرجاء إكمال كتابة الرمز المكون من 7 أرقام أولاً!');
+return;
+}
+if (!schoolCodes[currentGrade] || !schoolCodes[currentGrade]['arabic'] || !schoolCodes[currentGrade]['arabic'].includes(code)) {
+alert('الرمز المدخل غير صحيح!');
+return;
+}
+arbSubmitBtn.disabled = true;
+arbTriggerShatterEffect();
+});
+const canvas = document.getElementById('arabicBgCanvas');
+const ctx = canvas.getContext('2d');
+let width, height;
+function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+const particles = [], particleCount = 140;
+class ArbParticle {
+constructor() { this.reset(); }
+reset() {
+this.x = Math.random() * width; this.y = Math.random() * height; this.size = Math.random() * 1.8 + 0.4;
+this.speedY = -(Math.random() * 0.25 + 0.05); this.speedX = (Math.random() - 0.5) * 0.15;
+this.alpha = Math.random() * 0.8 + 0.2; this.twinkleSpeed = Math.random() * 0.03 + 0.005; this.isStar = Math.random() > 0.5;
+const goldPalette = ['#ffd700', '#f3e5ab', '#dfac44', '#ffe89e']; this.color = goldPalette[Math.floor(Math.random() * goldPalette.length)];
+}
+update() {
+this.y += this.speedY; this.x += this.speedX;
+if (this.isStar) this.alpha += Math.sin(Date.now() * this.twinkleSpeed) * 0.01;
+if (this.y < -10 || this.x < -10 || this.x > width + 10) { this.y = height + 10; this.x = Math.random() * width; }
+}
+draw() {
+ctx.save(); ctx.globalAlpha = Math.max(0.1, Math.min(1, this.alpha)); ctx.shadowBlur = this.isStar ? 6 : 2; ctx.shadowColor = '#ffd700'; ctx.fillStyle = this.color;
+ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+}
+}
+for (let i = 0; i < particleCount; i++) particles.push(new ArbParticle());
+class ArbMotif {
+constructor(x, y, radius) {
+this.x = x; this.y = y; this.radius = radius; this.alpha = 0; this.targetAlpha = Math.random() * 0.18 + 0.05;
+this.fadeSpeed = 0.0015; this.fadingIn = true; this.rotation = Math.random() * Math.PI; this.rotSpeed = (Math.random() - 0.5) * 0.0003;
+}
+update() {
+this.rotation += this.rotSpeed;
+if (this.fadingIn) { this.alpha += this.fadeSpeed; if (this.alpha >= this.targetAlpha) this.fadingIn = false; }
+else { this.alpha -= this.fadeSpeed; if (this.alpha <= 0) { this.fadingIn = true; this.targetAlpha = Math.random() * 0.18 + 0.05; this.x = Math.random() * width; this.y = Math.random() * height; } }
+}
+draw() {
+if (this.alpha <= 0) return;
+ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rotation); ctx.globalAlpha = Math.max(0, this.alpha);
+ctx.strokeStyle = '#dfac44'; ctx.lineWidth = 1; ctx.shadowBlur = 8; ctx.shadowColor = '#d4af37';
+const points = 8, rInner = this.radius * 0.45, rOuter = this.radius;
+ctx.beginPath();
+for (let i = 0; i < points * 2; i++) {
+const r = (i % 2 === 0) ? rOuter : rInner, angle = (i * Math.PI) / points, px = Math.cos(angle) * r, py = Math.sin(angle) * r;
+if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+}
+ctx.closePath(); ctx.stroke();
+ctx.beginPath(); ctx.arc(0, 0, this.radius * 0.65, 0, Math.PI * 2); ctx.stroke();
+ctx.beginPath(); ctx.arc(0, 0, this.radius * 0.25, 0, Math.PI * 2); ctx.stroke();
+for (let i = 0; i < points; i++) {
+const angle = (i * 2 * Math.PI) / points;
+ctx.beginPath(); ctx.arc(Math.cos(angle) * rOuter * 0.7, Math.sin(angle) * rOuter * 0.7, rOuter * 0.28, 0, Math.PI * 2); ctx.stroke();
+}
+ctx.restore();
+}
+}
+const motifs = [new ArbMotif(width * 0.2, height * 0.3, 130), new ArbMotif(width * 0.8, height * 0.2, 160), new ArbMotif(width * 0.5, height * 0.7, 190), new ArbMotif(width * 0.15, height * 0.8, 110), new ArbMotif(width * 0.85, height * 0.75, 140)];
+class ArbPaper {
+constructor() { this.reset(); }
+reset() {
+this.x = -60; this.y = Math.random() * height; this.w = Math.random() * 16 + 14; this.h = Math.random() * 22 + 18;
+this.speedX = Math.random() * 1.0 + 0.6; this.speedY = (Math.random() - 0.5) * 0.3; this.rotation = Math.random() * Math.PI * 2;
+this.rotSpeed = (Math.random() - 0.5) * 0.01; this.waveOffset = Math.random() * 100; this.alpha = Math.random() * 0.35 + 0.15;
+}
+update() {
+this.x += this.speedX; this.y += this.speedY + Math.sin(Date.now() * 0.0015 + this.waveOffset) * 0.4; this.rotation += this.rotSpeed;
+if (this.x > width + 60 || this.y < -60 || this.y > height + 60) this.reset();
+}
+draw() {
+ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rotation); ctx.globalAlpha = this.alpha;
+ctx.fillStyle = '#c8b27c'; ctx.shadowBlur = 5; ctx.shadowColor = '#000000';
+ctx.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
+ctx.strokeStyle = '#4a3818'; ctx.lineWidth = 1;
+for (let i = -this.h / 2 + 4; i < this.h / 2 - 2; i += 4) { ctx.beginPath(); ctx.moveTo(-this.w / 2 + 3, i); ctx.lineTo(this.w / 2 - 3, i); ctx.stroke(); }
+ctx.restore();
+}
+}
+const papers = [], paperCount = 18;
+for (let i = 0; i < paperCount; i++) { const p = new ArbPaper(); p.x = Math.random() * width; papers.push(p); }
+const arabicAlphabet = ['أ', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'هـ', 'و', 'ي'];
+class ArbFloatingLetter {
+constructor() { this.reset(); }
+reset() {
+const edge = Math.floor(Math.random() * 4);
+if (edge === 0) { this.x = -30; this.y = Math.random() * height; }
+else if (edge === 1) { this.x = width + 30; this.y = Math.random() * height; }
+else if (edge === 2) { this.x = Math.random() * width; this.y = -30; }
+else { this.x = Math.random() * width; this.y = height + 30; }
+this.char = arabicAlphabet[Math.floor(Math.random() * arabicAlphabet.length)]; this.size = Math.random() * 18 + 14;
+this.alpha = Math.random() * 0.7 + 0.3; this.rotation = (Math.random() - 0.5) * 0.5; this.rotSpeed = (Math.random() - 0.5) * 0.01;
+this.speed = Math.random() * 0.9 + 0.4; this.wave = Math.random() * 100;
+}
+update() {
+const centerX = width / 2, centerY = height / 2, dx = centerX - this.x, dy = centerY - this.y, distance = Math.sqrt(dx * dx + dy * dy);
+if (distance < 25) this.reset();
+else {
+const angle = Math.atan2(dy, dx);
+this.x += Math.cos(angle) * this.speed + Math.sin(Date.now() * 0.002 + this.wave) * 0.3;
+this.y += Math.sin(angle) * this.speed + Math.cos(Date.now() * 0.002 + this.wave) * 0.3;
+}
+this.rotation += this.rotSpeed;
+}
+draw() {
+ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rotation); ctx.globalAlpha = this.alpha; ctx.fillStyle = '#ffe89e';
+ctx.shadowBlur = 10; ctx.shadowColor = '#ffd700'; ctx.font = `${this.size}px "Traditional Arabic", "Amiri", serif`;
+ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(this.char, 0, 0); ctx.restore();
+}
+}
+const letters = [], letterCount = 35;
+for (let i = 0; i < letterCount; i++) letters.push(new ArbFloatingLetter());
+let arabicAnimStarted = false;
+function arbAnimate() {
+ctx.clearRect(0, 0, width, height);
+motifs.forEach(m => { m.update(); m.draw(); });
+papers.forEach(p => { p.update(); p.draw(); });
+particles.forEach(p => { p.update(); p.draw(); });
+letters.forEach(l => { l.update(); l.draw(); });
+requestAnimationFrame(arbAnimate);
+}
+window.startArabicBg = function () {
+if (arabicAnimStarted) return;
+arabicAnimStarted = true;
+arbAnimate();
+};
+})();
+</script>
+<script>
+(function () {
+const canvas = document.getElementById('chemLabCanvas');
+const ctx = canvas.getContext('2d');
+const enterBtn = document.getElementById('chemEnterBtn');
+const uiLayer = document.getElementById('chemUiLayer');
+const flashOverlay = document.getElementById('chemFlashOverlay');
+const hiddenCodeInput = document.getElementById('chemHiddenCodeInput');
+let width, height, centerX, centerY;
+let isAnimating = false;
+let startTime = null;
+let userCode = "";
+let isBoxVisible = false;
+let isFadingOut = false;
+let fadeOutStartTime = null;
+let boxBounds = { x: 0, y: 0, w: 0, h: 0 };
+let btnBounds = { x: 0, y: 0, w: 0, h: 0 };
+let shakeActive = false;
+let shakeStartTime = 0;
+let successTimeout = null;
+const FLASK_PAIR = [[-1, '#00d4ff', '#8a00ff', '#00f0ff'], [1, '#ff0077', '#ffaa00', '#ff00aa']];
 
-        const schoolCodes = {
-            third: {
-                math: ["7834192", "4592018", "6102837", "9023481", "1298475", "5483019", "3092847", "8471920", "2918347", "6382019"],
-                english: ["1928374", "5647382", "9019283", "4857692", "3829102", "7485961", "2039485", "6152438", "8910293", "5049382"],
-                physics: ["4920183", "7382910", "2837465", "9102938", "5647383", "8392019", "3049586", "6758493", "1928384", "9485762"],
-                chemistry: ["1122334", "5566778", "9900112", "3344556", "7788990", "1234567", "7654321", "1357924", "2468135", "9876543"],
-                arabic: ["2233445", "6677889", "0011223", "4455667", "8899001", "2345678", "8765432", "2468135", "3579246", "8765431"],
-                biology: ["4433221", "8877665", "2211009", "6655443", "0099887", "7651234", "1237654", "2461357", "1352468", "3456789"]
-            },
-            sixth: {
-                math: ["8392014", "3920184", "6574839", "2019384", "7485962", "1029384", "5948372", "8374652", "4859602", "9182736"],
-                english: ["3829104", "7485960", "2918374", "6543219", "8910294", "1029385", "4859603", "5748392", "9018273", "2837466"],
-                physics: ["9283746", "3847562", "1029386", "7584932", "5849302", "2918375", "8475632", "6758494", "4938201", "3049587"],
-                chemistry: ["4567890", "1122446", "3355779", "8866442", "9977553", "1472583", "3692581", "7418529", "9638527", "8529637"],
-                arabic: ["5678901", "2233557", "4466880", "9977331", "1188442", "2581473", "3691472", "8523691", "7419632", "9637418"],
-                biology: ["7412583", "3698521", "9632587", "1593578", "7531598", "9517538", "3571598", "8521473", "9631478", "7539512"]
-            }
-        };
-
-        function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            document.getElementById(viewId).classList.remove('hidden');
-        }
-
-        function selectSubject(subject) {
-            currentSubject = subject;
-            document.getElementById('selected-subject-title').innerText = `المادة المختارة`;
-            switchView('view-grades');
-        }
-
-        function selectGrade(grade) {
-            currentGrade = grade;
-            
-            let enteredCode = prompt("أدخل رمز الدخول المكون من 7 أرقام:");
-            if (!enteredCode) return;
-
-            if (schoolCodes[currentGrade] && schoolCodes[currentGrade][currentSubject]) {
-                if (schoolCodes[currentGrade][currentSubject].includes(enteredCode)) {
-                    alert("تم التحقق بنجاح! أهلاً بك في الدرس.");
-                    document.getElementById('dash-title').innerText = `مرحباً بك في المنصة`;
-                    document.getElementById('dash-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'}`;
-                    switchView('view-dashboard');
-                } else {
-                    alert("الرمز غير صحيح أو غير مخصص لهذه المادة/الصف.");
-                    switchView('view-home');
-                }
-            } else {
-                alert("حدث خطأ في تحديد المرحلة أو المادة.");
-                switchView('view-home');
-            }
-        }
-
-        function goBackToHome() {
-            switchView('view-home');
-        }
-
-        function logout() {
-            currentSubject = "";
-            currentGrade = "";
-            switchView('view-home');
-        }
-    </script>
+function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+function easeOutQuad(t) { return 1 - (1 - t) * (1 - t); }
+function easeInQuad(t) { return t * t; }
+function smoothProgress(elapsed, duration) {
+const t = Math.min(1, Math.max(0, elapsed / duration));
+return easeInOut(t);
+}
+function resize() {
+width = canvas.width = window.innerWidth;
+height = canvas.height = window.innerHeight;
+centerX = width / 2;
+centerY = height / 2;
+}
+window.addEventListener('resize', resize);
+resize();
+hiddenCodeInput.addEventListener('input', (e) => {
+if (isFadingOut || shakeActive) return;
+userCode = e.target.value.replace(/[^0-9]/g, '').slice(0, 7);
+e.target.value = userCode;
+});
+const particlesCount = 120;
+const particles = [];
+for (let i = 0; i < particlesCount; i++) {
+const angle = Math.random() * Math.PI * 2;
+const dist = Math.random() * Math.max(window.innerWidth, window.innerHeight) * 0.7 + 100;
+particles.push({
+baseAngle: angle, dist: dist,
+orbitSpeed: (Math.random() - 0.5) * 0.00025,
+driftPhase: Math.random() * Math.PI * 2,
+driftAmp: Math.random() * 12 + 4,
+size: Math.random() * 2.6 + 1.2,
+twinklePhase: Math.random() * Math.PI * 2,
+twinkleSpeed: Math.random() * 0.0015 + 0.0008,
+color: Math.random() > 0.4 ? '#00ffaa' : (Math.random() > 0.5 ? '#00f0ff' : '#ff00aa'),
+});
+}
+const vesselSparks = [];
+for (let i = 0; i < 40; i++) {
+vesselSparks.push({
+x: 0, y: 0,
+vx: (Math.random() - 0.5) * 1.4,
+vy: -Math.random() * 1.6 - 0.4,
+size: Math.random() * 2.2 + 1,
+color: Math.random() > 0.5 ? '#00f0ff' : '#ff00aa'
+});
+}
+const smokeParticlesCount = 60;
+const smokeParticles = [];
+for (let i = 0; i < smokeParticlesCount; i++) {
+smokeParticles.push({
+angle: Math.random() * Math.PI * 2,
+speed: Math.random() * 1.8 + 0.9,
+size: Math.random() * 60 + 50,
+color: Math.random() > 0.5 ? '#00e1ff' : '#ffe600',
+rot: Math.random() * Math.PI * 2,
+vRot: (Math.random() - 0.5) * 0.012,
+wobblePhase: Math.random() * Math.PI * 2,
+wobbleAmp: Math.random() * 30 + 10,
+});
+}
+function playSound(freq, duration) {
+try {
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const osc = audioCtx.createOscillator();
+const gain = audioCtx.createGain();
+osc.type = 'sine';
+osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + duration);
+gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+osc.connect(gain);
+gain.connect(audioCtx.destination);
+osc.start();
+osc.stop(audioCtx.currentTime + duration);
+} catch (e) {}
+}
+function drawHexagon(x, y, radius, alpha) {
+if (alpha <= 0) return;
+ctx.save();
+ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
+ctx.lineWidth = 1.5;
+ctx.beginPath();
+for (let i = 0; i < 6; i++) {
+const angle = (Math.PI / 3) * i;
+const hx = x + radius * Math.cos(angle);
+const hy = y + radius * Math.sin(angle);
+if (i === 0) ctx.moveTo(hx, hy); else ctx.lineTo(hx, hy);
+}
+ctx.closePath();
+ctx.stroke();
+ctx.restore();
+}
+function drawGlowingFlask(x, y, scale, colorBottom, colorTop, alpha, time, tiltAngle = 0) {
+if (alpha <= 0) return;
+ctx.save();
+ctx.globalAlpha = alpha;
+ctx.translate(x, y);
+ctx.rotate(tiltAngle);
+const baseWidth = 130 * scale;
+const flaskHeight = 220 * scale;
+const neckWidth = 40 * scale;
+const neckHeight = 85 * scale;
+const bottomY = 0;
+const shoulderY = -(flaskHeight - neckHeight);
+const topY = -flaskHeight;
+const liquidWobble = Math.sin(time * 0.0022 + x) * 2 * scale;
+const liquidLevelY = -(flaskHeight - neckHeight) * 0.6 + liquidWobble;
+ctx.save();
+ctx.beginPath();
+const liquidTopWidth = neckWidth + (baseWidth - neckWidth) * 0.6;
+ctx.moveTo(-liquidTopWidth / 2, liquidLevelY);
+ctx.lineTo(-baseWidth / 2 + 10 * scale, bottomY - 10 * scale);
+ctx.quadraticCurveTo(0, bottomY + 12 * scale, baseWidth / 2 - 10 * scale, bottomY - 10 * scale);
+ctx.lineTo(liquidTopWidth / 2, liquidLevelY);
+ctx.closePath();
+const liquidGrad = ctx.createLinearGradient(0, bottomY, 0, liquidLevelY);
+liquidGrad.addColorStop(0, colorBottom);
+liquidGrad.addColorStop(1, colorTop);
+ctx.fillStyle = liquidGrad;
+ctx.shadowColor = colorTop;
+ctx.shadowBlur = 25 * scale;
+ctx.fill();
+ctx.restore();
+ctx.save();
+ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+ctx.lineWidth = 3 * scale;
+ctx.shadowColor = colorTop;
+ctx.shadowBlur = 15 * scale;
+ctx.beginPath();
+ctx.ellipse(0, topY, neckWidth / 2 + 4 * scale, 6 * scale, 0, 0, Math.PI * 2);
+ctx.stroke();
+ctx.beginPath();
+ctx.moveTo(-neckWidth / 2, topY);
+ctx.lineTo(-neckWidth / 2, shoulderY);
+ctx.lineTo(-baseWidth / 2, bottomY - 8 * scale);
+ctx.quadraticCurveTo(0, bottomY + 12 * scale, baseWidth / 2, bottomY - 8 * scale);
+ctx.lineTo(neckWidth / 2, shoulderY);
+ctx.lineTo(neckWidth / 2, topY);
+ctx.stroke();
+ctx.restore();
+ctx.restore();
+}
+function drawCentralVessel(x, y, scale, alpha, fillProgress) {
+if (alpha <= 0) return;
+ctx.save();
+ctx.globalAlpha = alpha;
+ctx.translate(x, y);
+const vWidth = 240 * scale;
+const vHeight = 170 * scale;
+const halfW = vWidth / 2;
+const halfH = vHeight / 2;
+if (fillProgress > 0) {
+const currentH = (vHeight - 20 * scale) * fillProgress;
+const liquidY = halfH - 10 * scale - currentH;
+ctx.save();
+ctx.beginPath();
+ctx.roundRect(-halfW + 8 * scale, liquidY, vWidth - 16 * scale, currentH, [0, 0, 30 * scale, 30 * scale]);
+const liquidGrad = ctx.createLinearGradient(0, halfH, 0, liquidY);
+liquidGrad.addColorStop(0, '#ff00aa');
+liquidGrad.addColorStop(0.5, '#00f0ff');
+liquidGrad.addColorStop(1, '#ffffff');
+ctx.fillStyle = liquidGrad;
+ctx.shadowColor = '#00f0ff';
+ctx.shadowBlur = 20 * scale;
+ctx.fill();
+vesselSparks.forEach(sp => {
+sp.y += sp.vy;
+sp.x += sp.vx;
+if (sp.y < liquidY - y) {
+sp.y = halfH - 15 * scale;
+sp.x = (Math.random() - 0.5) * (vWidth - 30 * scale);
+}
+ctx.save();
+ctx.fillStyle = sp.color;
+ctx.shadowColor = sp.color;
+ctx.shadowBlur = 8;
+ctx.beginPath();
+ctx.arc(sp.x, sp.y, sp.size * scale, 0, Math.PI * 2);
+ctx.fill();
+ctx.restore();
+});
+ctx.restore();
+}
+const glassGrad = ctx.createLinearGradient(-halfW, -halfH, halfW, halfH);
+glassGrad.addColorStop(0, 'rgba(255, 255, 255, 0.2)');
+glassGrad.addColorStop(0.5, 'rgba(0, 240, 255, 0.05)');
+glassGrad.addColorStop(1, 'rgba(255, 0, 170, 0.1)');
+ctx.fillStyle = glassGrad;
+ctx.beginPath();
+ctx.roundRect(-halfW, -halfH, vWidth, vHeight, [10 * scale, 10 * scale, 35 * scale, 35 * scale]);
+ctx.fill();
+ctx.strokeStyle = '#00f0ff';
+ctx.lineWidth = 3 * scale;
+ctx.shadowColor = '#00f0ff';
+ctx.shadowBlur = 15 * scale;
+ctx.beginPath();
+ctx.roundRect(-halfW, -halfH, vWidth, vHeight, [10 * scale, 10 * scale, 35 * scale, 35 * scale]);
+ctx.stroke();
+ctx.beginPath();
+ctx.ellipse(0, -halfH, halfW + 10 * scale, 12 * scale, 0, 0, Math.PI * 2);
+ctx.strokeStyle = '#ffffff';
+ctx.lineWidth = 2 * scale;
+ctx.stroke();
+ctx.restore();
+}
+function drawPourBeam(startX, startY, endX, endY, color, scale, alpha) {
+if (alpha <= 0) return;
+ctx.save();
+ctx.globalAlpha = alpha;
+const midX = (startX + endX) / 2;
+const midY = (startY + endY) / 2 - 20 * scale;
+ctx.beginPath();
+ctx.moveTo(startX, startY);
+ctx.quadraticCurveTo(midX, midY, endX, endY);
+ctx.strokeStyle = color;
+ctx.lineWidth = 7 * scale;
+ctx.lineCap = 'round';
+ctx.shadowColor = color;
+ctx.shadowBlur = 20 * scale;
+ctx.stroke();
+ctx.beginPath();
+ctx.moveTo(startX, startY);
+ctx.quadraticCurveTo(midX, midY, endX, endY);
+ctx.strokeStyle = '#ffffff';
+ctx.lineWidth = 2.5 * scale;
+ctx.stroke();
+ctx.restore();
+}
+function drawGoldenGlassBox(x, y, scale, alpha, timestamp) {
+if (alpha <= 0) return;
+let shakeOffsetX = 0;
+let borderColor = '#ffd700';
+if (shakeActive) {
+const shakeElapsed = timestamp - shakeStartTime;
+if (shakeElapsed < 500) {
+shakeOffsetX = Math.sin(shakeElapsed * 0.09) * 10 * (1 - shakeElapsed / 500);
+borderColor = '#ff3030';
+} else {
+shakeActive = false;
+}
+}
+const floatY = y + Math.sin(timestamp * 0.0018) * 8;
+const boxWidth = 460 * scale;
+const boxHeight = 210 * scale;
+const halfW = boxWidth / 2;
+const halfH = boxHeight / 2;
+boxBounds = { x: (x + shakeOffsetX) - halfW, y: floatY - halfH, w: boxWidth, h: boxHeight };
+ctx.save();
+ctx.translate(x + shakeOffsetX, floatY);
+ctx.globalAlpha = alpha;
+const glassGrad = ctx.createLinearGradient(-halfW, -halfH, halfW, halfH);
+glassGrad.addColorStop(0, 'rgba(255, 215, 0, 0.15)');
+glassGrad.addColorStop(0.5, 'rgba(10, 20, 35, 0.85)');
+glassGrad.addColorStop(1, 'rgba(0, 240, 255, 0.12)');
+ctx.fillStyle = glassGrad;
+ctx.beginPath();
+ctx.roundRect(-halfW, -halfH, boxWidth, boxHeight, 16 * scale);
+ctx.fill();
+ctx.strokeStyle = borderColor;
+ctx.lineWidth = 3.5 * scale;
+ctx.shadowColor = borderColor;
+ctx.shadowBlur = 15;
+ctx.stroke();
+const slotCount = 7;
+const slotSize = 42 * scale;
+const gap = 10 * scale;
+const totalWidth = slotCount * slotSize + (slotCount - 1) * gap;
+const startX = -totalWidth / 2 + slotSize / 2;
+const slotY = 12 * scale;
+ctx.fillStyle = '#ffe875';
+ctx.font = `600 ${14 * scale}px system-ui, sans-serif`;
+ctx.textAlign = 'center';
+ctx.fillText('أدخل رمز مادة الكيمياء (انقر للكتابة)', 0, -40 * scale);
+for (let i = 0; i < slotCount; i++) {
+const sx = startX + i * (slotSize + gap);
+const isFilled = i < userCode.length;
+const isActive = (i === userCode.length && userCode.length < 7);
+const pulse = isActive ? (Math.sin(timestamp * 0.005) * 0.15 + 0.85) : 1;
+ctx.save();
+ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+ctx.strokeStyle = shakeActive ? '#ff3030' : (isActive ? '#00f0ff' : (isFilled ? '#00ffaa' : 'rgba(255, 215, 0, 0.6)'));
+ctx.lineWidth = 2 * scale;
+ctx.globalAlpha = alpha * pulse;
+ctx.beginPath();
+ctx.roundRect(sx - slotSize / 2, slotY - slotSize / 2, slotSize, slotSize, 7 * scale);
+ctx.fill();
+ctx.stroke();
+if (isFilled) {
+ctx.globalAlpha = alpha;
+ctx.fillStyle = '#ffffff';
+ctx.font = `bold ${20 * scale}px system-ui, sans-serif`;
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText(userCode[i], sx, slotY + 2 * scale);
+}
+ctx.restore();
+}
+const btnW = 170 * scale;
+const btnH = 46 * scale;
+const btnY = halfH + 38 * scale;
+btnBounds = { x: (x + shakeOffsetX) - btnW / 2, y: floatY + btnY - btnH / 2, w: btnW, h: btnH };
+const btnReady = userCode.length === 7;
+const btnGlow = btnReady ? (Math.sin(timestamp * 0.004) * 0.3 + 0.7) : 0.35;
+ctx.save();
+ctx.translate(0, btnY);
+ctx.fillStyle = btnReady ? `rgba(0, 255, 170, ${0.25 * btnGlow + 0.1})` : 'rgba(0, 240, 255, 0.15)';
+ctx.strokeStyle = btnReady ? '#00ffaa' : 'rgba(0, 240, 255, 0.55)';
+ctx.lineWidth = 2.5 * scale;
+ctx.shadowColor = btnReady ? '#00ffaa' : '#00f0ff';
+ctx.shadowBlur = 10 + 12 * btnGlow;
+ctx.beginPath();
+ctx.roundRect(-btnW / 2, -btnH / 2, btnW, btnH, 10 * scale);
+ctx.fill();
+ctx.stroke();
+ctx.fillStyle = '#ffffff';
+ctx.font = `bold ${18 * scale}px system-ui, sans-serif`;
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText('تــفــاعــل', 0, 0);
+ctx.restore();
+ctx.restore();
+}
+function triggerShake(timestamp) {
+shakeActive = true;
+shakeStartTime = timestamp;
+playSound(90, 0.35);
+flashOverlay.classList.add('active', 'error');
+setTimeout(() => flashOverlay.classList.remove('active', 'error'), 180);
+userCode = "";
+hiddenCodeInput.value = "";
+}
+function triggerFadeOut(timestamp) {
+if (isFadingOut) return;
+isFadingOut = true;
+fadeOutStartTime = timestamp;
+playSound(300, 0.6);
+flashOverlay.classList.add('active');
+setTimeout(() => flashOverlay.classList.remove('active'), 200);
+hiddenCodeInput.blur();
+successTimeout = setTimeout(finishChemistrySuccess, 12500);
+}
+function finishChemistrySuccess() {
+const overlay = document.getElementById('chemistryOtpOverlay');
+overlay.classList.remove('active');
+document.getElementById('dash-title').innerText = `مرحباً بك في المنصة`;
+document.getElementById('dash-subtitle').innerText = `المرحلة: ${currentGrade === 'third' ? 'ثالث متوسط' : 'سادس علمي'}`;
+if (typeof renderVideosInto === 'function') renderVideosInto('video-generic', 'chemistry');
+if (typeof switchView === 'function') switchView('view-dashboard');
+chemLabReset();
+}
+canvas.addEventListener('click', (e) => {
+if (!isAnimating || !isBoxVisible) return;
+const rect = canvas.getBoundingClientRect();
+const clickX = e.clientX - rect.left;
+const clickY = e.clientY - rect.top;
+if (
+!isFadingOut && !shakeActive &&
+clickX >= btnBounds.x && clickX <= btnBounds.x + btnBounds.w &&
+clickY >= btnBounds.y && clickY <= btnBounds.y + btnBounds.h
+) {
+if (userCode.length !== 7) return;
+const validCodes = (schoolCodes[currentGrade] && schoolCodes[currentGrade].chemistry) || [];
+if (validCodes.includes(userCode)) {
+triggerFadeOut(performance.now());
+} else {
+triggerShake(performance.now());
+}
+return;
+}
+if (
+!isFadingOut && !shakeActive &&
+clickX >= boxBounds.x && clickX <= boxBounds.x + boxBounds.w &&
+clickY >= boxBounds.y && clickY <= boxBounds.y + boxBounds.h
+) {
+hiddenCodeInput.focus();
+}
+});
+function animate(timestamp) {
+if (!startTime) startTime = timestamp;
+const elapsed = timestamp - startTime;
+const responsiveScale = Math.min(width, height) / 900;
+const flaskBaseY = height * 0.85;
+ctx.clearRect(0, 0, width, height);
+if (isAnimating) {
+ctx.save();
+ctx.strokeStyle = 'rgba(0, 240, 255, 0.14)';
+ctx.lineWidth = 1;
+const gridLines = 8;
+for (let i = 0; i <= gridLines; i++) {
+const ratio = i / gridLines;
+const y = centerY + (height / 2 - centerY) * ratio;
+ctx.beginPath();
+ctx.moveTo(centerX - centerX * ratio, y);
+ctx.lineTo(centerX + centerX * ratio, y);
+ctx.stroke();
+ctx.beginPath();
+ctx.moveTo(centerX, centerY);
+ctx.lineTo(ratio * width, height);
+ctx.stroke();
+}
+ctx.restore();
+drawHexagon(centerX, centerY - 60, 80, 0.3);
+drawHexagon(centerX - 80, centerY - 60, 40, 0.22);
+drawHexagon(centerX + 80, centerY - 60, 40, 0.22);
+particles.forEach(p => {
+const angle = p.baseAngle + timestamp * p.orbitSpeed;
+const drift = Math.sin(timestamp * 0.0012 + p.driftPhase) * p.driftAmp;
+const px = centerX + Math.cos(angle) * (p.dist + drift);
+const py = centerY + Math.sin(angle) * (p.dist + drift);
+const twinkle = Math.sin(timestamp * p.twinkleSpeed + p.twinklePhase) * 0.35 + 0.65;
+ctx.save();
+ctx.globalAlpha = twinkle;
+ctx.fillStyle = p.color;
+ctx.shadowColor = p.color;
+ctx.shadowBlur = 4;
+ctx.beginPath();
+ctx.arc(px, py, p.size, 0, Math.PI * 2);
+ctx.fill();
+ctx.restore();
+});
+if (!isFadingOut) {
+const flaskAlpha = smoothProgress(elapsed, 1600);
+const beamElapsed = Math.max(0, elapsed - 1300);
+const beamAlpha = smoothProgress(beamElapsed, 1600);
+const boxElapsed = Math.max(0, elapsed - 2600);
+const boxAlpha = smoothProgress(boxElapsed, 1800);
+if (boxAlpha >= 1.0) { isBoxVisible = true; }
+const flaskRise = (1 - easeOutCubic(Math.min(1, elapsed / 1600))) * 40 * responsiveScale;
+if (flaskAlpha > 0) FLASK_PAIR.forEach(([s, c1, c2]) => drawGlowingFlask(centerX + s * width * 0.22, flaskBaseY + flaskRise, responsiveScale, c1, c2, flaskAlpha, timestamp));
+if (beamAlpha > 0) {
+const mouthY = flaskBaseY - 220 * responsiveScale;
+FLASK_PAIR.forEach(([s, , , bc]) => drawPourBeam(centerX + s * width * 0.22, mouthY, centerX, centerY - 20 * responsiveScale, bc, responsiveScale, beamAlpha));
+}
+if (boxAlpha > 0) {
+const boxScale = 0.9 + 0.1 * easeOutCubic(Math.min(1, boxElapsed / 1800));
+ctx.save();
+ctx.translate(centerX, centerY - 20 * responsiveScale);
+ctx.scale(boxScale, boxScale);
+ctx.translate(-centerX, -(centerY - 20 * responsiveScale));
+drawGoldenGlassBox(centerX, centerY - 20 * responsiveScale, responsiveScale, boxAlpha, timestamp);
+ctx.restore();
+}
+} else {
+const fadeElapsed = timestamp - fadeOutStartTime;
+const fadeOutAlpha = 1 - easeInQuad(Math.min(1, fadeElapsed / 1200));
+if (fadeOutAlpha > 0) {
+const mouthY = flaskBaseY - 220 * responsiveScale;
+FLASK_PAIR.forEach(([s, c1, c2, bc]) => {
+drawGlowingFlask(centerX + s * width * 0.22, flaskBaseY, responsiveScale, c1, c2, fadeOutAlpha, timestamp);
+drawPourBeam(centerX + s * width * 0.22, mouthY, centerX, centerY - 20 * responsiveScale, bc, responsiveScale, fadeOutAlpha);
+});
+drawGoldenGlassBox(centerX, centerY - 20 * responsiveScale, responsiveScale, fadeOutAlpha, timestamp);
+}
+const phase2Elapsed = Math.max(0, fadeElapsed - 1200);
+const vesselAlpha = smoothProgress(phase2Elapsed, 2000);
+const enterElapsed = Math.max(0, phase2Elapsed - 1800);
+const enterProgress = easeOutCubic(Math.min(1.0, enterElapsed / 2200));
+const leftTargetX = centerX - width * 0.25;
+const rightTargetX = centerX + width * 0.25;
+const leftStartX = -150;
+const rightStartX = width + 150;
+const arc = Math.sin(enterProgress * Math.PI) * 18 * responsiveScale;
+const curLeftX = leftStartX + (leftTargetX - leftStartX) * enterProgress;
+const curRightX = rightStartX + (rightTargetX - rightStartX) * enterProgress;
+const curFlaskY = flaskBaseY - arc;
+const pourElapsed = Math.max(0, phase2Elapsed - 4200);
+const pourProgress = smoothProgress(pourElapsed, 1600);
+const fillProgress = smoothProgress(Math.max(0, pourElapsed - 400), 2800);
+const vesselSides = [
+{ x: curLeftX, tilt: pourProgress * 0.45, c1: '#00f0ff', c2: '#00ffaa', beam: '#00f0ff', vx: -35 * responsiveScale },
+{ x: curRightX, tilt: -pourProgress * 0.45, c1: '#ff00aa', c2: '#ffaa00', beam: '#ff00aa', vx: 35 * responsiveScale }
+];
+if (vesselAlpha > 0) drawCentralVessel(centerX, centerY + 20 * responsiveScale, responsiveScale, vesselAlpha, fillProgress);
+if (enterProgress > 0) vesselSides.forEach(v => drawGlowingFlask(v.x, curFlaskY, responsiveScale, v.c1, v.c2, enterProgress, timestamp, v.tilt));
+if (pourProgress > 0) {
+const flaskH = 220 * responsiveScale;
+const vesselTopY = (centerY + 20 * responsiveScale) - 85 * responsiveScale;
+vesselSides.forEach(v => drawPourBeam(v.x + Math.sin(v.tilt) * flaskH, curFlaskY - Math.cos(v.tilt) * flaskH, centerX + v.vx, vesselTopY, v.beam, responsiveScale, pourProgress));
+}
+if (fillProgress >= 1.0) {
+const smokeElapsed = Math.max(0, pourElapsed - 2800);
+const smokeAlpha = smoothProgress(smokeElapsed, 2200);
+if (smokeAlpha > 0) {
+ctx.save();
+const fillFullAlpha = smoothProgress(smokeElapsed, 3000);
+if (fillFullAlpha > 0) {
+const bgGrad = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, Math.max(width, height) * 0.9);
+bgGrad.addColorStop(0, `rgba(255, 230, 0, ${fillFullAlpha * 0.9})`);
+bgGrad.addColorStop(0.3, `rgba(0, 225, 255, ${fillFullAlpha * 0.85})`);
+bgGrad.addColorStop(0.6, `rgba(0, 80, 180, ${fillFullAlpha * 0.85})`);
+bgGrad.addColorStop(1.0, `rgba(5, 15, 35, ${fillFullAlpha})`);
+ctx.fillStyle = bgGrad;
+ctx.fillRect(0, 0, width, height);
+}
+ctx.globalCompositeOperation = 'lighter';
+smokeParticles.forEach((p, idx) => {
+const dist = smokeElapsed * 0.22 * p.speed;
+const wobble = Math.sin(smokeElapsed * 0.0018 + p.wobblePhase) * p.wobbleAmp;
+const currentX = centerX + Math.cos(p.angle) * dist + Math.cos(p.angle + Math.PI / 2) * wobble;
+const currentY = (centerY + 20 * responsiveScale) + Math.sin(p.angle) * dist + Math.sin(p.angle + Math.PI / 2) * wobble;
+const growth = easeOutQuad(Math.min(1, smokeElapsed / 3200));
+const currentSize = (p.size + growth * 340) * responsiveScale;
+ctx.save();
+ctx.translate(currentX, currentY);
+ctx.rotate(p.rot + smokeElapsed * p.vRot);
+const denseGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, currentSize);
+const opacityVal = Math.min(0.85, smokeAlpha);
+denseGrad.addColorStop(0, p.color);
+denseGrad.addColorStop(0.35, idx % 2 === 0 ? 'rgba(0,183,255,0.7)' : 'rgba(255,215,0,0.7)');
+denseGrad.addColorStop(0.7, 'rgba(0, 60, 140, 0.25)');
+denseGrad.addColorStop(1, 'rgba(0, 25, 60, 0)');
+ctx.globalAlpha = opacityVal;
+ctx.fillStyle = denseGrad;
+ctx.beginPath();
+ctx.arc(0, 0, currentSize, 0, Math.PI * 2);
+ctx.fill();
+ctx.restore();
+});
+ctx.globalCompositeOperation = 'source-over';
+ctx.restore();
+}
+}
+}
+}
+if (isAnimating) requestAnimationFrame(animate);
+}
+enterBtn.addEventListener('click', () => {
+uiLayer.style.display = 'none';
+playSound(150, 0.8);
+flashOverlay.classList.add('active');
+setTimeout(() => { flashOverlay.classList.remove('active'); }, 150);
+isAnimating = true;
+startTime = null;
+requestAnimationFrame(animate);
+});
+window.chemLabReset = function () {
+if (successTimeout) { clearTimeout(successTimeout); successTimeout = null; }
+isAnimating = false;
+startTime = null;
+userCode = "";
+isBoxVisible = false;
+isFadingOut = false;
+fadeOutStartTime = null;
+shakeActive = false;
+hiddenCodeInput.value = "";
+hiddenCodeInput.blur();
+uiLayer.style.display = 'flex';
+flashOverlay.classList.remove('active', 'error');
+resize();
+ctx.clearRect(0, 0, width, height);
+};
+})();
+</script>
 </body>
 </html>
